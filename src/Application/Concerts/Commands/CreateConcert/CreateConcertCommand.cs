@@ -20,8 +20,10 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
 
             public async Task<long> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
             {
+                
                 return 1;
             }
         }
+
     }
 }

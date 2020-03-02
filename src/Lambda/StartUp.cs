@@ -1,5 +1,9 @@
 ﻿using Cloudbash.Application;
+using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Cloudbash.Infrastructure;
+using Cloudbash.Lambda.Common;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
@@ -25,8 +29,14 @@ namespace Cloudbash.Lambda
 
             services.AddApplication();
             services.AddInfrastructure(configurationRoot);
-
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateConcertCommandValidator>());
+         
             return services;
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseCustomExceptionHandler();
         }
     }
 }
