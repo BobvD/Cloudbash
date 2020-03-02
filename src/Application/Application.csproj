@@ -6,4 +6,12 @@
     <RootNamespace>Cloudbash.Application</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Concerts\Queries\" />
+  </ItemGroup>
+
 </Project>
