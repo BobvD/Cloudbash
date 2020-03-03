@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.3.104.31" />
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.105.5" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.104.32" />
+    <PackageReference Include="AWSSDK.Kinesis" Version="3.3.100.139" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

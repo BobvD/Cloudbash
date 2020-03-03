@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: lambda
+service: cloudbash
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -23,36 +23,39 @@ service: lambda
 provider:
   name: aws
   runtime: dotnetcore2.1
+  stage: dev
+  region: us-east-1
+  accountId: ${file(env.configs.yml):accountId}
 
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+  iamRoleStatements:
+  # Grant privileges to read from kinesis stream
+  - Effect: Allow
+    Action:
+    - kinesis:GetRecords
+    - kinesis:GetShardIterator
+    - kinesis:DescribeStream
+    - kinesis:ListStreams
+    - kinesis:PutRecord
+    - kinesis:PutRecords
+    Resource:
+      Fn::GetAtt: 
+      - eventStream
+      - Arn
+  # Grant privilege to write to events table 
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    Resource:
+      Fn::GetAtt: 
+      - eventsTable
+      - Arn     
 
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
 
 package:
   artifact: bin/release/netcoreapp2.1/deploy-package.zip
 
 functions:
-  create_concert:
+  createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
     events:
     - http:
@@ -60,3 +63,46 @@ functions:
         method: post
         cors: true
 
+  ## lambda for catching events from the eventstream (kinesis)
+  eventStreamHandler:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.ProcessEvents::Run
+
+# Resources
+resources:
+  Resources:
+    # create the Kinesis EventStream
+    eventStream: 
+      Type: AWS::Kinesis::Stream
+      Properties: 
+        Name: eventStream
+        ShardCount: 1
+
+
+    eventsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: eventlog
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 5
+
+
+    Event:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        BatchSize: 50
+        EventSourceArn:
+          Fn::GetAtt:
+            - eventStream
+            - Arn      
+        FunctionName:
+          Fn::GetAtt:
+            - EventStreamHandlerLambdaFunction
+            - Arn
+        StartingPosition: TRIM_HORIZON

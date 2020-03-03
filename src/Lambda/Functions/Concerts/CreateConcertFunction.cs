@@ -21,7 +21,7 @@ namespace Cloudbash.Lambda.Functions.Concerts
                 var result = await Mediator.Send(requestModel);
                 return new APIGatewayProxyResponse { StatusCode = 201, Body = JsonConvert.SerializeObject(result) };
             }
-            catch (ValidationException ex)
+            catch (Exception ex)
             {
                 return new APIGatewayProxyResponse { StatusCode = 400, Body = JsonConvert.SerializeObject(ex.Message) };
             }            
