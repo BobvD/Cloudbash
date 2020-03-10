@@ -25,7 +25,6 @@ provider:
   runtime: dotnetcore2.1
   stage: dev
   region: us-east-1
-  accountId: ${file(env.configs.yml):accountId}
 
   iamRoleStatements:
   # Grant privileges to read from kinesis stream
@@ -65,7 +64,7 @@ functions:
 
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.ProcessEvents::Run
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.ProcessEventsFunction::Run
 
 # Resources
 resources:

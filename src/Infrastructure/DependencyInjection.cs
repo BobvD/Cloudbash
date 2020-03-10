@@ -11,11 +11,10 @@ namespace Cloudbash.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot)
         {
-
+            services.AddTransient<IPublisher, KinesisEventStream>();
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
-                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
-            services.AddTransient<IPublisher, KinesisEventStream>();
+                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());           
             return services;
         }
     }

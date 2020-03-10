@@ -2,9 +2,8 @@
 using Amazon.Kinesis;
 using Amazon.Kinesis.Model;
 using Cloudbash.Application.Common.Interfaces;
-using Cloudbash.Domain.Events;
+using Cloudbash.Domain.SeedWork;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace Cloudbash.Infrastructure.EventStream
             _streamName = "eventStream";
         }
               
-        public Task Publish(DomainEvent domainEvent)
+        public Task PublishAsync(IDomainEvent domainEvent)
         {
             PutRecordRequest requestRecord = new PutRecordRequest();
             requestRecord.StreamName = _streamName;
@@ -32,11 +31,7 @@ namespace Cloudbash.Infrastructure.EventStream
             var result = _amazonKinesisClient.PutRecordAsync(requestRecord).Result;
             return Task.FromResult(result);            
         }
-               
-        public Task Publish(IEnumerable<DomainEvent> domainEvents, Header header)
-        {
-            throw new System.NotImplementedException();
-        }
+            
         public void Dispose()
         {
             throw new System.NotImplementedException();

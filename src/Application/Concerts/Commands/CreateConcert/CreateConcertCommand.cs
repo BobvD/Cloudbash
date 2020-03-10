@@ -1,5 +1,5 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
-using Cloudbash.Domain.Events;
+using Cloudbash.Domain.Entities;
 using MediatR;
 using System;
 using System.Threading;
@@ -7,28 +7,26 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Concerts.Commands.CreateConcert
 {
-    public class CreateConcertCommand : IRequest<long>
+    public class CreateConcertCommand : IRequest<Guid>
     {
 
         public string Name { get; set; }
 
-        public class CreateConcertCommandHandler : IRequestHandler<CreateConcertCommand, long>
+        public class CreateConcertCommandHandler : IRequestHandler<CreateConcertCommand, Guid>
         {
 
-            IPublisher _publiser;
+            IRepository<Concert> _repository;
 
-            public CreateConcertCommandHandler(IPublisher publisher)
+            public CreateConcertCommandHandler(IRepository<Concert> repository)
             {
-                _publiser = publisher;
+                _repository = repository;
             }
 
-            public async Task<long> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
-            {
-                DomainEvent d = new DomainEvent();
-                d.Id = new Guid();
-                Console.WriteLine("Invoked");
-                await _publiser.Publish(d);
-                return _publiser.GetValue();
+            public async Task<Guid> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
+            {                
+                var concert = new Concert(request.Name);
+                await _repository.SaveAsync(concert);
+                return concert.Id; 
             }
         }
 

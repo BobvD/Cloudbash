@@ -7,11 +7,9 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
     {
         public CreateConcertCommandValidator()
         {
-
             RuleFor(v => v.Name)
                 .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(255).WithMessage("Name must not exceed 255 characters.");
-            
+                .MaximumLength(255).WithMessage("Name must not exceed 255 characters.");            
         }
 
     }

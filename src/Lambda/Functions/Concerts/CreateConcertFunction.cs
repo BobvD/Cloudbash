@@ -1,6 +1,5 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using Cloudbash.Application.Common.Exceptions;
 using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Newtonsoft.Json;
 using System;
