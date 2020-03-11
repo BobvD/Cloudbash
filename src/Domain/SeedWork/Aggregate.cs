@@ -16,7 +16,7 @@ namespace Cloudbash.Domain.SeedWork
         {
             if (!_uncommittedEvents.Any(x => Equals(x.EventId, @event.EventId)))
             {
-                // ((dynamic)this).Apply((dynamic)@event);
+                ((dynamic)this).Apply((dynamic)@event);
                 Version = version;
             }
         }

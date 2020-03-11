@@ -4,7 +4,7 @@ using Cloudbash.Lambda.Functions;
 
 namespace Cloudbash.Lambda.Events.Functions
 {
-    public class ProcessEventsFunction : FunctionBase
+    public class EventProcessorFunction : FunctionBase
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]

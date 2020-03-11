@@ -64,7 +64,7 @@ functions:
 
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.ProcessEventsFunction::Run
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
 
 # Resources
 resources:

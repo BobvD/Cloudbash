@@ -7,6 +7,5 @@ namespace Cloudbash.Application.Common.Interfaces
     public interface IPublisher : IDisposable
     {
         Task PublishAsync(IDomainEvent domainEvent);    
-
     }
 }
