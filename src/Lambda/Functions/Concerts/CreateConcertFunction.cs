@@ -23,7 +23,8 @@ namespace Cloudbash.Lambda.Functions.Concerts
             catch (Exception ex)
             {
                 return new APIGatewayProxyResponse { StatusCode = 400, Body = JsonConvert.SerializeObject(ex.Message) };
-            }            
+            }  
+            
             
         }
     }

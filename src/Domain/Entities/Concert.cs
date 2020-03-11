@@ -13,6 +13,13 @@ namespace Cloudbash.Domain.Entities
         }
 
         public string Title { get; set; }
-      
+
+        internal void Apply(ConcertCreatedEvent ev)
+        {
+            Id = ev.AggregateId;
+            Title = ev.Title;
+        }
+
+
     }
 }

@@ -6,7 +6,7 @@ namespace Cloudbash.Lambda.Functions
 {
     public abstract class FunctionBase
     {
-        private IServiceProvider _serviceProvider;
+        protected IServiceProvider _serviceProvider;
         protected IMediator Mediator;
 
         public FunctionBase() : this(Startup

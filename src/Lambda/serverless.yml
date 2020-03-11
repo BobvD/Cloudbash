@@ -43,7 +43,7 @@ provider:
   # Grant privilege to write to events table 
   - Effect: Allow
     Action:
-    - dynamodb:PutItem
+    - dynamodb:*
     Resource:
       Fn::GetAtt: 
       - eventsTable
