@@ -11,6 +11,12 @@ namespace Cloudbash.Lambda.Events.Functions
 {
     public class EventProcessorFunction : FunctionBase
     {
+        private IEventStore _eventStore;
+
+        public EventProcessorFunction() : base()
+        {
+            _eventStore  = (IEventStore)_serviceProvider.GetService(typeof(IEventStore));
+        }
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public void Run(KinesisEvent kinesisEvent, ILambdaContext context)
@@ -33,48 +39,9 @@ namespace Cloudbash.Lambda.Events.Functions
         }
 
         private async void SaveEventAsync(string e)
-        {
-
-            Console.WriteLine("START SAVING EVENT");
-            EventRecord @event = null;
-
-            try
-            {
-                @event  = JsonConvert.DeserializeObject<EventRecord>(e);
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine("FAILURE TO DESERIALIZE EVENT");
-                Console.WriteLine(ex.Message);
-            }
-            
-
-            IEventStore eventStore = null;
-
-            try
-            {
-                eventStore  = (IEventStore)_serviceProvider.GetService(typeof(IEventStore));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("FAILURE TO GET EVENTSTORE");
-                Console.WriteLine(ex.Message);
-            }
-                       
-            Console.WriteLine("SAVING EVENT");
-
-            try
-            {
-
-                await eventStore.SaveAsync(@event, new System.Threading.CancellationToken());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("FAILURE TO SAVE EVENT");
-                Console.WriteLine(ex.Message);
-            }
-            
+        {                      
+            EventRecord @event = JsonConvert.DeserializeObject<EventRecord>(e);
+            await _eventStore.SaveAsync(@event, new System.Threading.CancellationToken());
         }
     }
 }

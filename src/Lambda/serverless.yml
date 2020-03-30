@@ -76,21 +76,19 @@ resources:
         Name: eventStream
         ShardCount: 1
 
-
     eventsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: eventlog
+        TableName: EventLog
         AttributeDefinitions:
-          - AttributeName: key
+          - AttributeName: Id
             AttributeType: S
         KeySchema:
-          - AttributeName: key
+          - AttributeName: Id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
-          WriteCapacityUnits: 5
-
+          WriteCapacityUnits: 1
 
     Event:
       Type: AWS::Lambda::EventSourceMapping

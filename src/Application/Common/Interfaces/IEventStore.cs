@@ -9,6 +9,7 @@ namespace Cloudbash.Infrastructure.Persistence
     public interface IEventStore
     {
         Task SaveAsync(EventRecord e, CancellationToken c);
+        Task SaveAsync(string e, CancellationToken c);
         Task<IEnumerable<IDomainEvent>> GetAsync(string aggregateId, string aggregateType, int fromVersion);
     }
 }
