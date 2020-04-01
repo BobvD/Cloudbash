@@ -244,3 +244,5 @@ _Pvt_Extensions
 
 # Serverless directories
 .serverless
+
+node_modules

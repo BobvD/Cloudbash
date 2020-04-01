@@ -1,31 +1,15 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: cloudbash
-# app and org for use with dashboard.serverless.com
-#app: your-app-name
-#org: your-org-name
 
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
 
 provider:
   name: aws
   runtime: dotnetcore2.1
   stage: dev
   region: us-east-1
-
+  environment:   
+    POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
+    POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
+       
   iamRoleStatements:
   # Grant privileges to read from kinesis stream
   - Effect: Allow
@@ -49,6 +33,20 @@ provider:
       - eventsTable
       - Arn     
 
+custom:
+  DB_NAME: cloudbash
+  USERNAME: master
+  PASSWORD: password
+  POSTGRESQL:
+    HOST:
+      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
+    PORT:
+      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
+  scripts:
+    commands:
+      hello: echo Hello from ${self:service} service!
+    hooks:
+      'deploy:finalize': serverless invoke --function dbInit -d
 
 package:
   artifact: bin/release/netcoreapp2.1/deploy-package.zip
@@ -65,6 +63,9 @@ functions:
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
+  # lambda for initiliazing the database on deployment
+  dbInit:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Util.DatabaseInitializerFunction::Run
 
 # Resources
 resources:
@@ -90,6 +91,17 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
+    PostgreSqlRDSInstance:
+        Type: AWS::RDS::DBInstance
+        Properties:
+          MasterUsername: ${self:custom.USERNAME}
+          MasterUserPassword: ${self:custom.PASSWORD}
+          AllocatedStorage: 20
+          DBName: ${self:custom.DB_NAME}
+          DBInstanceClass: db.t2.micro
+          Engine: postgres
+          PubliclyAccessible: true
+
     Event:
       Type: AWS::Lambda::EventSourceMapping
       Properties:
@@ -103,3 +115,6 @@ resources:
             - EventStreamHandlerLambdaFunction
             - Arn
         StartingPosition: TRIM_HORIZON
+
+plugins:
+  - serverless-plugin-scripts
