@@ -76,7 +76,7 @@ resources:
       Properties: 
         Name: eventStream
         ShardCount: 1
-
+    # creat the eventlog
     eventsTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -90,7 +90,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
+    # create the Amazon RDS PostgreSQL Database
     PostgreSqlRDSInstance:
         Type: AWS::RDS::DBInstance
         Properties:
@@ -101,7 +101,7 @@ resources:
           DBInstanceClass: db.t2.micro
           Engine: postgres
           PubliclyAccessible: true
-
+    
     Event:
       Type: AWS::Lambda::EventSourceMapping
       Properties:

@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
     "rxjs": "~6.5.4",
+    "save-dev": "0.0.1-security",
+    "serverless-single-page-app-plugin": "^1.0.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

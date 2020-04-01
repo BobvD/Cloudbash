@@ -1,14 +1,13 @@
 ﻿
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.DocumentModel;
 using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cloudbash.Infrastructure.Persistence
+namespace Cloudbash.Infrastructure.Persistence.EventStore
 {
     public class DynamoDBEventStore : IEventStore
     {

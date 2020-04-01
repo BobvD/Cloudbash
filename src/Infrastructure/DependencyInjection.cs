@@ -3,6 +3,7 @@ using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.EventStream;
 using Cloudbash.Infrastructure.Extensions;
 using Cloudbash.Infrastructure.Persistence;
+using Cloudbash.Infrastructure.Persistence.EventStore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

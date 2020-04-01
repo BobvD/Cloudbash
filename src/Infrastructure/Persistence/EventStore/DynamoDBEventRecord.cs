@@ -2,7 +2,7 @@
 using Cloudbash.Domain.SeedWork;
 using System;
 
-namespace Cloudbash.Infrastructure.Persistence
+namespace Cloudbash.Infrastructure.Persistence.EventStore
 {
     [DynamoDBTable("EventLog")]
     public class DynamoDBEventRecord
