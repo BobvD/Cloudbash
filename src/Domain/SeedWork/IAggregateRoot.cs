@@ -3,12 +3,14 @@ using System.Collections.Generic;
 
 namespace Cloudbash.Domain.SeedWork
 {
-    public interface IAggregate
+    public interface IAggregateRoot
     {
         Guid Id { get; }
         long Version { get; }
-        void ApplyEvent(IDomainEvent @event, long version);
+        void AddEvent(IDomainEvent @event);
+        void ApplyEvent(IDomainEvent @event);
         IEnumerable<IDomainEvent> GetUncommittedEvents();
         void ClearUncommittedEvents();
+
     }
 }

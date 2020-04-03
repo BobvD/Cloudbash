@@ -4,12 +4,12 @@ using System;
 
 namespace Cloudbash.Domain.Entities
 {
-    public class Concert : Aggregate
+    public class Concert : AggregateRootBase
     {
         public Concert(string title)
         {
             Id = Guid.NewGuid();
-            RaiseEvent(new ConcertCreatedEvent(Id, title));
+            AddEvent(new ConcertCreatedEvent(Id, title));
         }
 
         public string Title { get; set; }
@@ -19,7 +19,6 @@ namespace Cloudbash.Domain.Entities
             Id = ev.AggregateId;
             Title = ev.Title;
         }
-
 
     }
 }

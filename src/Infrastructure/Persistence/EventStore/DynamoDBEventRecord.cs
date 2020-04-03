@@ -12,7 +12,9 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
         [DynamoDBProperty]
         public string EventType { get; set; }
         [DynamoDBProperty]
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
+        [DynamoDBProperty]
+        public long EventVersion { get; set; }
         [DynamoDBProperty]
         public DateTime Created { get; set; }
 
@@ -20,8 +22,9 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
 
         public DynamoDBEventRecord(EventRecord eventRecord)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = eventRecord.AggregateId.ToString();
             EventType = eventRecord.EventType;
+            EventVersion = eventRecord.EventVersion;
             Data = eventRecord.Data;
             Created = eventRecord.Created;
         }

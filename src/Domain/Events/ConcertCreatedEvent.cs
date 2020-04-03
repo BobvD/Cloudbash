@@ -3,7 +3,7 @@ using System;
 
 namespace Cloudbash.Domain.Events
 {
-    public class ConcertCreatedEvent : DomainEvent
+    public class ConcertCreatedEvent : DomainEventBase
     {
        
         internal ConcertCreatedEvent(Guid aggregateId, string title) : base(aggregateId)

@@ -34,14 +34,7 @@ namespace Cloudbash.Lambda.Events.Functions
             var kinesisRecord = record.Kinesis;
             var dataBytes = kinesisRecord.Data.ToArray();
             var dataText = Encoding.UTF8.GetString(dataBytes);
-            Console.WriteLine($"[{record.EventName}] Data = '{dataText}'."); 
-            SaveEventAsync(dataText);
-        }
-
-        private async void SaveEventAsync(string e)
-        {                      
-            EventRecord @event = JsonConvert.DeserializeObject<EventRecord>(e);
-            await _eventStore.SaveAsync(@event, new System.Threading.CancellationToken());
+            Console.WriteLine($"[{record.EventName}] Data = '{dataText}'.");            
         }
     }
 }

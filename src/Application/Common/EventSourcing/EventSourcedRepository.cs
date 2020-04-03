@@ -1,17 +1,22 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
+using Cloudbash.Infrastructure.Persistence;
 using System;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.EventSourcing
 {
-    public class Repository<TAggregate> : IRepository<TAggregate>
-        where TAggregate : Aggregate, IAggregate
+    public class EventSourcedRepository<TAggregate> : IRepository<TAggregate>
+        where TAggregate : AggregateRootBase, IAggregateRoot
     {
+        private readonly IEventStore _eventStore;
         private readonly IPublisher _publisher;
 
-        public Repository(IPublisher publisher)
+        public EventSourcedRepository(
+            IEventStore eventStore,
+            IPublisher publisher)
         {
+            _eventStore = eventStore;
             _publisher = publisher;
         }
 
@@ -24,10 +29,11 @@ namespace Cloudbash.Application.Common.EventSourcing
         {
             try
             {
-                IAggregate aggregatePersistence = aggregate;
+                IAggregateRoot aggregatePersistence = aggregate;
 
                 foreach (var @event in aggregatePersistence.GetUncommittedEvents())
                 {
+                    await _eventStore.SaveAsync(@event);
                     await _publisher.PublishAsync((dynamic)@event);
                 }
                 aggregatePersistence.ClearUncommittedEvents();

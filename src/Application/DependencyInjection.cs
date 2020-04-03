@@ -13,7 +13,7 @@ namespace Cloudbash.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddTransient<IRepository<Concert>, Repository<Concert>>();
+            services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));       
             return services;

@@ -1,5 +1,4 @@
-﻿using Amazon;
-using Amazon.Kinesis;
+﻿using Amazon.Kinesis;
 using Amazon.Kinesis.Model;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
@@ -35,13 +34,7 @@ namespace Cloudbash.Infrastructure.EventStream
 
         private Byte[] createRecord(IDomainEvent @event)
         {
-            return Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
-                    new EventRecord(
-                        @event.GetType().ToString(),      
-                        Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@event)), 
-                        DateTime.Now)
-                    ));
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@event));
         }
             
         public void Dispose()

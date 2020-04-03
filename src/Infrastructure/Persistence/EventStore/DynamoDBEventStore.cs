@@ -2,6 +2,7 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Cloudbash.Domain.SeedWork;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -29,11 +30,18 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
             throw new System.NotImplementedException();
         }
 
-        public async Task SaveAsync(EventRecord @event, CancellationToken cancellationToken = default)
+        public async Task SaveAsync(IDomainEvent @event)
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
-                var item = new DynamoDBEventRecord(@event);
+                Console.WriteLine("Start saving new item");
+                var item = new DynamoDBEventRecord(
+                                new EventRecord(@event.AggregateId, 
+                                @event.GetType().ToString(), 
+                                JsonConvert.SerializeObject(@event), 
+                                @event.AggregateVersion, 
+                                new DateTime()));
+                Console.WriteLine(item.ToString());
                 try
                 {
                     await context.SaveAsync(item, _configuration);
@@ -46,10 +54,6 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
             }
         }
 
-        public async Task SaveAsync(string @event, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();           
-        }
     }
 
     
