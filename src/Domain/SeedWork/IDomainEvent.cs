@@ -1,5 +1,4 @@
 ﻿
-// source: https://github.com/VenomAV/EventSourcingCQRS/blob/a2046e3017ff2f2ee5287d420aa0ab444f69cfc0/EventSourcingCQRS.Domain/Core/IDomainEvent.cs
 using System;
 
 namespace Cloudbash.Domain.SeedWork

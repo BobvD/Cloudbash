@@ -5,7 +5,10 @@ namespace Cloudbash.Domain.Events
 {
     public class ConcertCreatedEvent : DomainEventBase
     {
-       
+        public ConcertCreatedEvent()
+        {
+        }
+
         internal ConcertCreatedEvent(Guid aggregateId, string title) : base(aggregateId)
         {
             Title = title;

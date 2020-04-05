@@ -70,12 +70,28 @@ functions:
 # Resources
 resources:
   Resources:
+
     # create the Kinesis EventStream
     eventStream: 
       Type: AWS::Kinesis::Stream
       Properties: 
         Name: eventStream
         ShardCount: 1
+
+    Event:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        BatchSize: 50
+        EventSourceArn:
+          Fn::GetAtt:
+            - eventStream
+            - Arn      
+        FunctionName:
+          Fn::GetAtt:
+            - EventStreamHandlerLambdaFunction
+            - Arn
+        StartingPosition: TRIM_HORIZON
+
     # creat the eventlog
     eventsTable:
       Type: AWS::DynamoDB::Table
@@ -90,6 +106,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     # create the Amazon RDS PostgreSQL Database
     PostgreSqlRDSInstance:
         Type: AWS::RDS::DBInstance
@@ -102,19 +119,7 @@ resources:
           Engine: postgres
           PubliclyAccessible: true
     
-    Event:
-      Type: AWS::Lambda::EventSourceMapping
-      Properties:
-        BatchSize: 50
-        EventSourceArn:
-          Fn::GetAtt:
-            - eventStream
-            - Arn      
-        FunctionName:
-          Fn::GetAtt:
-            - EventStreamHandlerLambdaFunction
-            - Arn
-        StartingPosition: TRIM_HORIZON
+
 
 plugins:
   - serverless-plugin-scripts

@@ -39,8 +39,7 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
                                 new EventRecord(@event.AggregateId, 
                                 @event.GetType().ToString(), 
                                 JsonConvert.SerializeObject(@event), 
-                                @event.AggregateVersion, 
-                                new DateTime()));
+                                @event.AggregateVersion));
                 Console.WriteLine(item.ToString());
                 try
                 {

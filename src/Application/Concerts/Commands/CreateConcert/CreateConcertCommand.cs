@@ -26,6 +26,7 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
             {                
                 var concert = new Concert(request.Name);
                 await _repository.SaveAsync(concert);
+
                 return concert.Id; 
             }
         }
