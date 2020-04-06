@@ -4,8 +4,10 @@ using Cloudbash.Infrastructure.EventStream;
 using Cloudbash.Infrastructure.Extensions;
 using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Infrastructure.Persistence.EventStore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Cloudbash.Infrastructure
 {
@@ -17,8 +19,22 @@ namespace Cloudbash.Infrastructure
             services.AddTransient<IEventStore, DynamoDBEventStore>();
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
-                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());           
+                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
+
+            services.AddDbContext<ApplicationDbContext>(opt =>
+                opt.UseNpgsql(GetConnectionString(configurationRoot), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
             return services;
+        }
+        
+        public static string GetConnectionString(IConfigurationRoot configurationRoot)
+        {
+            var host = configurationRoot.GetSection("POSTGRESQL_HOST").Value;
+            Console.WriteLine(host);
+            var port = configurationRoot.GetSection("POSTGRESQL_PORT").Value;
+            Console.WriteLine(port);
+
+            return $"Server={host};Port={port};Username=master;Password=password;Database=cloudbash;";
         }
     }
 }

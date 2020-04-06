@@ -1,0 +1,15 @@
+DependsOn: CloudbashVPC
+Type: AWS::EC2::SecurityGroup
+Properties:
+  GroupDescription: SecurityGroup for Cloudbash Serverless Functions
+  VpcId:
+    Ref: CloudbashVPC
+  SecurityGroupIngress:
+    - IpProtocol: tcp
+      FromPort: '0'
+      ToPort: '65535'
+      CidrIp: "0.0.0.0/0"
+  Tags: 
+    - 
+      Key: "Name"
+      Value: "CloudbashSecurityGroup"

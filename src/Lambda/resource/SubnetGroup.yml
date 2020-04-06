@@ -1,0 +1,11 @@
+Type: AWS::RDS::DBSubnetGroup
+Properties:
+  DBSubnetGroupDescription: "RDS Subnet Group"
+  SubnetIds:
+    - Ref: CloudbashSubnetA
+    - Ref: CloudbashSubnetB
+    - Ref: CloudbashSubnetC
+  Tags: 
+    - 
+      Key: "Name"
+      Value: "CloudbashSubnetGroup"

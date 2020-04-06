@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Cloudbash.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -6,7 +7,7 @@ namespace Cloudbash.Lambda.Functions
 {
     public abstract class FunctionBase
     {
-        protected IServiceProvider _serviceProvider;
+        public IServiceProvider _serviceProvider;
         protected IMediator Mediator;
 
         public FunctionBase() : this(Startup
@@ -18,7 +19,7 @@ namespace Cloudbash.Lambda.Functions
         public FunctionBase(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Mediator = _serviceProvider.GetService<IMediator>(); 
+            Mediator = _serviceProvider.GetService<IMediator>();          
         }
     }
 }

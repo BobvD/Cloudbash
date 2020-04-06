@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
+
 namespace Cloudbash.Lambda.Functions.Concerts
 {
     public class CreateConcertFunction : FunctionBase

@@ -1,0 +1,11 @@
+DependsOn: CloudbashVPC
+Type: AWS::EC2::Subnet
+Properties:
+  VpcId:
+    Ref: CloudbashVPC
+  AvailabilityZone: ${self:provider.region}a
+  CidrBlock: "10.0.0.0/24"
+  Tags: 
+    - 
+      Key: "Name"
+      Value: "CloudbashSubnetA"

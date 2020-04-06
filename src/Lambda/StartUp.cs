@@ -1,11 +1,13 @@
 ﻿using Cloudbash.Application;
 using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Cloudbash.Infrastructure;
+using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Lambda.Common;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
 
 namespace Cloudbash.Lambda
@@ -16,7 +18,7 @@ namespace Cloudbash.Lambda
         {
             var configuration = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())
-              .AddEnvironmentVariables()
+              .AddEnvironmentVariables()             
               .Build();
 
             return ConfigureServices(configuration);
@@ -34,9 +36,5 @@ namespace Cloudbash.Lambda
             return services;
         }
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseCustomExceptionHandler();
-        }
     }
 }

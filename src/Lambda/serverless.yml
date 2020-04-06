@@ -38,10 +38,10 @@ custom:
   USERNAME: master
   PASSWORD: password
   POSTGRESQL:
-    HOST:
-      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
-    PORT:
-      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
+    HOST: 
+        Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
+    PORT: 
+        Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
   scripts:
     commands:
       hello: echo Hello from ${self:service} service!
@@ -64,12 +64,42 @@ functions:
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
   # lambda for initiliazing the database on deployment
-  dbInit:
+  dbInit:    
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Util.DatabaseInitializerFunction::Run
+    timeout: 180
 
 # Resources
 resources:
   Resources:
+
+    # Internet Gateway
+    CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}
+
+    # Virtual Private Cloud
+    CloudbashVPC: ${file(./resource/VPC.yml)}
+    CloudbashVPCGA: ${file(./resource/VPCGA.yml)}
+
+    # Subnets
+    CloudbashSubnetA: ${file(./resource/SubnetA.yml)}
+    CloudbashSubnetB: ${file(./resource/SubnetB.yml)}
+    CloudbashSubnetC: ${file(./resource/SubnetC.yml)}
+
+    # Subnet Group
+    CloudbashSubnetGroup: ${file(./resource/SubnetGroup.yml)}
+
+    # Security Group
+    CloudbashSecurityGroup: ${file(./resource/SecurityGroup.yml)}
+    
+    # Routing
+    RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
+    RoutePublic: ${file(./resource/RoutePublic.yml)}
+    RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
+    RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
+    RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
+
+
+    # POSTGRESQL RDS Database
+    PostgreSqlRDSInstance: ${file(./resource/PostgresSQL.yml)}
 
     # create the Kinesis EventStream
     eventStream: 
@@ -106,20 +136,6 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
-    # create the Amazon RDS PostgreSQL Database
-    PostgreSqlRDSInstance:
-        Type: AWS::RDS::DBInstance
-        Properties:
-          MasterUsername: ${self:custom.USERNAME}
-          MasterUserPassword: ${self:custom.PASSWORD}
-          AllocatedStorage: 20
-          DBName: ${self:custom.DB_NAME}
-          DBInstanceClass: db.t2.micro
-          Engine: postgres
-          PubliclyAccessible: true
-    
-
 
 plugins:
   - serverless-plugin-scripts
