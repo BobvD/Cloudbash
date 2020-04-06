@@ -23,6 +23,9 @@ namespace Cloudbash.Infrastructure
 
             services.AddDbContext<ApplicationDbContext>(opt =>
                 opt.UseNpgsql(GetConnectionString(configurationRoot), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
 
             return services;
         }

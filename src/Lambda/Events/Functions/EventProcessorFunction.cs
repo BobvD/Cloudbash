@@ -52,8 +52,8 @@ namespace Cloudbash.Lambda.Events.Functions
             // Convert the JSON event to the correct DomainEvent  
             // FIX THIS (unnecessary serialize)
             var @event = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(enveloppe.Event), type);
-
             // Consume the event
+            Console.WriteLine(JsonConvert.SerializeObject(@event));
             Consume(@event);
         }
 

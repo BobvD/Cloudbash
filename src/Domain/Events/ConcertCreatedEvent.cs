@@ -9,16 +9,21 @@ namespace Cloudbash.Domain.Events
         {
         }
 
-        internal ConcertCreatedEvent(Guid aggregateId, string title) : base(aggregateId)
+        internal ConcertCreatedEvent(Guid aggregateId, string name) : base(aggregateId)
         {
-            Title = title;
+            Name = name;
         }
         
-        public string Title { get; private set; }
+        public string Name { get; private set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new ConcertCreatedEvent(aggregateId, Title);
+            return new ConcertCreatedEvent(aggregateId, Name);
+        }
+
+        public override string ToString()
+        {
+            return Name + base.ToString();
         }
     }
 }

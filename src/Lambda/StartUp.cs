@@ -28,9 +28,8 @@ namespace Cloudbash.Lambda
         private static IServiceCollection ConfigureServices(IConfigurationRoot configurationRoot)
         {
             var services = new ServiceCollection();
-
             services.AddApplication();
-            services.AddInfrastructure(configurationRoot);
+            services.AddInfrastructure(configurationRoot);            
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateConcertCommandValidator>());
          
             return services;
