@@ -3,6 +3,7 @@ using Amazon.Lambda.KinesisEvents;
 using Cloudbash.Application.Common.Events;
 using Cloudbash.Domain.Events;
 using Cloudbash.Domain.SeedWork;
+using Cloudbash.Infrastructure.EventStore;
 using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Lambda.Functions;
 using MediatR;
@@ -43,18 +44,23 @@ namespace Cloudbash.Lambda.Events.Functions
             Console.WriteLine($"[{record.EventName}] Data = '{data}'.");
 
             // Deserialize to dynamic object to get the type of event.
-            dynamic enveloppe = JsonConvert.DeserializeObject<dynamic>(data);
-            
+            var enveloppe = JsonConvert.DeserializeObject<KinesisEventEnveloppe>(data);
             // Get the Event Type
             string eventType = enveloppe.Type;
-            Type type = Type.GetType(eventType, true);
+            Type type = Type.GetType(eventType, true);        
 
-            // Convert the JSON event to the correct DomainEvent  
-            // FIX THIS (unnecessary serialize)
-            var @event = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(enveloppe.Event), type);
-            // Consume the event
-            Console.WriteLine(JsonConvert.SerializeObject(@event));
-            Consume(@event);
+            var contractResolver = new PrivateSetterContractResolver();
+            JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = contractResolver };
+
+            var @event = JsonConvert.DeserializeObject(enveloppe.Event, type, settings);
+
+            Consume(@event as IDomainEvent);
+        }
+
+        private class KinesisEventEnveloppe
+        {
+            public string Type { get; set; }
+            public string Event { get; set; }
         }
 
         public T CastObject<T>(object input)

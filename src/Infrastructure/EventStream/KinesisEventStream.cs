@@ -34,7 +34,7 @@ namespace Cloudbash.Infrastructure.EventStream
         private byte[] createRecord(IDomainEvent @event)
         {
             var enveloppe = new  {
-                Event = @event,
+                Event = JsonConvert.SerializeObject(@event),
                 Type = @event.GetType()
             };
 
