@@ -1,4 +1,4 @@
-service: cloudbash-api
+service: cloudbash-api-1
 
 
 provider:
@@ -52,12 +52,21 @@ package:
   artifact: bin/release/netcoreapp2.1/deploy-package.zip
 
 functions:
+
+  ## Concert Endpoints
   createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
     events:
     - http:
         path: concerts
         method: post
+        cors: true
+  getConcerts:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
+    events:
+    - http:
+        path: concerts
+        method: get
         cors: true
 
   ## lambda for catching events from the eventstream (kinesis)
