@@ -72,6 +72,7 @@ functions:
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
+
   # lambda for initiliazing the database on deployment
   dbInit:    
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Util.DatabaseInitializerFunction::Run
@@ -80,6 +81,12 @@ functions:
 # Resources
 resources:
   Resources:
+
+    # Cognito User Pool
+    CloudbashCognitoUserPool: ${file(./resource/CognitoUserPool.yml)}
+
+    # Cognito Client
+    CloudbashCognitoUserPoolClient: ${file(./resource/CognitoUserPoolClient.yml)}
 
     # Internet Gateway
     CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}
@@ -105,8 +112,7 @@ resources:
     RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
     RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
     RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
-
-
+    
     # POSTGRESQL RDS Database
     PostgreSqlRDSInstance: ${file(./resource/PostgresSQL.yml)}
 

@@ -1,0 +1,6 @@
+﻿Type: AWS::Cognito::UserPoolClient
+Properties:
+    ClientName: CloudbashWebApp
+    GenerateSecret: false
+    UserPoolId:
+        Ref: CloudbashCognitoUserPool

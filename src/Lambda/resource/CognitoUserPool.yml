@@ -1,0 +1,4 @@
+﻿   # docs: https://serverless.com/framework/docs/providers/aws/events/cognito-user-pool/#cognito-user-pool
+   Type: AWS::Cognito::UserPool
+   Properties:
+        UserPoolName: Cloudbash
