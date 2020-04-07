@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Cloudbash',
-  base: '/Cloudbash',
+  base: '/Cloudbash/',
   description: 'Event Sourced Serverless Architecture',
   themeConfig: {
     // logo: '/vuepress-logo.png',
