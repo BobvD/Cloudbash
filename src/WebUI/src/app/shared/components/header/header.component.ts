@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+    
+    searchTerm: string = "";
+
     constructor() { }
 
     ngOnInit(): void { }

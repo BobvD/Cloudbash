@@ -118,7 +118,13 @@ select {
     outline: 0;
   }
   
-input:focus, input:focus + select {
+
+.has-input {
     color: #87499c;
     border-color: #87499c; 
+}
+
+.has-input-btn  {
+    background: #87499c!important;
+    border-color: #87499c!important; 
 }
