@@ -3,5 +3,42 @@
     width: 100%;
     background: green;
     min-height: 300px;
-    border-radius: 25px;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
+
+h4 {
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.svg-icon {
+    width: 0.9em;
+    height: 0.9em;
+    margin-top: -4px;
+  }
+  
+  .svg-icon path,
+  .svg-icon polygon,
+  .svg-icon rect {
+    fill: #fff;
+  }
+  
+  .svg-icon circle {
+    stroke: #fff;
+    stroke-width: 1;
+  }

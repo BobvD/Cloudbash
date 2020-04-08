@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConcertGridItemComponent implements OnInit {
 
-    backgroundImage = '/assets/images/concert-1.jpg';
+    backgroundImage = "";
 
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.backgroundImage = `https://cloudbash-frontend.s3.amazonaws.com/concer_placehold_${this.getRandomInt(1,11)}.jpg`;
+    }
 
     get backgroundImageUrl() {
         if (this.backgroundImage) {
@@ -20,5 +22,12 @@ export class ConcertGridItemComponent implements OnInit {
      
        return null
      }
+
+
+     getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; 
+      }
      
 }
