@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ConcertModule } from './modules/concert/concert.module';
 import { AppRoutingModule } from './app-routing.module';
+import { HomePageComponent } from './shared/pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

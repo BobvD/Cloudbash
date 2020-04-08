@@ -36,3 +36,35 @@ btn:focus, select:focus,  a:focus
 {
          outline: none;
 }
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8)!important;
+}
+
+.nav-item {
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 18px;
+
+}
+
+
+.btn-outline-light {
+    font-weight: 500;
+    color: white;
+    border: 2px solid white;
+    border-radius: 40px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 18px;
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+
+}
+
+.btn-outline-light:hover {
+    color: #87499c;
+    background: white;
+}
+
