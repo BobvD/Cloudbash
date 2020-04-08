@@ -55,7 +55,7 @@ select {
     line-height: 1.5;
     background: #f7f7f7;
     color: #aaa;
-    width: 200px;
+    width: 240px;
     padding-left: 15px;
 }
 
@@ -166,6 +166,7 @@ select {
     
     .jumbotron-scrolled > .container > img {
         width: 130px;
+        margin-left: 1rem;
         margin-bottom: 0!important;
         margin-top: 0!important;
     }
@@ -175,6 +176,7 @@ select {
     }
     
     .jumbotron-scrolled > .container > .auth-menu {
+        margin-right: 1rem;
         display: flex!important;
         margin-top: auto;
         margin-bottom: auto;
