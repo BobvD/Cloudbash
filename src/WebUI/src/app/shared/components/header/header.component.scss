@@ -29,6 +29,12 @@ input {
     color: #87499c;
 }
 
+input:focus {
+    border: 2px solid #46c3bf;
+    border-right: none;
+    box-shadow: none;
+}
+
 input::placeholder {
     color: #aaa;
 }
