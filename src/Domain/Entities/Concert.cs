@@ -6,18 +6,24 @@ namespace Cloudbash.Domain.Entities
 {
     public class Concert : AggregateRootBase
     {
-        public Concert(string name)
+        public Concert(string name, string venue, string imageUrl, string date)
         {
             Id = Guid.NewGuid();
-            AddEvent(new ConcertCreatedEvent(Id, name));
+            AddEvent(new ConcertCreatedEvent(Id, name, venue, imageUrl, date));
         }
 
         public string Name { get; set; }
+        public string Venue { get; set; }
+        public string ImageUrl { get; set; }
+        public string Date { get; set; }
 
         internal void Apply(ConcertCreatedEvent ev)
         {
             Id = ev.AggregateId;
             Name = ev.Name;
+            Venue = ev.Venue;
+            ImageUrl = ev.ImageUrl;
+            Date = ev.Date;
         }
 
     }

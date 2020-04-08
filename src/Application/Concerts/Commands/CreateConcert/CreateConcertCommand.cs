@@ -11,6 +11,9 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
     {
 
         public string Name { get; set; }
+        public string Venue { get; set; }
+        public string ImageUrl { get; set; }
+        public string Date { get; set; }
 
         public class CreateConcertCommandHandler : IRequestHandler<CreateConcertCommand, Guid>
         {
@@ -24,7 +27,7 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
 
             public async Task<Guid> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
             {                
-                var concert = new Concert(request.Name);
+                var concert = new Concert(request.Name, request.Venue, request.ImageUrl, request.Date);
                 await _repository.SaveAsync(concert);
 
                 return concert.Id; 

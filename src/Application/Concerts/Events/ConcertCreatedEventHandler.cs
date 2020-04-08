@@ -5,7 +5,6 @@ using Cloudbash.Domain.Events;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Cloudbash.Application.Concerts.Events
 {
@@ -21,7 +20,9 @@ namespace Cloudbash.Application.Concerts.Events
         public async Task Handle(DomainEventNotification<ConcertCreatedEvent> notification, CancellationToken cancellationToken)
         {
             var @event = notification.DomainEvent;
-            await _concertRepository.InsertAsync(new Concert { Id = @event.AggregateId, Name = @event.Name }, cancellationToken);            
+            await _concertRepository.InsertAsync(
+                new Concert { Id = @event.AggregateId, Name = @event.Name, Venue = @event.Venue, ImageUrl = @event.ImageUrl, Date = @event.Date }, 
+                cancellationToken);            
         }
     }
 }
