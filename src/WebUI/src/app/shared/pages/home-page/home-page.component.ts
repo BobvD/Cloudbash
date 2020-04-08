@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConcertService } from '../../services/concert.service';
 
 @Component({
     selector: 'app-home-page',
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-    constructor() { }
+    concerts = [];
+    constructor(private concertService: ConcertService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.concertService.get().subscribe(res => {
+            this.concerts = res.Concerts;
+        })
+    }
 }

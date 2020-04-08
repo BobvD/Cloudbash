@@ -8,7 +8,8 @@ import { ConcertGridItemComponent } from './components/concert-grid-item/concert
         ConcertGridComponent,
         ConcertGridItemComponent
     ],
-    imports: [ CommonModule ],
+    imports: [ 
+        CommonModule ],
     exports: [
         ConcertGridComponent
     ],

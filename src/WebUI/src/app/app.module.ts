@@ -6,6 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { ConcertModule } from './modules/concert/concert.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageComponent } from './shared/pages/home-page/home-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomePageComponent } from './shared/pages/home-page/home-page.component'
     BrowserModule,
     ConcertModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 <div class="concert"
-    [ngStyle]="{'background': 'linear-gradient(to bottom, rgba(125, 125, 125, 0.3), rgba(34, 34, 34, 0.7)), url(' + backgroundImage + ') no-repeat 0 0 / cover'}">
+    [ngStyle]="{'background': 'linear-gradient(to bottom, rgba(125, 125, 125, 0.3), rgba(34, 34, 34, 0.7)), url(' + concert?.ImageUrl + ') no-repeat 0 0 / cover'}">
     <div>
-        <h4>Imagine Dragons Live</h4>
+        <h4>{{ concert?.Name }}</h4>
         <p>
             <svg class="svg-icon" viewBox="0 0 20 20">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-marker-alt"
@@ -12,7 +12,7 @@
                     </path>
                 </svg>
             </svg>
-            Paradiso Amsterdam
+            {{ concert?.Venue }}
         </p>
         <p>
             <svg class="svg-icon" viewBox="0 0 20 20">
@@ -24,6 +24,6 @@
                     </path>
                 </svg>
             </svg>
-            18 November, 2020 - 20:00</p>
+            {{ concert?.Date }}</p>
     </div>
 </div>

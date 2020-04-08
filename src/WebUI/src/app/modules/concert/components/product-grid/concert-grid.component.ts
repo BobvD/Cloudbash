@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Concert } from 'src/app/shared/models/concert.model';
 
 @Component({
     selector: 'app-concert-grid',
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./concert-grid.component.scss']
 })
 export class ConcertGridComponent implements OnInit {
-    items = [1,2,3,4,5,6,7,8,9,10,11,12];
-
+    @Input() concerts: Concert[] = [];
+ 
     constructor() { }
 
     ngOnInit(): void { 

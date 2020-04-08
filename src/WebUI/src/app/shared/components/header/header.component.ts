@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     onWindowScroll() {
   
       const number = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      if (number > 330) {
+      if (number > 300) {
         this.scrolled = true;
       } else {
           this.scrolled = false;

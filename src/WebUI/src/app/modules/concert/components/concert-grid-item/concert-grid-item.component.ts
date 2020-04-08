@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Concert } from 'src/app/shared/models/concert.model';
 
 @Component({
     selector: 'app-concert-grid-item',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./concert-grid-item.component.scss']
 })
 export class ConcertGridItemComponent implements OnInit {
-
+    @Input() concert: Concert;
     backgroundImage = "";
 
     constructor() { }
