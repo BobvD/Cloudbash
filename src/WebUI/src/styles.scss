@@ -50,8 +50,8 @@ btn:focus, select:focus,  a:focus
 
 
 .btn-outline-light {
-    font-weight: 500;
-    color: white;
+    font-weight: 500 !important;
+    color: white!important;
     border: 2px solid white;
     border-radius: 40px;
     font-size: 14px;

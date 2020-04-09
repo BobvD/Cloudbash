@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
         CommonModule,
         NgbDropdownModule,
         NgbCollapseModule,
-        FormsModule
+        FormsModule,
+        RouterModule
      ],
     exports: [
         HeaderComponent,
