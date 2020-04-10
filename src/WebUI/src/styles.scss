@@ -1,4 +1,13 @@
+$primary: #78418b;
+
 @import "~bootstrap/scss/bootstrap";
+
+@import './assets/sass/components/buttons';
+@import './assets/sass/components/input';
+@import './assets/sass/components/alert';
+@import './assets/sass/components/card';
+@import './assets/sass/components/amplify';
+
 
 
 .svg-icon {
@@ -68,3 +77,11 @@ btn:focus, select:focus,  a:focus
     background: white;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+}
+
+body {
+  background: #fafafc;
+}

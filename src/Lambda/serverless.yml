@@ -84,9 +84,10 @@ resources:
 
     # Cognito User Pool
     CloudbashCognitoUserPool: ${file(./resource/CognitoUserPool.yml)}
-
-    # Cognito Client
+    # Cognito Client - lambda
     CloudbashCognitoUserPoolClient: ${file(./resource/CognitoUserPoolClient.yml)}
+    # Cognito Client - Angular
+    CloudbashCognitoUserPoolClientWeb: ${file(./resource/CognitoUserPoolClientWeb.yml)}
 
     # Internet Gateway
     CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}

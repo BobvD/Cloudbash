@@ -22,16 +22,13 @@
     max-width: 200px;
 }
 
-input, select, .btn {
-    font-family: 'Work Sans', sans-serif;
-}
 
 input {
     height: 44px;
     border-radius: 22px 0px 0px 22px;
     border: 2px solid #46c3bf;
     border-right: none;
-    color: #87499c;
+    color: #78418b;
 }
 
 input:focus {
@@ -131,15 +128,18 @@ select {
   
 
 .has-input {
-    color: #87499c!important; 
-    border-color: #87499c!important; 
+    color: #78418b!important; 
+    border-color: #78418b!important; 
 }
 
 .has-input-btn  {
-    background: #87499c!important;
-    border-color: #87499c!important; 
+    background: #78418b!important;
+    border-color: #78418b!important; 
 }
 
+.form-control {
+    background: #fff!important;
+}
 
 
 

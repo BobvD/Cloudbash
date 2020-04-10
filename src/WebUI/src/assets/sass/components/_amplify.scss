@@ -1,0 +1,60 @@
+.amplify-input-label {
+    display: none!important;
+}
+
+.amplify-form-input {
+    @extend .form-control;
+    margin-bottom: 1rem;
+    color: #59597e!important;
+}
+
+.amplify-form-button {   
+    @extend .btn;
+    @extend .btn-primary;
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.amplify-form-signup {
+    display: none!important;
+}
+
+.amplify-form-header {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;    
+    color: #78418b;
+}
+
+.amplify-form-action {
+    margin-bottom: 1rem;
+}
+
+.amplify-form-action {
+    float: right;
+    font-size: 0.9rem;
+}
+
+a.amplify-form-link {
+    color: #78418b;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: transparent;
+    font-size: 0.9rem;
+}
+
+a.amplify-form-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.amplify-form-text {
+    margin-bottom: 1rem;
+}
+
+.amplify-alert {
+    @extend .alert;
+    @extend .alert-danger;
+}

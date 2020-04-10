@@ -1,0 +1,16 @@
+.flex-center {
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.brand {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.brand img {
+    -webkit-filter: drop-shadow(0 0.75rem 1.5rem rgba(18,38,63,.03));
+    filter: drop-shadow(0 0.75rem 1.5rem rgba(18,38,63,.03));
+}

@@ -10,12 +10,14 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FooterComponent,
-        NavbarComponent
+        NavbarComponent,
+        AuthLayoutComponent
     ],
     imports: [ 
         CommonModule,
