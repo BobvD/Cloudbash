@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // 3rd Party
 import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplify-angular';
-import Auth from '@aws-amplify/auth';
+import Auth from '@aws-amplify/auth'; 
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -11,6 +13,7 @@ import { ConcertModule } from './modules/concert/concert.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageComponent } from './shared/pages/home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfoBoxComponent } from './shared/components/info-box/info-box.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,14 @@ import { HttpClientModule } from '@angular/common/http';
     ConcertModule,
     SharedModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      disableTimeOut: true,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      tapToDismiss: false
+    }) // ToastrModule added
   ],
   providers: [
     {
@@ -34,6 +44,11 @@ import { HttpClientModule } from '@angular/common/http';
       }
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ],
+  entryComponents:  [
+    InfoBoxComponent
+  ]
 })
 export class AppModule { }

@@ -1,0 +1,78 @@
+:host {
+    background-color: transparent;
+    background-image: none!important;
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 0 0!important;
+    padding: 0 0 0 0!important;
+    width: 400px!important;
+    color: #222222;
+    pointer-events: all;
+    cursor: pointer;    
+    border-radius: 15px!important;
+    border-color: #edf2f9;
+    box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
+}
+
+
+.toastr-wrapper {
+    width: 100%;
+    border: 1px solid #efefef;
+    border-radius: 15px!important;
+}
+
+.toastr-info {
+    height: 100%;
+    width: 100%;
+    background: #FEFFF1;
+    border-radius: 15px!important;
+}
+
+.avatar {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #efefef;
+}
+
+p {
+    font-size: 1.1rem;
+    font-family: monospace;
+}
+
+h4 {
+    font-size: 1.2em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.svg-icon {
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 5px;
+    margin-bottom: 3px;
+  }
+  
+  .svg-icon path,
+  .svg-icon polygon,
+  .svg-icon rect {
+    fill: #222;
+  }
+  
+  .svg-icon circle {
+    stroke: #222;
+    stroke-width: 1;
+  }
+
+  a {
+      font-weight: 500;
+      color: 222;
+      font-family: monospace;
+  }
+
+  .table th, .table td {
+    padding: 0.3rem;
+    font-size: 0.9rem;
+    font-family: monospace;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}

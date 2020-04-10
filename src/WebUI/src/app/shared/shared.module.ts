@@ -11,13 +11,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { InfoBoxComponent } from './components/info-box/info-box.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FooterComponent,
         NavbarComponent,
-        AuthLayoutComponent
+        AuthLayoutComponent,
+        InfoBoxComponent
     ],
     imports: [ 
         CommonModule,

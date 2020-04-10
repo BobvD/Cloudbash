@@ -1,6 +1,7 @@
 $primary: #78418b;
 
 @import "~bootstrap/scss/bootstrap";
+@import '~ngx-toastr/toastr-bs4-alert';
 
 @import './assets/sass/components/buttons';
 @import './assets/sass/components/input';
