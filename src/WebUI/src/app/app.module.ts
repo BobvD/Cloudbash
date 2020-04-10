@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // 3rd Party
-import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplify-angular';
+import { AmplifyService, AmplifyModules } from 'aws-amplify-angular';
 import Auth from '@aws-amplify/auth'; 
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -42,7 +42,8 @@ import { InfoBoxComponent } from './shared/components/info-box/info-box.componen
           Auth
         });
       }
-    }
+    },
+    ToastrService
   ],
   bootstrap: [
     AppComponent
