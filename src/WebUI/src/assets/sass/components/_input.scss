@@ -17,6 +17,9 @@
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
 }
 
+.form-control:focus {    
+    background-color: #eeeef5;
+}
 input, select, .btn {
     font-family: 'Work Sans', sans-serif;
 }
