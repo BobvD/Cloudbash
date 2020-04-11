@@ -3,9 +3,9 @@ module.exports = {
   base: '/Cloudbash/',
   description: 'Event Sourced Serverless Architecture',
   themeConfig: {
-    // logo: '/vuepress-logo.png',
+    logo: 'https://cloudbash-frontend.s3.amazonaws.com/cloudbash_rgb.svg',
     // lastUpdated: 'Last updated',
-    // repo: 'https://github.com/bencodezen/vuepress-starter-kit',
+    repo: 'https://github.com/BobvD/Cloudbash',
     // docsDir: 'docs',
     // editLinks: true,
     // editLinkText: 'Recommend a change',
@@ -38,10 +38,6 @@ module.exports = {
       {
         text: 'Home',
         link: '/'
-      },
-      {
-        text: 'Github',
-        link: 'https://github.com/BobvD/Cloudbash'
       },
       {
         text: 'Live Example',
