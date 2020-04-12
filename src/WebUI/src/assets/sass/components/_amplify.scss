@@ -8,6 +8,12 @@
     color: #59597e!important;
 }
 
+.amplify-select-phone-country  {
+    @extend .form-control;
+    margin-bottom: 1rem;
+    color: #59597e!important;
+}
+
 .amplify-form-button {   
     @extend .btn;
     @extend .btn-primary;

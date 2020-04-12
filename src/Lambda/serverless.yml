@@ -69,6 +69,14 @@ functions:
         method: get
         cors: true
 
+  preSignUp:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PreSignUpFunction::Run
+    events:
+    - cognitoUserPool:
+        pool: Cloudbash
+        trigger: PreSignUp
+        existing: true
+
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run

@@ -14,6 +14,8 @@ namespace Cloudbash.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
+            services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();
+
             services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, ConcertRepository>();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
