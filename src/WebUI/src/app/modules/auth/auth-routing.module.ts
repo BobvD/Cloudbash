@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { SignInPageComponent } from './pages/signin-page/signin-page.component';
+import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 
 
 const routes: Routes = [
-    { path: 'sign-in', component: SignInPageComponent },
+    { path: 'sign-in', component: AuthPageComponent }
 ];
 
 @NgModule({

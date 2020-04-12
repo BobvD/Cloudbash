@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-header',
@@ -10,9 +11,13 @@ export class HeaderComponent implements OnInit {
     searchTerm: string = "";
     scrolled = false;
 
-    constructor() { }
+    constructor(public authService: AuthenticationService) { }
 
     ngOnInit(): void { }
+
+    signOut() {
+        this.authService.signOut();
+    }
 
     @HostListener("window:scroll", [])
     onWindowScroll() {
@@ -27,4 +32,6 @@ export class HeaderComponent implements OnInit {
     }
 
   
+
+    
 }

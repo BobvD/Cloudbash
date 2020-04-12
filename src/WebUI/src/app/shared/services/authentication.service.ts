@@ -28,6 +28,7 @@ export class AuthenticationService {
                 } else {
                     this.user = authState.user;
                     this.currentUserRole = this.getRole(authState.user);
+                    this.router.navigate(['/']);
                 }
             });
     }
