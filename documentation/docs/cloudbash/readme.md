@@ -89,8 +89,13 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 | AU04 | As a Registrant, I would like to secure my account with Two-Factor Authentication, so that my account is safe from hackers. |
 | AU05 | As an Organiser, I would like to send a welcome email after a new user registration, so that I can introduce the platform.  |
 
-## Event Storming
-![Bounded Contexts](../../assets/images/event_storming.jpg "Bounded Contexts")
+## Event Storming (WIP)
+View the Event Storming results on [Miro.com](https://miro.com/app/board/o9J_kthgmqk=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/event_storming.77d3f7f7.jpg).
+![Event Storming](../../assets/images/event_storming.jpg "Event Storming")
+
+More about Event Storming:
+* [Introducing Event Storming by Alberto Brandolini](http://ziobrando.blogspot.com/2013/11/introducing-event-storming.html)
+* [Awesome Event Storming on GitHub.com](https://github.com/mariuszgil/awesome-eventstorming)
 
 ## Bounded Contexts
 ![Bounded Contexts](../../assets/images/bounded_contexts.png "Bounded Contexts")
