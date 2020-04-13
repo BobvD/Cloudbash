@@ -103,9 +103,6 @@ More about Event Storming:
 * [Introducing Event Storming by Alberto Brandolini](http://ziobrando.blogspot.com/2013/11/introducing-event-storming.html)
 * [Awesome Event Storming on GitHub.com](https://github.com/mariuszgil/awesome-eventstorming)
 
-## Domain Model
-
-
 ## Bounded Contexts
 ![Bounded Contexts](../../assets/images/bounded_contexts.png "Bounded Contexts")
 
