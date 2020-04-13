@@ -32,9 +32,11 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 * [Ticketmaster](https://www.ticketmaster.com/)
 * [Attendize](http://www.attendize.com/)
 * [CM](https://www.cm.com/)
+* [PreTix](https://pretix.eu/)
+* [Alf.io](https://alf.io/)
 
 ## Story Mapping
-The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthx_7g=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.jpg).
+The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthx_7g=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.42249952.jpg).
 ![Story Mapping](../../assets/images/story_mapping.jpg "Story Mapping")
 
 
@@ -95,12 +97,17 @@ The Event Storming results are best viewed on [Miro.com](https://miro.com/app/bo
 | AU05 | As an Organiser, I would like to send a welcome email after a new user registration, so that I can introduce the platform.  |
 
 ## Event Storming (WIP)
-The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthgmqk=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/event_storming.77d3f7f7.jpg).
+The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthgmqk=/) or as an c[image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.42249952.jpg).
 ![Event Storming](../../assets/images/event_storming.jpg "Event Storming")
-
 More about Event Storming:
 * [Introducing Event Storming by Alberto Brandolini](http://ziobrando.blogspot.com/2013/11/introducing-event-storming.html)
 * [Awesome Event Storming on GitHub.com](https://github.com/mariuszgil/awesome-eventstorming)
 
+## Domain Model
+
+
 ## Bounded Contexts
 ![Bounded Contexts](../../assets/images/bounded_contexts.png "Bounded Contexts")
+
+## Class Diagrms
+![Concert Management Class Diagram](../../assets/images/class_diagram_concert.png "Concert Management Class Diagram")
