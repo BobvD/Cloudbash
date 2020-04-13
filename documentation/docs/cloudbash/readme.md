@@ -89,5 +89,8 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 | AU04 | As a Registrant, I would like to secure my account with Two-Factor Authentication, so that my account is safe from hackers. |
 | AU05 | As an Organiser, I would like to send a welcome email after a new user registration, so that I can introduce the platform.  |
 
+## Event Storming
+![Bounded Contexts](../../assets/images/event_storming.jpg "Bounded Contexts")
+
 ## Bounded Contexts
 ![Bounded Contexts](../../assets/images/bounded_contexts.png "Bounded Contexts")
