@@ -23,11 +23,8 @@ module.exports = {
       },      
       {
         title: 'Business Scenario and Analysis',
-        collapsable: false,
-        children: [ 
-          ['/cloudbash/nutshell', 'In a Nutshell...'],
-          ['/cloudbash/USERSTORIES', 'User Stories']
-         ]
+        path: '/cloudbash/',
+        collapsable: false
       },
       {
         title: 'Serverless Architecture',
