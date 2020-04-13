@@ -33,6 +33,11 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 * [Attendize](http://www.attendize.com/)
 * [CM](https://www.cm.com/)
 
+## Story Mapping
+The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthx_7g=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.jpg).
+![Story Mapping](../../assets/images/story_mapping.jpg "Story Mapping")
+
+
 ## User Stories
 ### Actors
 
@@ -90,7 +95,7 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 | AU05 | As an Organiser, I would like to send a welcome email after a new user registration, so that I can introduce the platform.  |
 
 ## Event Storming (WIP)
-View the Event Storming results on [Miro.com](https://miro.com/app/board/o9J_kthgmqk=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/event_storming.77d3f7f7.jpg).
+The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthgmqk=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/event_storming.77d3f7f7.jpg).
 ![Event Storming](../../assets/images/event_storming.jpg "Event Storming")
 
 More about Event Storming:
