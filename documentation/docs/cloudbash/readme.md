@@ -109,5 +109,5 @@ More about Event Storming:
 ## Bounded Contexts
 ![Bounded Contexts](../../assets/images/bounded_contexts.png "Bounded Contexts")
 
-## Class Diagrms
+## Class Diagrams
 ![Concert Management Class Diagram](../../assets/images/class_diagram_concert.png "Concert Management Class Diagram")
