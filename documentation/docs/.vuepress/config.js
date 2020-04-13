@@ -20,6 +20,14 @@ module.exports = {
           ['/introduction/ES', 'Event Sourcing & CQRS'],
           ['/introduction/DDD', 'Domain Driven Design']
         ]
+      },      
+      {
+        title: 'Business Scenario and Analysis',
+        collapsable: false,
+        children: [ 
+          ['/cloudbash/nutshell', 'In a Nutshell...'],
+          ['/cloudbash/USERSTORIES', 'User Stories']
+         ]
       },
       {
         title: 'Serverless Architecture',

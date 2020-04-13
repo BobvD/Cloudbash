@@ -18,10 +18,17 @@ namespace Cloudbash.Lambda.Functions.Users
                 Email = (string) input["request"]["userAttributes"]["email"]
             };
 
+            
             var result = await Mediator.Send(userData);
 
-            context.Logger.LogLine("New user signup: " + result);
+            // Save the Aggregate ID
+            JObject userAttributes = input["request"]["userAttributes"] as JObject;
+            userAttributes.Add("custom:aggregate_id", result.ToString());
+            input["request"]["userAttributes"] = userAttributes;
 
+            
+            context.Logger.LogLine("New user signup: " + result);
+            context.Logger.LogLine("User: " + input);
             return input;
         }
     }
