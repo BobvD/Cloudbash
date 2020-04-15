@@ -1,0 +1,8 @@
+﻿Type: AWS::ElastiCache::SubnetGroup
+Properties:
+  Description: "Cache Subnet Group"
+  SubnetIds:
+    - Ref: CloudbashSubnetA
+    - Ref: CloudbashSubnetB
+    - Ref: CloudbashSubnetC
+

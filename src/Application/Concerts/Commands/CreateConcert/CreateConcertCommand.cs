@@ -28,8 +28,9 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
             public async Task<Guid> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
             {                
                 var concert = new Concert(request.Name, request.Venue, request.ImageUrl, request.Date);
-                await _repository.SaveAsync(concert);
 
+                await _repository.SaveAsync(concert);
+               
                 return concert.Id; 
             }
         }

@@ -1,12 +1,9 @@
 ﻿using Amazon.Lambda.Core;
 using Amazon.Lambda.KinesisEvents;
 using Cloudbash.Application.Common.Events;
-using Cloudbash.Domain.Events;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.EventStore;
-using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Lambda.Functions;
-using MediatR;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -49,8 +46,7 @@ namespace Cloudbash.Lambda.Events.Functions
             string eventType = enveloppe.Type;
             Type type = Type.GetType(eventType, true);        
 
-            var contractResolver = new PrivateSetterContractResolver();
-            JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = contractResolver };
+            JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = new PrivateSetterContractResolver() };
 
             var @event = JsonConvert.DeserializeObject(enveloppe.Event, type, settings);
 

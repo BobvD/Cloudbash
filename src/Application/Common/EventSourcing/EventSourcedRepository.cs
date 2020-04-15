@@ -2,6 +2,7 @@
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Persistence;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.EventSourcing
@@ -20,28 +21,39 @@ namespace Cloudbash.Application.Common.EventSourcing
             _publisher = publisher;
         }
 
-        public Task<TAggregate> GetByIdAsync(Guid id)
-        {
-            throw new System.NotImplementedException();
+        public async Task<TAggregate> GetByIdAsync(Guid id)
+        {            
+            var aggregate = CreateEmptyAggregate();
+            IAggregateRoot aggregatePersistence = aggregate;
+
+            foreach (var @event in await _eventStore.GetAsync(id))
+            {
+                aggregatePersistence.ApplyEvent(@event);
+            }
+            return aggregate;           
         }
 
         public async Task SaveAsync(TAggregate aggregate)
-        {
-            try
+        {            
+            // Loop to all new (uncommited) events
+            foreach (var @event in aggregate.GetUncommittedEvents())
             {
-                IAggregateRoot aggregatePersistence = aggregate;
-
-                foreach (var @event in aggregatePersistence.GetUncommittedEvents())
-                {
-                    await _eventStore.SaveAsync(@event);
-                    await _publisher.PublishAsync((dynamic)@event);
-                }
-                aggregatePersistence.ClearUncommittedEvents();
+                // Save event to Event Store
+                await _eventStore.SaveAsync(@event);
+                // Publish event to Event Bus
+                await _publisher.PublishAsync((dynamic)@event);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            // All events are committed, clear the list with uncommitted events
+            aggregate.ClearUncommittedEvents();           
         }
+
+        private TAggregate CreateEmptyAggregate()
+        {
+            return (TAggregate)typeof(TAggregate)
+                    .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+                        null, new Type[0], new ParameterModifier[0])
+                    .Invoke(new object[0]);
+        }
+
     }
 }

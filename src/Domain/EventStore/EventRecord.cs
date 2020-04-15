@@ -1,30 +1,35 @@
-﻿using System;
+﻿using Cloudbash.Domain.EventStore;
+using System;
 
 namespace Cloudbash.Domain.SeedWork
 {
-    public class EventRecord
+    public class EventRecord : IEventRecord
     {
-		public readonly Guid AggregateId;
+		/// <summary>
+		/// Id of the Aggregate connected to this event.
+		/// </summary>
+		public Guid AggregateId { get; private set; }
 
 		/// <summary>
 		/// Name (type) of the event.
 		/// </summary>
-		public readonly string EventType;
+		public string EventType { get; private set; }
 
 		/// <summary>
 		/// The actual event data stored as an array of bytes.
 		/// </summary>
-		public readonly string Data;
+		public string Data { get; private set; }
 
 		/// <summary>
 		/// Position of the event.
 		/// </summary>
-		public readonly long EventVersion;
+		public long EventVersion { get; private set; }
 
 		/// <summary>
 		/// Time of the event being commited.
 		/// </summary>
-		public readonly DateTime Created;
+		public DateTime Created { get; private set; }
+
 		public EventRecord(Guid aggregateId, string eventType, string data, long eventVersion)
 		{
 			AggregateId = aggregateId;

@@ -10,7 +10,7 @@ Properties:
   VPCSecurityGroups:
   - !GetAtt CloudbashSecurityGroup.GroupId
   DBSubnetGroupName:
-    Ref: CloudbashSubnetGroup
+    Ref: CloudbashRDSSubnetGroup
   Engine: postgres
   PubliclyAccessible: true
 

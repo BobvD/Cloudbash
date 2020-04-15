@@ -24,6 +24,9 @@ namespace Cloudbash.Lambda.Functions.Users
             // Save the Aggregate ID
             JObject userAttributes = input["request"]["userAttributes"] as JObject;
             userAttributes.Add("custom:aggregate_id", result.ToString());
+            userAttributes.Remove("phone_number");
+            userAttributes.Add("phone_number", "+1213123123");
+            userAttributes.Add("custom:id", "testetsttest");
             input["request"]["userAttributes"] = userAttributes;
 
             

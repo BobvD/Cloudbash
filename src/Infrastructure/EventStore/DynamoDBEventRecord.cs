@@ -1,19 +1,20 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
+using Cloudbash.Domain.EventStore;
 using Cloudbash.Domain.SeedWork;
 using System;
 
 namespace Cloudbash.Infrastructure.Persistence.EventStore
 {
     [DynamoDBTable("EventLog")]
-    public class DynamoDBEventRecord
+    public class DynamoDBEventRecord : IEventRecord
     {
         [DynamoDBHashKey]
-        public string Id { get; set; }
+        public Guid AggregateId { get; set; }
         [DynamoDBProperty]
         public string EventType { get; set; }
         [DynamoDBProperty]
         public string Data { get; set; }
-        [DynamoDBProperty]
+        [DynamoDBRangeKey]
         public long EventVersion { get; set; }
         [DynamoDBProperty]
         public DateTime Created { get; set; }
@@ -22,7 +23,7 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
 
         public DynamoDBEventRecord(EventRecord eventRecord)
         {
-            Id = eventRecord.AggregateId.ToString();
+            AggregateId = eventRecord.AggregateId;
             EventType = eventRecord.EventType;
             EventVersion = eventRecord.EventVersion;
             Data = eventRecord.Data;

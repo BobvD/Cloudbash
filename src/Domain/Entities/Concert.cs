@@ -6,6 +6,8 @@ namespace Cloudbash.Domain.Entities
 {
     public class Concert : AggregateRootBase
     {
+        private Concert() { }
+
         public Concert(string name, string venue, string imageUrl, string date)
         {
             Id = Guid.NewGuid();

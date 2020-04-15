@@ -1,4 +1,4 @@
-service: cloudbash-api-1
+service: cloudbash
 
 
 provider:
@@ -9,7 +9,9 @@ provider:
   environment:   
     POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
     POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
-       
+    REDIS_HOST: ${self:custom.REDIS.HOST}
+      
+
   iamRoleStatements:
   # Grant privileges to read from kinesis stream
   - Effect: Allow
@@ -42,6 +44,10 @@ custom:
         Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
     PORT: 
         Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
+  REDIS:
+    HOST: 
+        Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address]  
+
   scripts:
     commands:
       hello: echo Hello from ${self:service} service!
@@ -77,6 +83,22 @@ functions:
         trigger: PreSignUp
         existing: true
 
+  postAuthentication:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PostAuthenticationFunction::Run
+    events:
+    - cognitoUserPool:
+        pool: Cloudbash
+        trigger: PostAuthentication
+        existing: true
+
+  postConfirmation:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PostConfirmationFunction::Run
+    events:
+    - cognitoUserPool:
+        pool: Cloudbash
+        trigger: PostConfirmation
+        existing: true
+
   ## lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
@@ -110,7 +132,7 @@ resources:
     CloudbashSubnetC: ${file(./resource/SubnetC.yml)}
 
     # Subnet Group
-    CloudbashSubnetGroup: ${file(./resource/SubnetGroup.yml)}
+    CloudbashRDSSubnetGroup: ${file(./resource/RDSSubnetGroup.yml)}
 
     # Security Group
     CloudbashSecurityGroup: ${file(./resource/SecurityGroup.yml)}
@@ -122,8 +144,14 @@ resources:
     RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
     RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
     
+    CloudbashStorageSecurityGroup : ${file(./resource/StorageSecurityGroup.yml)}
+
     # POSTGRESQL RDS Database
     PostgreSqlRDSInstance: ${file(./resource/PostgresSQL.yml)}
+
+    ## ELASTICACHE
+    CloudbashElasticacheSubnetGroup: ${file(./resource/ElastiCacheSubnetGroup.yml)}
+    ElasticCacheCluster: ${file(./resource/ElastiCacheCluster.yml)}
 
     # create the Kinesis EventStream
     eventStream: 
@@ -152,11 +180,15 @@ resources:
       Properties:
         TableName: EventLog
         AttributeDefinitions:
-          - AttributeName: Id
+          - AttributeName: AggregateId
             AttributeType: S
+          - AttributeName: EventVersion
+            AttributeType: N
         KeySchema:
-          - AttributeName: Id
+          - AttributeName: AggregateId
             KeyType: HASH
+          - AttributeName: EventVersion
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

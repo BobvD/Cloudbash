@@ -36,7 +36,7 @@ Ticketing platforms like Eventbrite and Ticketmaster take a big cut of the sales
 * [Alf.io](https://alf.io/)
 
 ## Story Mapping
-The Event Storming results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthx_7g=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.42249952.jpg).
+The story mapping results are best viewed on [Miro.com](https://miro.com/app/board/o9J_kthx_7g=/) or as an [image](https://bobvd.github.io/Cloudbash/assets/img/story_mapping.42249952.jpg).
 ![Story Mapping](../../assets/images/story_mapping.jpg "Story Mapping")
 
 

@@ -8,4 +8,4 @@ Properties:
   Tags: 
     - 
       Key: "Name"
-      Value: "CloudbashSubnetGroup"
+      Value: "CloudbashRDSSubnetGroup"

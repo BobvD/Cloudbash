@@ -1,0 +1,12 @@
+﻿DependsOn: CloudbashVPC
+Type: AWS::EC2::SecurityGroup
+Properties:
+  GroupDescription: Ingress for Redis Cluster
+  VpcId:
+    Ref: CloudbashVPC
+  SecurityGroupIngress:
+    - IpProtocol: tcp
+      FromPort: '6379'
+      ToPort: '6379'
+      SourceSecurityGroupId:
+        Ref: CloudbashSecurityGroup
