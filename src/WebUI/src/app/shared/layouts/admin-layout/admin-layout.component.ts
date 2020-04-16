@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-admin-layout',
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./admin-layout.component.scss']
 })
 export class AdminLayoutComponent implements OnInit {
-    constructor() { }
+    public isCollapsed = true;
+    constructor(public authService: AuthenticationService) { }
 
     ngOnInit(): void { }
+
+    signOut() {
+        this.authService.signOut();
+    }
 }

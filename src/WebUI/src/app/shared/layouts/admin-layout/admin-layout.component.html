@@ -1,9 +1,50 @@
 
-<nav class="navbar">
+<nav class="navbar navbar-expand-lg">
     <div class="container">    
         <a class="navbar-brand" href="#">
-            <img src="https://cloudbash-frontend.s3.amazonaws.com/cloudbash_white.svg" alt="Responsive image" width="120px">
+            <img src="https://cloudbash-frontend.s3.amazonaws.com/cloudbash_white.svg" alt="Responsive image" style="margin-bottom: 5px;" width="120px">
         </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+         </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="!isCollapsed">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="[ '/admin/concerts' ]">Concerts</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" *ngIf="!authService?.user">
+                    <a class="nav-link" [routerLink]="[ '/sign-up' ]">Register</a>
+                </li>
+                <li class="nav-item" *ngIf="!authService?.user">
+                    <a class="btn btn-outline-light" [routerLink]="[ '/sign-in' ]">Sign in</a>
+                </li>
+                <li class="nav-item" *ngIf="authService?.user">
+                    <div ngbDropdown placement="bottom-right" class="d-inline-block">
+                        <button class="nav-link" id="dropdownBasic2" ngbDropdownToggle>
+                            <svg class="svg-icon-user" viewBox="0 0 20 20">
+                                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="user"
+                                    class="svg-inline--fa fa-user fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 448 512">
+                                    <path fill="currentColor"
+                                        d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z">
+                                    </path>
+                                </svg>
+                            </svg>
+                            {{ authService?.user?.username }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                            <button ngbDropdownItem (click)="signOut()">Uitloggen</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 <main role="main">
