@@ -5,6 +5,8 @@ import { ConcertOverviewPageComponent } from './pages/concert-overview-page/conc
 import { ConcertCreatePageComponent } from './pages/concert-create-page/concert-create-page.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         AdminRoutingModule,
         RouterModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxDatatableModule,
+        
      ],
     exports: [],
     providers: [],

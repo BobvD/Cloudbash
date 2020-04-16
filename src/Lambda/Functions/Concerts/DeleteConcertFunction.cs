@@ -1,8 +1,10 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using Amazon.Runtime.Internal.Transform;
 using Cloudbash.Application.Concerts.Commands.DeleteConcert;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -26,13 +28,26 @@ namespace Cloudbash.Lambda.Functions.Concerts
             try
             {
                 var result = await Mediator.Send(new DeleteConcertCommand { Id = Guid.Parse(id) } );
-                return new APIGatewayProxyResponse { StatusCode = 201, Body = JsonConvert.SerializeObject(result) };
+
+                return new APIGatewayProxyResponse
+                {
+                    Headers = GetCorsHeaders(),
+                    StatusCode = 201,
+                    Body = JsonConvert.SerializeObject(result)
+                };
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse { StatusCode = 400, Body = JsonConvert.SerializeObject(ex.Message) };
+                return new APIGatewayProxyResponse
+                {
+                    Headers = GetCorsHeaders(),
+                    StatusCode = 400,
+                    Body = JsonConvert.SerializeObject(ex.Message)
+                };
             }
 
         }
+
+        
     }
 }

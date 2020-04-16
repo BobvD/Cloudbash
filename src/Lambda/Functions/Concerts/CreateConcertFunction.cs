@@ -25,12 +25,22 @@ namespace Cloudbash.Lambda.Functions.Concerts
                 // Send the Command to the correct Handler with Mediator
                 var result = await Mediator.Send(requestModel);
                 // Return an API Gateway result with the request as body (serialized to json)
-                return new APIGatewayProxyResponse { StatusCode = 201, Body = JsonConvert.SerializeObject(result) };
+                return new APIGatewayProxyResponse
+                {
+                    Headers = GetCorsHeaders(),
+                    StatusCode = 201,
+                    Body = JsonConvert.SerializeObject(result)
+                };
             }
             catch (Exception ex)
             {
                 // On bad request return status 400 with the errors as body
-                return new APIGatewayProxyResponse { StatusCode = 400, Body = JsonConvert.SerializeObject(ex.Message) };
+                return new APIGatewayProxyResponse
+                {
+                    Headers = GetCorsHeaders(),
+                    StatusCode = 400,
+                    Body = JsonConvert.SerializeObject(ex.Message)
+                };
             }             
             
         }

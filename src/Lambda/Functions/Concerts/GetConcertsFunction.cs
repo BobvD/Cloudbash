@@ -23,16 +23,6 @@ namespace Cloudbash.Lambda.Functions.Concerts
                 Body = JsonConvert.SerializeObject(result)
             };
         }
-
-        private IDictionary<string, string> GetCorsHeaders()
-        {
-            return new Dictionary<string, string>()
-            {
-                new KeyValuePair<string, string>("Access-Control-Allow-Origin", "*"),
-                new KeyValuePair<string, string>("Access-Control-Allow-Credentials", "true"),
-                new KeyValuePair<string, string>("Access-Control-Allow-Methods", "OPTIONS,POST,GET")
-            };
-        }
-
+        
     }
 }

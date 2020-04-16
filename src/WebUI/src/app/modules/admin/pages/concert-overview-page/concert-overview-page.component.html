@@ -1,1 +1,48 @@
-<a class="btn btn-primary" [routerLink]="[ '/admin/concerts/new']">Create new</a>
+
+<div class="card">
+    <div class="card-body">
+        <a class="btn btn-light ml-auto mr-2" [routerLink]="[ '/admin/concerts/new']">create new</a>
+        <button class="btn btn-danger" [disabled]="selected.length < 1"
+        (click)="removeSelected()">delete</button>
+        <div class="mt-3">
+            <ngx-datatable #table class="bootstrap" [rows]="rows" [columnMode]="ColumnMode.force" [headerHeight]="50"
+            [footerHeight]="50" rowHeight="auto" [limit]="25" [selected]="selected"
+            [selectionType]="SelectionType.checkbox" (activate)="onActivate($event)" (select)="onSelect($event)">
+            <ngx-datatable-column [cellClass]="'pl-3'" [headerClass]="'pl-3'" [width]="60" [sortable]="false"
+                [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+                <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                    let-selectFn="selectFn">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="selectAll"
+                            [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)">
+                        <label class="custom-control-label" for="selectAll"></label>
+                    </div>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex"
+                    let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" [id]="rowIndex"
+                            [checked]="isSelected" (change)="onCheckboxChangeFn($event)">
+                        <label class="custom-control-label" [for]="rowIndex"></label>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="Id" name="Id">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <a href="">{{ value }}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="Name" name="Name">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <a href="">{{ value }}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="Venue" name="Venue">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+          </div>
+    </div>
+</div>

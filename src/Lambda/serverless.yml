@@ -81,6 +81,7 @@ functions:
       - http:
           path: concerts/{id}
           method: delete
+          cors: true
           request:
             parameters:
               paths:
