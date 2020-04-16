@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Concert } from 'src/app/shared/models/concert.model';
 import { ConcertService } from 'src/app/shared/services/concert.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-concert-create-page',
@@ -26,7 +28,9 @@ export class ConcertCreatePageComponent implements OnInit {
     concert = new Concert();
 
     constructor(private formBuilder: FormBuilder,
-                private concertService: ConcertService) { }
+                private concertService: ConcertService,
+                private toastr: ToastrService,
+                private router: Router) { }
 
     ngOnInit(): void {
         this.concertForm = this.createFormGroup();
@@ -51,7 +55,10 @@ export class ConcertCreatePageComponent implements OnInit {
           console.log(this.concert);
 
           this.concertService.create(this.concert).subscribe(res => {
-              console.log(res);
+            this.toastr.success(`The concert has been created with id: ` + res, 'Success!');
+            this.router.navigate(['/admin/concerts']);
+          }, err => {
+            this.toastr.error(`Could not create concert.`, 'Error');
           });
       }
 

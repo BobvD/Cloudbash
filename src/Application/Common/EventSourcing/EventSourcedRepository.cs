@@ -28,7 +28,6 @@ namespace Cloudbash.Application.Common.EventSourcing
 
             foreach (var @event in await _eventStore.GetAsync(id, -1, long.MaxValue))
             {
-                Console.WriteLine("EVENT REPO TEST:" + @event.AggregateId + " - " + @event.AggregateVersion + " - " + @event.EventId);
                 aggregatePersistence.ApplyEvent(@event, @event.AggregateVersion);
             }
 
