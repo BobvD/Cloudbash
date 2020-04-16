@@ -9,11 +9,15 @@ export class ConcertService {
     private _concertUrl: string;
 
     constructor(private http: HttpClient) {
-        this._concertUrl = 'https://03rdp1k0sf.execute-api.us-east-1.amazonaws.com/dev/concerts';
+        this._concertUrl = 'https://5nids9redb.execute-api.us-east-1.amazonaws.com/dev/concerts';
     }
 
     get(): Observable<any> {
         return this.http.get<any>(this._concertUrl);
+    }
+
+    create(concert: any): Observable<any> {
+        return this.http.post<any>(this._concertUrl, concert);
     }
 
 }

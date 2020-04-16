@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { InfoBoxComponent } from './components/info-box/info-box.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { InfoBoxComponent } from './components/info-box/info-box.component';
         FooterComponent,
         NavbarComponent,
         AuthLayoutComponent,
-        InfoBoxComponent
+        InfoBoxComponent,
+        AdminLayoutComponent
     ],
     imports: [ 
         CommonModule,

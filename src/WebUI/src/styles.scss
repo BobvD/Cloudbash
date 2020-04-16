@@ -86,3 +86,9 @@ body {
     stroke: #fff;
     stroke-width: 1;
   }
+
+.bg-gradient {
+  background: rgb(70,195,191);
+  background: linear-gradient(90deg, rgba(70,195,191,1) 0%, rgba(135,73,156,1) 52%, rgba(189,42,149,1) 100%);
+  color: white;
+}

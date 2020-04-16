@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="concertForm" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="email" class="form-control" formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Venue</label>
+                        <input type="email" class="form-control" formControlName="venue">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="email" class="form-control" formControlName="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" formControlName="description" rows="6"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="row p-1 py-0">
+                    <div class="col-4 p-1" *ngFor="let item of images">
+                        <img (click)="selectImage(item)" [src]="item" class="rounded  img-fluid" [ngClass]="{'selected': selectedImage == item}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <p>{{ date | date: 'short' }}</p>
+                <button class="btn btn-primary btn-lg btn-block" (click)="submit()">Publish</button>
+            </div>
+        </div>
+    </div>
+</div>

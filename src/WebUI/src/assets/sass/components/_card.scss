@@ -6,3 +6,11 @@
     border-color: #edf2f9;
     box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
 }
+
+.card-header {
+    background: #edf2f9;
+    color: #222;
+    font-weight: 600;
+    border-top-right-radius: 15px!important;
+    border-top-left-radius: 15px!important;
+}
