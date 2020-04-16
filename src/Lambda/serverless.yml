@@ -32,7 +32,7 @@ provider:
     - dynamodb:*
     Resource:
       Fn::GetAtt: 
-      - eventsTable
+      - eventStore
       - Arn     
 
 custom:
@@ -74,6 +74,17 @@ functions:
         path: concerts
         method: get
         cors: true
+
+  deleteConcert:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.DeleteConcertFunction::Run
+    events:
+      - http:
+          path: concerts/{id}
+          method: delete
+          request:
+            parameters:
+              paths:
+                id: true
 
   preSignUp:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PreSignUpFunction::Run
@@ -175,19 +186,19 @@ resources:
         StartingPosition: TRIM_HORIZON
 
     # creat the eventlog
-    eventsTable:
+    eventStore:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: EventLog
+        TableName: EventStore
         AttributeDefinitions:
           - AttributeName: AggregateId
             AttributeType: S
-          - AttributeName: EventVersion
+          - AttributeName: AggregateVersion
             AttributeType: N
         KeySchema:
           - AttributeName: AggregateId
             KeyType: HASH
-          - AttributeName: EventVersion
+          - AttributeName: AggregateVersion
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1

@@ -15,6 +15,9 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
         public string ImageUrl { get; set; }
         public string Date { get; set; }
 
+        /// <summary>
+        /// The Command Handler, receives the command from Mediatr and processes it.
+        /// </summary>
         public class CreateConcertCommandHandler : IRequestHandler<CreateConcertCommand, Guid>
         {
 
@@ -26,11 +29,12 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
             }
 
             public async Task<Guid> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
-            {                
+            {   
+                // Create 
                 var concert = new Concert(request.Name, request.Venue, request.ImageUrl, request.Date);
-
+                // Save
                 await _repository.SaveAsync(concert);
-               
+                // Return Id
                 return concert.Id; 
             }
         }

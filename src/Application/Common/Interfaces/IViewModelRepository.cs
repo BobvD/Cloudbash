@@ -17,5 +17,7 @@ namespace Cloudbash.Application.Common.Interfaces
 
         Task<T> GetByIdAsync(Guid id);
 
+        Task RemoveByIdAsync(T entity, CancellationToken cancellationToken);
+
     }
 }

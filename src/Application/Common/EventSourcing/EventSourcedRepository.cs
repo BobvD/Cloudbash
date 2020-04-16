@@ -26,10 +26,12 @@ namespace Cloudbash.Application.Common.EventSourcing
             var aggregate = CreateEmptyAggregate();
             IAggregateRoot aggregatePersistence = aggregate;
 
-            foreach (var @event in await _eventStore.GetAsync(id))
+            foreach (var @event in await _eventStore.GetAsync(id, -1, long.MaxValue))
             {
-                aggregatePersistence.ApplyEvent(@event);
+                Console.WriteLine("EVENT REPO TEST:" + @event.AggregateId + " - " + @event.AggregateVersion + " - " + @event.EventId);
+                aggregatePersistence.ApplyEvent(@event, @event.AggregateVersion);
             }
+
             return aggregate;           
         }
 

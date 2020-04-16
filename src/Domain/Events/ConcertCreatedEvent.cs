@@ -16,7 +16,15 @@ namespace Cloudbash.Domain.Events
             ImageUrl = imageUrl;
             Date = date;
         }
-        
+
+        internal ConcertCreatedEvent(Guid aggregateId, long aggregateVersion, string name, string venue, string imageUrl, string date) : base(aggregateId, aggregateVersion)
+        {
+            Name = name;
+            Venue = venue;
+            ImageUrl = imageUrl;
+            Date = date;
+        }
+               
         public string Name { get; private set; }
         public string Venue { get; set; }
         public string ImageUrl { get; set; }
@@ -24,7 +32,7 @@ namespace Cloudbash.Domain.Events
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new ConcertCreatedEvent(aggregateId, Name, Venue, ImageUrl, Date);
+            return new ConcertCreatedEvent(aggregateId, aggregateVersion, Name, Venue, ImageUrl, Date);
         }
 
         public override string ToString()

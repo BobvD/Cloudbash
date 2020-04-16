@@ -15,7 +15,7 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
         [DynamoDBProperty]
         public string Data { get; set; }
         [DynamoDBRangeKey]
-        public long EventVersion { get; set; }
+        public long AggregateVersion { get; set; }
         [DynamoDBProperty]
         public DateTime Created { get; set; }
 
@@ -25,7 +25,7 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
         {
             AggregateId = eventRecord.AggregateId;
             EventType = eventRecord.EventType;
-            EventVersion = eventRecord.EventVersion;
+            AggregateVersion = eventRecord.AggregateVersion;
             Data = eventRecord.Data;
             Created = eventRecord.Created;
         }

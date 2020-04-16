@@ -22,7 +22,7 @@ namespace Cloudbash.Domain.EventStore
 		/// <summary>
 		/// Position of the event.
 		/// </summary>
-		long EventVersion { get; }
+		long AggregateVersion { get; }
 
 		/// <summary>
 		/// Time of the event being commited.

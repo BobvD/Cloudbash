@@ -1,11 +1,13 @@
 ﻿
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.EventStore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence.EventStore
@@ -14,47 +16,46 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
     {
         private readonly AmazonDynamoDBClient _amazonDynamoDBClient;
         private readonly DynamoDBOperationConfig _configuration;
-        
+               
         public DynamoDBEventStore(IAwsClientFactory<AmazonDynamoDBClient> clientFactory)
         {
             _amazonDynamoDBClient = clientFactory.GetAwsClient();
+            
             _configuration = new DynamoDBOperationConfig
             {
-                OverrideTableName = "EventLog",
+                OverrideTableName = "EventStore",
                 SkipVersionCheck = true
             };
         }
 
-        public async Task<IEnumerable<IDomainEvent>> GetAsync(Guid aggregateId)
-        {
-           
-            var events = new List<IDomainEvent>();
+        public async Task<IEnumerable<IDomainEvent>> GetAsync(Guid aggregateId, long minVersion, long maxVersion)
+        {            
+             var events = new List<IDomainEvent>();
 
-            using (var context = new DynamoDBContext(_amazonDynamoDBClient))
-            {               
-                // string id = aggregateId.ToString();
-                AsyncSearch<DynamoDBEventRecord> recordQuery = context.QueryAsync<DynamoDBEventRecord>(aggregateId, _configuration);
-                
-                Task<List<DynamoDBEventRecord>> recordTask = recordQuery.GetRemainingAsync();
-                recordTask.Wait();
+             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
+             {               
+                 AsyncSearch<DynamoDBEventRecord> recordQuery = context.QueryAsync<DynamoDBEventRecord>(aggregateId, _configuration);
 
-                if (recordTask.Exception == null)
-                 {
-                    Console.WriteLine("count: " + recordTask.Result.Count);
+                 Task<List<DynamoDBEventRecord>> recordTask = recordQuery.GetRemainingAsync();
+                 recordTask.Wait();
 
-                    foreach (var @event in recordTask.Result)
-                    {
-                        events.Add(Deserialize(@event.EventType, @event.Data));
-                    }
-                    return events;
-                 }
-            }
+                 if (recordTask.Exception == null)
+                  {
+                     foreach (var @event in recordTask.Result)
+                     {
+                         events.Add(Deserialize(@event.EventType, @event.Data));
+                     }
+                     return events;
+                  }
+             }
 
-            return events;
+            return events.OrderBy(x => x.AggregateVersion).ToArray();
+             
         }
 
         public async Task SaveAsync(IDomainEvent @event)
         {
+            
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
                 var item = new DynamoDBEventRecord(

@@ -1,0 +1,28 @@
+﻿using Cloudbash.Application.Common.Events;
+using Cloudbash.Application.Common.Interfaces;
+using Cloudbash.Domain.ViewModels;
+using Cloudbash.Domain.Events;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Cloudbash.Application.Concerts.Events
+{
+    public class ConcertDeletedEventHandler : INotificationHandler<DomainEventNotification<ConcertDeletedEvent>>
+    {
+        private readonly IViewModelRepository<Concert> _concertRepository;
+
+        public ConcertDeletedEventHandler(IViewModelRepository<Concert> concertRepository)
+        {
+            _concertRepository = concertRepository;
+        }
+
+        public async Task Handle(DomainEventNotification<ConcertDeletedEvent> notification, CancellationToken cancellationToken)
+        {
+            var @event = notification.DomainEvent;
+
+            var concert = await _concertRepository.GetByIdAsync(@event.AggregateId);           
+            await _concertRepository.RemoveByIdAsync(concert, cancellationToken);            
+        }
+    }
+}

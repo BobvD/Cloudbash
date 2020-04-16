@@ -23,20 +23,21 @@ namespace Cloudbash.Domain.SeedWork
 		/// <summary>
 		/// Position of the event.
 		/// </summary>
-		public long EventVersion { get; private set; }
+		public long AggregateVersion { get; private set; }
 
 		/// <summary>
 		/// Time of the event being commited.
 		/// </summary>
 		public DateTime Created { get; private set; }
 
-		public EventRecord(Guid aggregateId, string eventType, string data, long eventVersion)
+		public EventRecord(Guid aggregateId, string eventType, string data, long aggregateVersion)
 		{
 			AggregateId = aggregateId;
 			EventType = eventType;
 			Data = data;
-			EventVersion = eventVersion;
+			AggregateVersion = aggregateVersion;
 			Created = DateTime.Now;
+			Console.WriteLine("AGGREGATE VERSION: " + aggregateVersion);
 		}
 	}
 }

@@ -24,6 +24,7 @@ namespace Cloudbash.Domain.SeedWork
         protected DomainEventBase(Guid aggregateId, long aggregateVersion) : this(aggregateId)
         {
             AggregateVersion = aggregateVersion;
+            Console.WriteLine("DOMAIN EVENT BASE VERISON: " + aggregateVersion);
         }
 
         public override bool Equals(object obj)

@@ -24,12 +24,18 @@ namespace Cloudbash.Application.Common.Repositories
 
         public Task<Concert> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Concerts.FindAsync(id);
         }
 
         public Task InsertAsync(Concert entity, CancellationToken cancellationToken)
         {
             _context.Concerts.Add(entity);
+            return _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public Task RemoveByIdAsync(Concert concert, CancellationToken cancellationToken)
+        {
+            _context.Concerts.Remove(concert);
             return _context.SaveChangesAsync(cancellationToken);
         }
 
