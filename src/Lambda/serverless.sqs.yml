@@ -1,0 +1,37 @@
+﻿service: cloudbash-sqs
+
+
+provider:
+  name: aws
+  runtime: dotnetcore2.1
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource:
+        - Fn::GetAtt: [ receiverQueue, Arn ]  
+  environment:   
+    ServerlessConfiguration__EventBus: 'SQS'
+ 
+package:
+  artifact: bin/release/netcoreapp2.1/deploy-package.zip
+
+functions:
+
+  ## Concert Endpoints
+  createConcert:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
+    events:
+    - http:
+        path: concerts
+        method: post
+        cors: true
+
+resources:
+  Resources:
+    receiverQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: receiverQueue

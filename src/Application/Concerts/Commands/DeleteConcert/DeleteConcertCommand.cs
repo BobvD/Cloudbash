@@ -23,10 +23,7 @@ namespace Cloudbash.Application.Concerts.Commands.DeleteConcert
 
             public async Task<Unit> Handle(DeleteConcertCommand request, CancellationToken cancellationToken)
             {
-                Console.WriteLine("request id: " + request.Id);
-
                 var concert = await _repository.GetByIdAsync(request.Id);
-                Console.WriteLine("concert id: " + concert.Id);
                 if (concert == null)
                 {
                     throw new NotFoundException(nameof(Concert), request.Id);

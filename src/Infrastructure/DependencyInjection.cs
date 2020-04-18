@@ -15,8 +15,27 @@ namespace Cloudbash.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot)
         {
-            services.AddTransient<IPublisher, KinesisEventStream>();
+            // Get the configuration
+            var config = new ServerlessConfiguration();
+            configurationRoot.Bind("ServerlessConfiguration", config);
+            services.AddSingleton(config);
+
+            // Inject Event stream
+            switch (config.EventBus)
+            {
+                case EventBusType.SQS:
+                    services.AddTransient<IPublisher, SQSEventStream>();
+                    break;
+                case EventBusType.KINESIS:
+                    services.AddTransient<IPublisher, KinesisEventStream>();
+                    break;
+                default:
+                    break;
+            }            
+
             services.AddTransient<IEventStore, DynamoDBEventStore>();
+
+
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
                 .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
