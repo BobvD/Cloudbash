@@ -18,7 +18,7 @@ namespace Cloudbash.Infrastructure
             // Get the configuration
             var config = new ServerlessConfiguration();
             configurationRoot.Bind("ServerlessConfiguration", config);
-            services.AddSingleton(config);
+            services.AddSingleton<IServerlessConfiguration>(config);
 
             // Inject Event stream
             switch (config.EventBus)
@@ -34,8 +34,7 @@ namespace Cloudbash.Infrastructure
             }            
 
             services.AddTransient<IEventStore, DynamoDBEventStore>();
-
-
+            
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
                 .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());

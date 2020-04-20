@@ -9,7 +9,6 @@ provider:
   environment:   
     POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
     POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
-    REDIS_HOST: ${self:custom.REDIS.HOST}
     ServerlessConfiguration__EventBus: 'KINESIS'
  
   iamRoleStatements:
@@ -36,6 +35,7 @@ provider:
       - Arn     
 
 custom:
+  EVENT_STORE_NAME: EventStore_config1
   DB_NAME: cloudbash
   USERNAME: master
   PASSWORD: password
@@ -44,10 +44,6 @@ custom:
         Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
     PORT: 
         Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
-  REDIS:
-    HOST: 
-        Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address]  
-
   scripts:
     commands:
       hello: echo Hello from ${self:service} service!
@@ -111,7 +107,7 @@ functions:
         trigger: PostConfirmation
         existing: true
 
-  ## lambda for catching events from the eventstream (kinesis)
+  # lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.EventProcessorFunction::Run
 
@@ -161,10 +157,6 @@ resources:
     # POSTGRESQL RDS Database
     PostgreSqlRDSInstance: ${file(./resource/PostgresSQL.yml)}
 
-    ## ELASTICACHE
-    CloudbashElasticacheSubnetGroup: ${file(./resource/ElastiCacheSubnetGroup.yml)}
-    ElasticCacheCluster: ${file(./resource/ElastiCacheCluster.yml)}
-
     # create the Kinesis EventStream
     eventStream: 
       Type: AWS::Kinesis::Stream
@@ -186,24 +178,8 @@ resources:
             - Arn
         StartingPosition: TRIM_HORIZON
 
-    # creat the eventlog
-    eventStore:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: EventStore
-        AttributeDefinitions:
-          - AttributeName: AggregateId
-            AttributeType: S
-          - AttributeName: AggregateVersion
-            AttributeType: N
-        KeySchema:
-          - AttributeName: AggregateId
-            KeyType: HASH
-          - AttributeName: AggregateVersion
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+    # Event Store = DynamoDB
+    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
 
 plugins:
   - serverless-plugin-scripts

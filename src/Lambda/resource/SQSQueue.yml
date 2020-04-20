@@ -1,0 +1,3 @@
+﻿Type: AWS::SQS::Queue
+Properties:
+  QueueName: eventBus

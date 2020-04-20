@@ -1,6 +1,5 @@
 ﻿service: cloudbash-sqs
 
-
 provider:
   name: aws
   runtime: dotnetcore2.1
@@ -11,15 +10,31 @@ provider:
       Action:
         - sqs:SendMessage
       Resource:
-        - Fn::GetAtt: [ receiverQueue, Arn ]  
+        - Fn::GetAtt: [ eventBus, Arn ]  
+    # Grant privilege to write to events table 
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - Fn::GetAtt: [ eventStore, Arn ]         
   environment:   
     ServerlessConfiguration__EventBus: 'SQS'
- 
+    ServerlessConfiguration__SQSUrl: ${self:custom.SQS.URL}
+    ServerlessConfiguration__RedisConnectionString: ${self:custom.REDIS.HOST}
+
 package:
   artifact: bin/release/netcoreapp2.1/deploy-package.zip
 
-functions:
 
+custom: 
+  SQS:
+    URL: 
+       Ref: eventBus
+  REDIS:
+    HOST: 
+        Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address]  
+
+functions:
   ## Concert Endpoints
   createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
@@ -29,9 +44,46 @@ functions:
         method: post
         cors: true
 
+  # lambda for catching events from the eventstream (SQS)
+  eventStreamHandler:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.SQSEventProcessorFunction::Run
+    events:
+      - sqs: 
+          arn:
+            Fn::GetAtt: [ eventBus, Arn ]     
+
 resources:
   Resources:
-    receiverQueue:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: receiverQueue
+  
+    # Internet Gateway
+    CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}
+
+    # Virtual Private Cloud
+    CloudbashVPC: ${file(./resource/VPC.yml)}
+    CloudbashVPCGA: ${file(./resource/VPCGA.yml)}
+
+    # Subnets
+    CloudbashSubnetA: ${file(./resource/SubnetA.yml)}
+    CloudbashSubnetB: ${file(./resource/SubnetB.yml)}
+    CloudbashSubnetC: ${file(./resource/SubnetC.yml)}
+
+    # Security GroupS
+    CloudbashSecurityGroup: ${file(./resource/SecurityGroup.yml)}
+    CloudbashStorageSecurityGroup : ${file(./resource/StorageSecurityGroup.yml)}
+
+    # Routing
+    RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
+    RoutePublic: ${file(./resource/RoutePublic.yml)}
+    RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
+    RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
+    RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
+    
+    # Event Bus = Simple Queue Service
+    eventBus: ${file(./resource/SQSQueue.yml)}
+
+    # Event Store = DynamoDB
+    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
+
+    # Read Databse = ELASTICACHE
+    CloudbashElasticacheSubnetGroup: ${file(./resource/ElastiCacheSubnetGroup.yml)}
+    ElasticCacheCluster: ${file(./resource/ElastiCacheCluster.yml)}

@@ -1,0 +1,17 @@
+﻿Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ${self:custom.EVENT_STORE_NAME}
+  AttributeDefinitions:
+    - AttributeName: AggregateId
+      AttributeType: S
+    - AttributeName: AggregateVersion
+      AttributeType: N
+  KeySchema:
+    - AttributeName: AggregateId
+      KeyType: HASH
+    - AttributeName: AggregateVersion
+      KeyType: RANGE
+  ProvisionedThroughput:
+    ReadCapacityUnits: 1
+    WriteCapacityUnits: 1
+
