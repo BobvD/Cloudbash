@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.EventStream
 {
-    public class SQSEventStream : IPublisher
+    public class SQSEventStream : EventStream
     {
 
         
@@ -23,32 +23,16 @@ namespace Cloudbash.Infrastructure.EventStream
         }
         
 
-        public async Task PublishAsync(IDomainEvent domainEvent)
-        {           
-            
+        public override async Task PublishAsync(IDomainEvent @event)
+        {                                   
             var sendMessageRequest = new SendMessageRequest
             {
-                DelaySeconds = 10,
-                MessageAttributes = new Dictionary<string, MessageAttributeValue>
-                {
-                    {"Type",   new MessageAttributeValue{DataType = "String", StringValue = domainEvent.GetType().ToString() }}
-                },
-                MessageBody = Serialize(domainEvent),
+                MessageBody = CreateEnveloppe(@event),
                 QueueUrl = _config.SQSUrl
             };
 
-            await _amazonSQSClient.SendMessageAsync(sendMessageRequest);
-            
+            await _amazonSQSClient.SendMessageAsync(sendMessageRequest);            
         }
 
-        private string Serialize(IDomainEvent @event)
-        {
-            return JsonConvert.SerializeObject(@event);
-        }
-
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

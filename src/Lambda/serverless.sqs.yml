@@ -18,7 +18,8 @@ provider:
       Resource:
         - Fn::GetAtt: [ eventStore, Arn ]         
   environment:   
-    ServerlessConfiguration__EventBus: 'SQS'
+    ServerlessConfiguration__EventBus: 'SQS'    
+    ServerlessConfiguration__Database: 'REDIS'
     ServerlessConfiguration__SQSUrl: ${self:custom.SQS.URL}
     ServerlessConfiguration__RedisConnectionString: ${self:custom.REDIS.HOST}
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}

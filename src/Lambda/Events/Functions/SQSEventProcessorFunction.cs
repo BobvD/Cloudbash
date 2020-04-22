@@ -1,6 +1,5 @@
 ﻿using Amazon.Lambda.Core;
 using Amazon.Lambda.SQSEvents;
-using System;
 using static Amazon.Lambda.SQSEvents.SQSEvent;
 
 namespace Cloudbash.Lambda.Events.Functions
@@ -12,11 +11,9 @@ namespace Cloudbash.Lambda.Events.Functions
         {
             foreach (var record in sqsEvent.Records)
             {
-                MessageAttribute eventType = null;
-                record.MessageAttributes.TryGetValue("Type", out eventType);
-                var @event = DeserializeEvent(record.Body, TypeFromString(eventType.StringValue));
-                Consume(@event);
+                Consume(record.Body);
             }
         }
+
     }
 }

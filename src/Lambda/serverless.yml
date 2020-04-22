@@ -10,8 +10,10 @@ provider:
     POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
     POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
     ServerlessConfiguration__EventBus: 'KINESIS'
+    ServerlessConfiguration__Database: 'POSTGRES'
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
- 
+    ServerlessConfiguration__KinesisStreamName: ${self:custom.KINESIS_STREAM_NAME}
+
   iamRoleStatements:
   # Grant privileges to read from kinesis stream
   - Effect: Allow
@@ -37,6 +39,7 @@ provider:
 
 custom:
   EVENT_STORE_NAME: EventStore_config1
+  KINESIS_STREAM_NAME: eventStream
   DB_NAME: cloudbash
   USERNAME: master
   PASSWORD: password

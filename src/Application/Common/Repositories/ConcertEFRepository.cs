@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Repositories
 {
-    public class ConcertRepository : IViewModelRepository<Concert>
+    public class ConcertEFRepository : IViewModelRepository<Concert>
     {
         private readonly IApplicationDbContext _context;
 
-        public ConcertRepository(IApplicationDbContext context)
+        public ConcertEFRepository(IApplicationDbContext context)
         {
             _context = context;
         }

@@ -1,6 +1,7 @@
 ﻿using Cloudbash.Application;
 using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Cloudbash.Infrastructure;
+using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Lambda.Common;
 using FluentValidation.AspNetCore;
@@ -21,6 +22,7 @@ namespace Cloudbash.Lambda
               .AddEnvironmentVariables()             
               .Build();
 
+
             return ConfigureServices(configuration);
         }
 
@@ -28,8 +30,14 @@ namespace Cloudbash.Lambda
         private static IServiceCollection ConfigureServices(IConfigurationRoot configurationRoot)
         {
             var services = new ServiceCollection();
-            services.AddApplication();
-            services.AddInfrastructure(configurationRoot);            
+
+            // Get the configuration
+            var config = new ServerlessConfiguration();
+            configurationRoot.Bind("ServerlessConfiguration", config);
+            services.AddSingleton<IServerlessConfiguration>(config);
+
+            services.AddApplication(config);
+            services.AddInfrastructure(configurationRoot, config);            
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateConcertCommandValidator>());
          
             return services;

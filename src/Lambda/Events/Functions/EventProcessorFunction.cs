@@ -9,32 +9,37 @@ namespace Cloudbash.Lambda.Events.Functions
 {
     public abstract class EventProcessorFunction : FunctionBase
     {
-        public T CastObject<T>(object input)
+        public void Consume(string eventData)
         {
-            return (T)input;
-        }
-
-        public Type TypeFromString(string type)
-        {
-            return Type.GetType(type + ", Cloudbash.Domain", true);
-        }
-
-        public IDomainEvent DeserializeEvent(string @event, Type type)
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = new PrivateSetterContractResolver() };
-            return JsonConvert.DeserializeObject(@event, type, settings) as IDomainEvent;
-        }
-
-        public void Consume(IDomainEvent @event)
-        {
+            var @event = DeserializeEvent(eventData);
             var domainEventNotification = CreateDomainEventNotification((dynamic)@event);
             Mediator.Publish(domainEventNotification);
         }
 
+        public IDomainEvent DeserializeEvent(string eventData)
+        {
+            var enveloppe = JsonConvert.DeserializeObject<EventEnveloppe>(eventData);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = new PrivateSetterContractResolver() };
+            return JsonConvert.DeserializeObject(enveloppe.Event, TypeFromString(enveloppe.Type), settings) as IDomainEvent;
+        }
+
+        public Type TypeFromString(string type)
+        {
+            return Type.GetType(type, true);
+        }
+      
         private static DomainEventNotification<TDomainEvent> CreateDomainEventNotification<TDomainEvent>(TDomainEvent domainEvent)
             where TDomainEvent : IDomainEvent
         {
             return new DomainEventNotification<TDomainEvent>(domainEvent);
         }
+
+        private class EventEnveloppe
+        {
+            public string Type { get; set; }
+            public string Event { get; set; }
+        }
+
     }
 }

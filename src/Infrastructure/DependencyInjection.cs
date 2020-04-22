@@ -7,19 +7,22 @@ using Cloudbash.Infrastructure.Persistence.EventStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Cloudbash.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot, IServerlessConfiguration config)
         {
-            // Get the configuration
-            var config = new ServerlessConfiguration();
-            configurationRoot.Bind("ServerlessConfiguration", config);
-            services.AddSingleton<IServerlessConfiguration>(config);
+            
+            // Inject Event Store
+            services.AddTransient<IEventStore, DynamoDBEventStore>();
 
+            // Inject AWS Configuration
+            services
+                .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
+                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
+            
             // Inject Event stream
             switch (config.EventBus)
             {
@@ -31,30 +34,30 @@ namespace Cloudbash.Infrastructure
                     break;
                 default:
                     break;
-            }            
+            }
 
-            services.AddTransient<IEventStore, DynamoDBEventStore>();
-            
-            services
-                .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
-                .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
-
-            services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseNpgsql(GetConnectionString(configurationRoot), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
-
-
+            // Inject (read) Database
+            switch (config.Database)
+            {
+                case DatabaseType.POSTGRES:
+                    services.AddDbContext<ApplicationDbContext>(opt =>
+                        opt.UseNpgsql(GetPostgresConnectionString(configurationRoot), 
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+                    break;
+                case DatabaseType.REDIS:
+                    break;
+                default:
+                    break;
+            }
+               
             return services;
         }
         
-        public static string GetConnectionString(IConfigurationRoot configurationRoot)
+        public static string GetPostgresConnectionString(IConfigurationRoot configurationRoot)
         {
             var host = configurationRoot.GetSection("POSTGRESQL_HOST").Value;
-            Console.WriteLine(host);
             var port = configurationRoot.GetSection("POSTGRESQL_PORT").Value;
-            Console.WriteLine(port);
-
             return $"Server={host};Port={port};Username=master;Password=password;Database=cloudbash;";
         }
     }
