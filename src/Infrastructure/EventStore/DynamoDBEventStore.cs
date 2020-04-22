@@ -3,6 +3,7 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Cloudbash.Domain.SeedWork;
+using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.EventStore;
 using Newtonsoft.Json;
 using System;
@@ -16,16 +17,18 @@ namespace Cloudbash.Infrastructure.Persistence.EventStore
     {
         private readonly AmazonDynamoDBClient _amazonDynamoDBClient;
         private readonly DynamoDBOperationConfig _configuration;
-               
-        public DynamoDBEventStore(IAwsClientFactory<AmazonDynamoDBClient> clientFactory)
+
+        public DynamoDBEventStore(IAwsClientFactory<AmazonDynamoDBClient> clientFactory,
+                                  IServerlessConfiguration config)                    
         {
             _amazonDynamoDBClient = clientFactory.GetAwsClient();
             
             _configuration = new DynamoDBOperationConfig
             {
-                OverrideTableName = "EventStore",
+                OverrideTableName = config.EventStoreTableName,
                 SkipVersionCheck = true
             };
+
         }
 
         public async Task<IEnumerable<IDomainEvent>> GetAsync(Guid aggregateId, long minVersion, long maxVersion)

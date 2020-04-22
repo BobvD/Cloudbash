@@ -35,7 +35,10 @@ select opt in "${options[@]}" "Quit"; do
 
     case "$REPLY" in
 
-    1 ) printf "\e[95m\nOption 1 selected\n${normal}Starting serverless... \n\n"; 
+    1 ) printf "\e[95m\nOption 1 selected\n${normal}";
+        printf "Building source code... \n\n"; 
+        ./build.sh; 
+        printf "\n\nStarting serverless... \n\n"; 
         sls deploy --config $SERVERLESS_CONFIGURATION_1; 
         break;;
     2 ) printf "\e[95m\nOption 2 selected\n${normal}"; 

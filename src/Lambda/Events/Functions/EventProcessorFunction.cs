@@ -16,7 +16,7 @@ namespace Cloudbash.Lambda.Events.Functions
 
         public Type TypeFromString(string type)
         {
-            return Type.GetType(type, true); 
+            return Type.GetType(type + ", Cloudbash.Domain", true);
         }
 
         public IDomainEvent DeserializeEvent(string @event, Type type)

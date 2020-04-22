@@ -7,6 +7,7 @@ namespace Cloudbash.Infrastructure.Configs
     public interface IServerlessConfiguration
     {
         EventBusType EventBus { get; }
+        string EventStoreTableName { get;  }
         string SQSUrl { get;  }
         string RedisConnectionString { get; }
     }
@@ -15,6 +16,7 @@ namespace Cloudbash.Infrastructure.Configs
     {
         public EventBusType EventBus { get; set; }
         public string SQSUrl { get; set; }
+        public string EventStoreTableName { get; set; }
         public string RedisConnectionString { get; set; }
     }
 

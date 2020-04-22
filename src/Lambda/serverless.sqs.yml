@@ -21,12 +21,13 @@ provider:
     ServerlessConfiguration__EventBus: 'SQS'
     ServerlessConfiguration__SQSUrl: ${self:custom.SQS.URL}
     ServerlessConfiguration__RedisConnectionString: ${self:custom.REDIS.HOST}
+    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
 
 package:
   artifact: bin/release/netcoreapp2.1/deploy-package.zip
 
-
 custom: 
+  EVENT_STORE_NAME: EventStore_config2
   SQS:
     URL: 
        Ref: eventBus
