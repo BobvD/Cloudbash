@@ -9,7 +9,7 @@ export class ConcertService {
     private _concertUrl: string;
 
     constructor(private http: HttpClient) {
-        this._concertUrl = 'https://tidyeiib71.execute-api.us-east-1.amazonaws.com/dev/concerts';
+        this._concertUrl = 'https://tidyeiib71.execute-api.us-east-1.amazonaws.com/dev/concerts/';
     }
 
     get(): Observable<any> {
