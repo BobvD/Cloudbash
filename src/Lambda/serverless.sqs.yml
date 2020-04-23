@@ -21,7 +21,8 @@ provider:
     ServerlessConfiguration__EventBus: 'SQS'    
     ServerlessConfiguration__Database: 'REDIS'
     ServerlessConfiguration__SQSUrl: ${self:custom.SQS.URL}
-    ServerlessConfiguration__RedisConnectionString: ${self:custom.REDIS.HOST}
+    ServerlessConfiguration__Redis__Host: ${self:custom.REDIS.HOST}
+    ServerlessConfiguration__Redis__Port: ${self:custom.REDIS.PORT}
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
 
 package:
@@ -34,7 +35,8 @@ custom:
        Ref: eventBus
   REDIS:
     HOST: 
-        Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address]  
+        Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address] 
+    PORT: '6379'
 
 functions:
   ## Concert Endpoints
@@ -49,6 +51,8 @@ functions:
   # lambda for catching events from the eventstream (SQS)
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.SQSEventProcessorFunction::Run
+    timeout: 30
+    vpc: ${file(./resource/LambdaStorageSecurityGroupConfig.yml)}
     events:
       - sqs: 
           arn:

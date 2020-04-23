@@ -1,0 +1,6 @@
+﻿securityGroupIds:
+   - "Fn::GetAtt": CloudbashSecurityGroup.GroupId
+subnetIds:
+   - Ref: CloudbashSubnetA
+   - Ref: CloudbashSubnetB
+   - Ref: CloudbashSubnetC

@@ -6,6 +6,7 @@ using Cloudbash.Domain.Entities;
 using Cloudbash.Infrastructure.Configs;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Reflection;
 
 namespace Cloudbash.Application
@@ -18,12 +19,14 @@ namespace Cloudbash.Application
             services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
             services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();
 
+            Console.WriteLine("DATASE TYPE: " + config.Database);
             switch (config.Database)
             {
                 case DatabaseType.POSTGRES:
                     services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, ConcertEFRepository>();
                     break;
                 case DatabaseType.REDIS:
+                    services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, ConcertCacheRepository>();
                     break;
                 default:
                     break;

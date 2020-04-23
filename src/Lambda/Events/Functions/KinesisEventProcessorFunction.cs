@@ -9,7 +9,7 @@ namespace Cloudbash.Lambda.Events.Functions
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-        public override void Run(KinesisEvent kinesisEvent)
+        public void Run(KinesisEvent kinesisEvent)
         {
             foreach (var record in kinesisEvent.Records)
             {

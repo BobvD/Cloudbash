@@ -7,7 +7,7 @@ namespace Cloudbash.Infrastructure.Cache
     public class RedisCache : Cloudbash.Application.Common.Definitions.Cache
     {
         private ConnectionMultiplexer redisConnections;
-        private string _connectionString;
+        private IServerlessConfiguration _config;
         private IDatabase RedisDatabase
         {
             get
@@ -20,17 +20,17 @@ namespace Cloudbash.Infrastructure.Cache
             }
         }
 
-        public RedisCache(bool isCacheEnabled, IServerlessConfiguration config) : base(isCacheEnabled)
+        public RedisCache(IServerlessConfiguration config) : base(true)
         {
-            _connectionString = config.RedisConnectionString;
+            _config = config;
             InitializeConnection();
         }
 
         private void InitializeConnection()
-        {
+        {            
             try
             {
-                this.redisConnections = ConnectionMultiplexer.Connect(_connectionString);
+                this.redisConnections = ConnectionMultiplexer.Connect(_config.RedisConnectionString);
             }
             catch (RedisConnectionException errorConnectionException)
             {

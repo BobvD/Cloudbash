@@ -1,4 +1,5 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
+using Cloudbash.Infrastructure.Cache;
 using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.EventStream;
 using Cloudbash.Infrastructure.Extensions;
@@ -46,6 +47,7 @@ namespace Cloudbash.Infrastructure
                     services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
                     break;
                 case DatabaseType.REDIS:
+                    services.AddTransient<ICache, RedisCache>();
                     break;
                 default:
                     break;

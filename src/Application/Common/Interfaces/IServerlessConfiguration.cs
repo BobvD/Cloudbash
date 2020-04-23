@@ -8,6 +8,7 @@
         string KinesisStreamName { get; }
         string KinesisPartitionKey { get; }
         string SQSUrl { get;  }
+        RedisConfiguration Redis { get; set; }
         string RedisConnectionString { get; }
     }
 
@@ -19,7 +20,8 @@
         public string KinesisStreamName { get; set; }
         public string KinesisPartitionKey { get; set; } = "partitionKey-1";
         public string EventStoreTableName { get; set; }
-        public string RedisConnectionString { get; set; }
+        public RedisConfiguration Redis { get; set; }
+        public string RedisConnectionString { get { return $"{Redis.Host}:{Redis.Port}"; } }
     }
 
     public enum EventBusType
@@ -34,4 +36,9 @@
         REDIS
     }
 
+    public class RedisConfiguration
+    {
+        public int Port { get; set; }
+        public string Host { get; set; }
+    }
 }
