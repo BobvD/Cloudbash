@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Definitions\" />
     <Folder Include="Users\Events\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>

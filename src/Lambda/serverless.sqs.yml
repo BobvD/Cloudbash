@@ -39,7 +39,7 @@ custom:
     PORT: '6379'
 
 functions:
-  ## Concert Endpoints
+  # Concert Endpoints
   createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
     events:
@@ -47,6 +47,15 @@ functions:
         path: concerts
         method: post
         cors: true
+
+  getConcerts:
+     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
+     vpc: ${file(./resource/LambdaStorageSecurityGroupConfig.yml)}
+     events:
+     - http:
+         path: concerts
+         method: get
+         cors: true
 
   # lambda for catching events from the eventstream (SQS)
   eventStreamHandler:

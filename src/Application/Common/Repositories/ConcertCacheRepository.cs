@@ -23,6 +23,12 @@ namespace Cloudbash.Application.Common.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<List<Concert>> GetAsync()
+        {
+            var results = _cache.Get<Concert>() as List<Concert>;
+            return Task.FromResult<List<Concert>>(results);
+        }
+
         public Task<Concert> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
@@ -30,7 +36,8 @@ namespace Cloudbash.Application.Common.Repositories
 
         public Task InsertAsync(Concert entity, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _cache.Save(entity);
+            return Task.CompletedTask;
         }
 
         public Task RemoveByIdAsync(Concert entity, CancellationToken cancellationToken)

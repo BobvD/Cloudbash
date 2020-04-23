@@ -1,5 +1,6 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -20,6 +21,11 @@ namespace Cloudbash.Application.Common.Repositories
         public Task<IEnumerable<Concert>> FindAllAsync(Expression<Func<Concert, bool>> predicate)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<List<Concert>> GetAsync()
+        {
+            return _context.Concerts.ToListAsync();
         }
 
         public Task<Concert> GetByIdAsync(Guid id)

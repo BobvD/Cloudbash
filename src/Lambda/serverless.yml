@@ -67,6 +67,7 @@ functions:
         path: concerts
         method: post
         cors: true
+
   getConcerts:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
     events:

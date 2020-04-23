@@ -1,101 +1,72 @@
-﻿using Cloudbash.Infrastructure.Configs;
-using StackExchange.Redis;
+﻿using Cloudbash.Application.Common.Interfaces;
+using Cloudbash.Infrastructure.Configs;
+using ServiceStack.Redis;
 using System;
+using System.Collections.Generic;
 
 namespace Cloudbash.Infrastructure.Cache
 {
-    public class RedisCache : Cloudbash.Application.Common.Definitions.Cache
+    public class RedisCache : ICache, IDisposable
     {
-        private ConnectionMultiplexer redisConnections;
         private IServerlessConfiguration _config;
-        private IDatabase RedisDatabase
-        {
-            get
-            {
-                if (this.redisConnections == null)
-                {
-                    InitializeConnection();
-                }
-                return this.redisConnections != null ? this.redisConnections.GetDatabase() : null;
-            }
-        }
+        private IRedisClientsManager _manager;
+        private Lazy<IRedisClient> _clientFactory;
 
-        public RedisCache(IServerlessConfiguration config) : base(true)
+        public RedisCache(IServerlessConfiguration config) 
         {
             _config = config;
             InitializeConnection();
         }
 
         private void InitializeConnection()
-        {            
+        {
             try
             {
-                this.redisConnections = ConnectionMultiplexer.Connect(_config.RedisConnectionString);
+                _clientFactory = new Lazy<IRedisClient>(GetRedisClient);
+                _manager = new PooledRedisClientManager(_config.RedisConnectionString);
             }
-            catch (RedisConnectionException errorConnectionException)
+            catch (Exception e)
             {
-                Console.WriteLine("Error connecting the redis cache : " + errorConnectionException.Message, errorConnectionException);
+
+                Console.WriteLine(e.Message);
+            }            
+        }
+
+        private IRedisClient GetRedisClient()
+        {
+            return _manager.GetClient();
+        }
+
+        private T Run<T>(Func<IRedisClient, T> action)
+        {
+            using (var client = GetRedisClient())
+            {
+                return action(client);
             }
         }
 
-        protected override string GetStringProtected(string key)
-        {
-            if (this.RedisDatabase == null)
-            {
-                return null;
-            }
-            var redisObject = this.RedisDatabase.StringGet(key);
-            if (redisObject.HasValue)
-            {
-                return redisObject.ToString();
-            }
-            else
-            {
-                return null;
-            }
+        public T Get<T>(Guid id) where T : class
+        {            
+            return Run(_ => _.As<T>().GetById(id));
         }
 
-        protected override void SetStringProtected(string key, string objectToCache, TimeSpan? expiry = null)
+        public void Save<T>(T entity) where T : class
         {
-            if (this.RedisDatabase == null)
-            {
-                return;
-            }
-
-            this.RedisDatabase.StringSet(key, objectToCache, expiry);
+            Run(_ => _.Store(entity));            
         }
 
-        protected override void DeleteProtected(string key)
+        public void Dispose()
         {
-            if (this.RedisDatabase == null)
+            _manager.Dispose();
+            if(_clientFactory.IsValueCreated)
             {
-                return;
-            }
-            this.RedisDatabase.KeyDelete(key);
+                _clientFactory.Value.Dispose();
+            }            
         }
 
-        protected override void FlushAllProtected()
+        public IList<T> Get<T>() where T : class
         {
-            if (this.RedisDatabase == null)
-            {
-                return;
-            }
-            var endPoints = this.redisConnections.GetEndPoints();
-            foreach (var endPoint in endPoints)
-            {
-                var server = this.redisConnections.GetServer(endPoint);
-                server.FlushAllDatabases();
-            }
-        }
-
-        protected override void DeleteByPatternProtected(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsCacheRunning
-        {
-            get { return this.redisConnections != null && this.redisConnections.IsConnected; }
+            return Run(_ => _.As<T>().GetAll());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
+using Cloudbash.Domain.ViewModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -11,18 +12,16 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcerts
     {
         public class GetProductsQueryHandler : IRequestHandler<GetConcertsQuery, GetConcertsVm>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IViewModelRepository<Concert> _repository;
 
-            public GetProductsQueryHandler(IApplicationDbContext context)
+            public GetProductsQueryHandler(IViewModelRepository<Concert> repository)
             {
-                _context = context;
+                _repository = repository;
             }
 
             public async Task<GetConcertsVm> Handle(GetConcertsQuery request, CancellationToken cancellationToken)
             {
-                var concerts = await _context.Concerts
-                    .OrderBy(t => t.Name)
-                    .ToListAsync(cancellationToken);
+                var concerts = await _repository.GetAsync();
 
                 var vm = new GetConcertsVm
                 {

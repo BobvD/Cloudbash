@@ -11,6 +11,8 @@ namespace Cloudbash.Application.Common.Interfaces
     {
         Task InsertAsync(T entity, CancellationToken cancellationToken);
 
+        Task<List<T>> GetAsync();
+
         Task UpdateAsync(T entity);
 
         Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
