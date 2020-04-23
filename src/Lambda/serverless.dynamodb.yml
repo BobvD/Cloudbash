@@ -1,0 +1,53 @@
+﻿service: cloudbash-dynamodb
+
+provider:
+  name: aws
+  runtime: dotnetcore2.1
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    # Grant privilege to write to events table 
+    - Effect: Allow
+      Action:
+      - dynamodb:*
+      Resource:
+        Fn::GetAtt: 
+        - eventStore
+        - Arn  
+  environment:   
+    ServerlessConfiguration__EventBus: 'DYNAMO'    
+    ServerlessConfiguration__Database: 'DYNAMO'
+    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
+
+custom:
+  EVENT_STORE_NAME: EventStore_config3
+  
+functions:
+
+  # Concert Endpoints
+  createConcert:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
+    events:
+    - http:
+        path: concerts
+        method: post
+        cors: true
+
+  eventStreamHandler:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - eventStore
+              - StreamArn
+          batchSize: 1
+
+resources:
+  Resources:
+    # Event Store = DynamoDB
+    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
+
+package:
+  artifact: bin/release/netcoreapp2.1/deploy-package.zip

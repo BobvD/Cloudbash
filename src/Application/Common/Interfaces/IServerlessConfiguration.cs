@@ -21,19 +21,21 @@
         public string KinesisPartitionKey { get; set; } = "partitionKey-1";
         public string EventStoreTableName { get; set; }
         public RedisConfiguration Redis { get; set; }
-        public string RedisConnectionString { get { return $"{Redis.Host}:{Redis.Port}"; } }
+        public string RedisConnectionString { get { return $"{Redis?.Host}:{Redis?.Port}"; } }
     }
 
     public enum EventBusType
     {
         SQS,
-        KINESIS 
+        KINESIS,
+        DYNAMO
     }
 
     public enum DatabaseType
     {
         POSTGRES,
-        REDIS
+        REDIS,
+        DYNAMO
     }
 
     public class RedisConfiguration

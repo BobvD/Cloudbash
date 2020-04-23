@@ -1,5 +1,6 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
+using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.Persistence;
 using System;
 using System.Reflection;
@@ -12,14 +13,26 @@ namespace Cloudbash.Application.Common.EventSourcing
     {
         private readonly IEventStore _eventStore;
         private readonly IPublisher _publisher;
+        private readonly IServerlessConfiguration _config;
 
         public EventSourcedRepository(
             IEventStore eventStore,
-            IPublisher publisher)
+            IPublisher publisher,
+            IServerlessConfiguration config)
         {
             _eventStore = eventStore;
             _publisher = publisher;
+            _config = config;
         }
+
+        public EventSourcedRepository(
+           IEventStore eventStore,
+           IServerlessConfiguration config)
+        {
+            _eventStore = eventStore;
+            _config = config;
+        }
+
 
         public async Task<TAggregate> GetByIdAsync(Guid id)
         {            
@@ -42,7 +55,10 @@ namespace Cloudbash.Application.Common.EventSourcing
                 // Save event to Event Store
                 await _eventStore.SaveAsync(@event);
                 // Publish event to Event Bus
-                await _publisher.PublishAsync((dynamic)@event);
+                if(_config.EventBus != EventBusType.DYNAMO)
+                {
+                    await _publisher.PublishAsync((dynamic)@event);
+                }
             }
             // All events are committed, clear the list with uncommitted events
             aggregate.ClearUncommittedEvents();           

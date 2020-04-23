@@ -59,7 +59,7 @@ package:
 
 functions:
 
-  ## Concert Endpoints
+  # Concert Endpoints
   createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
     events:

@@ -9,7 +9,8 @@ prompt="Pick an option:"
 options=(
     "Eventstream: ${bold}Kinesis${normal}, Event store: ${bold}DynamoDB${normal}, Read Database: ${bold}RDS (Postgres)${normal}" 
     "Eventstream: ${bold}Simple Queue Service${normal}, Event store: ${bold}DynamoDB${normal}, Read Database: ${bold}ElastiCache (Redis)${normal}"
-     "${bold}Remove${normal} an existing deployment"
+    "Eventstream: ${bold}DynamoDB Streams${normal}, Event store: ${bold}DynamoDB${normal}, Read Database: ${bold}DynamoDB${normal}"
+    "${bold}Remove${normal} an existing deployment"
      )
 
 removeOptions=(
@@ -28,6 +29,7 @@ printf "$title"
 
 SERVERLESS_CONFIGURATION_1="serverless.yml"
 SERVERLESS_CONFIGURATION_2="serverless.sqs.yml"
+SERVERLESS_CONFIGURATION_3="serverless.dynamodb.yml"
 
 PS3="$prompt "
 cd src/Lambda; 
@@ -47,7 +49,13 @@ select opt in "${options[@]}" "Quit"; do
         printf "\n\nStarting serverless... \n\n"; 
         sls deploy --config $SERVERLESS_CONFIGURATION_2; 
         break;;
-    3 ) printf "\nWhich deployment do you want to remove?\n\n";
+    3)  printf "\e[95m\nOption 2 selected\n${normal}"; 
+        printf "Building source code... \n\n"; 
+        ./build.sh; 
+        printf "\n\nStarting serverless... \n\n"; 
+        sls deploy --config $SERVERLESS_CONFIGURATION_3; 
+        break;; 
+    4 ) printf "\nWhich deployment do you want to remove?\n\n";
 
         select opt in "${removeOptions[@]}" "Quit"; do 
 

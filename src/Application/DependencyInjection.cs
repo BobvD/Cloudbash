@@ -15,11 +15,12 @@ namespace Cloudbash.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IServerlessConfiguration config)
         {
-            
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
             services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
             services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();
 
-            Console.WriteLine("DATASE TYPE: " + config.Database);
             switch (config.Database)
             {
                 case DatabaseType.POSTGRES:
@@ -30,12 +31,7 @@ namespace Cloudbash.Application
                     break;
                 default:
                     break;
-            }
-            
-
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-
+            }         
 
             return services;
         }
