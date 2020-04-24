@@ -21,8 +21,8 @@ namespace Cloudbash.Application.Concerts.Events
         {
             var @event = notification.DomainEvent;
 
-            var concert = await _concertRepository.GetByIdAsync(@event.AggregateId);           
-            await _concertRepository.RemoveByIdAsync(concert, cancellationToken);            
+            var concert = _concertRepository.GetById(@event.AggregateId);           
+            _concertRepository.RemoveById(concert);            
         }
     }
 }

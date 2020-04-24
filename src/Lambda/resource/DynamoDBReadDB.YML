@@ -1,0 +1,12 @@
+﻿Type: AWS::DynamoDB::Table
+Properties:
+  TableName: Cloudbash.Concerts
+  AttributeDefinitions:
+    - AttributeName: AggregateId
+      AttributeType: S
+  KeySchema:
+    - AttributeName: AggregateId
+      KeyType: HASH
+  ProvisionedThroughput:
+    ReadCapacityUnits: 1
+    WriteCapacityUnits: 1

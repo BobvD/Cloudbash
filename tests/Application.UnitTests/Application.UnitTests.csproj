@@ -8,6 +8,8 @@
     <AssemblyName>Cloudbash.Application.UnitTests</AssemblyName>
 
     <RootNamespace>Cloudbash.Application.UnitTests</RootNamespace>
+
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

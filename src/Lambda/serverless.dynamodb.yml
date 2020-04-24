@@ -2,7 +2,7 @@
 
 provider:
   name: aws
-  runtime: dotnetcore2.1
+  runtime: dotnetcore3.1
   stage: dev
   region: us-east-1
   iamRoleStatements:
@@ -14,6 +14,13 @@ provider:
         Fn::GetAtt: 
         - eventStore
         - Arn  
+    - Effect: Allow
+      Action:
+      - dynamodb:*
+      Resource:
+        Fn::GetAtt: 
+        - readDatabase
+        - Arn 
   environment:   
     ServerlessConfiguration__EventBus: 'DYNAMO'    
     ServerlessConfiguration__Database: 'DYNAMO'
@@ -48,6 +55,6 @@ resources:
   Resources:
     # Event Store = DynamoDB
     eventStore: ${file(./resource/DynamoDBEventStore.yml)}
-
+    readDatabase:  ${file(./resource/DynamoDBReadDB.yml)}
 package:
-  artifact: bin/release/netcoreapp2.1/deploy-package.zip
+  artifact: bin/release/netcoreapp3.1/deploy-package.zip

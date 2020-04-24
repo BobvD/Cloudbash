@@ -49,6 +49,9 @@ namespace Cloudbash.Infrastructure
                 case DatabaseType.REDIS:
                     services.AddTransient<ICache, RedisCache>();
                     break;
+                case DatabaseType.DYNAMO:
+                    services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, DynamoDBRepository<Domain.ViewModels.Concert>>();
+                    break;
                 default:
                     break;
             }

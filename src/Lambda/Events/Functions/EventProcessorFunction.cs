@@ -17,8 +17,6 @@ namespace Cloudbash.Lambda.Events.Functions
 
         public void Consume(string ev, string type)
         {
-            Console.WriteLine(ev);
-            Console.WriteLine(type);
             var @event = DomainFromEnveloppe(new EventEnveloppe { Event = ev, Type = type + ", Cloudbash.Domain" });
             Publish(@event);
         }
@@ -26,6 +24,7 @@ namespace Cloudbash.Lambda.Events.Functions
         public void Publish(IDomainEvent @event)
         {
             var domainEventNotification = CreateDomainEventNotification((dynamic)@event);
+            Console.WriteLine("Event Handled: " + @event.GetType().ToString());
             Mediator.Publish(domainEventNotification);
         }
 

@@ -2,7 +2,7 @@
 
 provider:
   name: aws
-  runtime: dotnetcore2.1
+  runtime: netcoreapp3.1
   stage: dev
   region: us-east-1
   iamRoleStatements:
@@ -26,7 +26,7 @@ provider:
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
 
 package:
-  artifact: bin/release/netcoreapp2.1/deploy-package.zip
+  artifact: bin/release/netcoreapp3.1/deploy-package.zip
 
 custom: 
   EVENT_STORE_NAME: EventStore_config2

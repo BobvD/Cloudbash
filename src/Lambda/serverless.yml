@@ -3,7 +3,7 @@ service: cloudbash
 
 provider:
   name: aws
-  runtime: dotnetcore2.1
+  runtime: dotnetcore3.1
   stage: dev
   region: us-east-1
   environment:   
@@ -55,7 +55,7 @@ custom:
       'deploy:finalize': serverless invoke --function dbInit -d
 
 package:
-  artifact: bin/release/netcoreapp2.1/deploy-package.zip
+  artifact: bin/release/netcoreapp3.1/deploy-package.zip
 
 functions:
 

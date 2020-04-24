@@ -2,24 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Interfaces
 {
     public interface IViewModelRepository<T> where T : ReadModelBase
     {
-        Task InsertAsync(T entity, CancellationToken cancellationToken);
+        void Insert(T entity);
 
-        Task<List<T>> GetAsync();
+        IEnumerable<T> Get();
 
-        Task UpdateAsync(T entity);
+        void Update(T entity);
 
-        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate);
 
-        Task<T> GetByIdAsync(Guid id);
+        T GetById(Guid id);
 
-        Task RemoveByIdAsync(T entity, CancellationToken cancellationToken);
+        void RemoveById(T entity);
 
     }
 }

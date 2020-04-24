@@ -1,11 +1,10 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Repositories
 {
@@ -18,34 +17,35 @@ namespace Cloudbash.Application.Common.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<Concert>> FindAllAsync(Expression<Func<Concert, bool>> predicate)
+        public IEnumerable<Concert> FindAll(Expression<Func<Concert, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Concert>> GetAsync()
+        public IEnumerable<Concert> Get()
         {
-            return _context.Concerts.ToListAsync();
+            return _context.Concerts.ToList();
         }
 
-        public Task<Concert> GetByIdAsync(Guid id)
+        public Concert GetById(Guid id)
         {
-            return _context.Concerts.FindAsync(id);
+            return _context.Concerts.Find(id);
         }
 
-        public Task InsertAsync(Concert entity, CancellationToken cancellationToken)
+
+        public void Insert(Concert entity)
         {
             _context.Concerts.Add(entity);
-            return _context.SaveChangesAsync(cancellationToken);
+            _context.SaveChanges();
         }
 
-        public Task RemoveByIdAsync(Concert concert, CancellationToken cancellationToken)
+        public void RemoveById(Concert concert)
         {
             _context.Concerts.Remove(concert);
-            return _context.SaveChangesAsync(cancellationToken);
+            _context.SaveChanges();
         }
 
-        public Task UpdateAsync(Concert entity)
+        public void Update(Concert entity)
         {
             throw new NotImplementedException();
         }

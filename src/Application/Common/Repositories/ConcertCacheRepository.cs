@@ -5,8 +5,6 @@ using Cloudbash.Domain.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Repositories
 {
@@ -18,34 +16,33 @@ namespace Cloudbash.Application.Common.Repositories
             _cache = cache;
         }
 
-        public Task<IEnumerable<Concert>> FindAllAsync(Expression<Func<Concert, bool>> predicate)
+        public IEnumerable<Concert> FindAll(Expression<Func<Concert, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Concert>> GetAsync()
+        public IEnumerable<Concert> Get()
         {
-            var results = _cache.Get<Concert>() as List<Concert>;
-            return Task.FromResult<List<Concert>>(results);
+            return _cache.Get<Concert>();
+            
         }
 
-        public Task<Concert> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task InsertAsync(Concert entity, CancellationToken cancellationToken)
-        {
-            _cache.Save(entity);
-            return Task.CompletedTask;
-        }
-
-        public Task RemoveByIdAsync(Concert entity, CancellationToken cancellationToken)
+        public Concert GetById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Concert entity)
+        public void Insert(Concert entity)
+        {
+            _cache.Save(entity);         
+        }
+
+        public void RemoveById(Concert entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Concert entity)
         {
             throw new NotImplementedException();
         }

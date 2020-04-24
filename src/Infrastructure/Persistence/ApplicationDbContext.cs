@@ -20,12 +20,9 @@ namespace Cloudbash.Infrastructure.Persistence
 
         public DbSet<Concert> Concerts { get; set; }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override int SaveChanges()
         {
-            // async doesnt seem to work temporary fix
-            var saveChangesResult = this.SaveChanges();
-
-            return base.SaveChangesAsync(cancellationToken);
+            return SaveChanges();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

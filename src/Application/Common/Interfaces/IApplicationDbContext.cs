@@ -11,7 +11,6 @@ namespace Cloudbash.Application.Common.Interfaces
     {
         DbSet<Concert> Concerts { get; set; }
         IQueryable<object> GetSetByObject(Type t);
-
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        int SaveChanges();
     }
 }
