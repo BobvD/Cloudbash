@@ -10,6 +10,7 @@ namespace Cloudbash.Application.Common.Mappings
         public MappingProfile()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+            ApplyMappingsFromAssembly(Assembly.Load("Cloudbash.Infrastructure"));
         }
 
         private void ApplyMappingsFromAssembly(Assembly assembly)

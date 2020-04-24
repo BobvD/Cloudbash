@@ -1,4 +1,5 @@
-﻿using Cloudbash.Application.Common.Behaviours;
+﻿using AutoMapper;
+using Cloudbash.Application.Common.Behaviours;
 using Cloudbash.Application.Common.EventSourcing;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Application.Common.Repositories;
@@ -31,7 +32,10 @@ namespace Cloudbash.Application
                     break;
                 default:
                     break;
-            }         
+            }
+
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }

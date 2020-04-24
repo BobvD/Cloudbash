@@ -2,10 +2,10 @@
 Properties:
   TableName: Cloudbash.Concerts
   AttributeDefinitions:
-    - AttributeName: AggregateId
+    - AttributeName: Id
       AttributeType: S
   KeySchema:
-    - AttributeName: AggregateId
+    - AttributeName: Id
       KeyType: HASH
   ProvisionedThroughput:
     ReadCapacityUnits: 1

@@ -2,7 +2,7 @@
 
 provider:
   name: aws
-  runtime: netcoreapp3.1
+  runtime: dotnetcore3.1
   stage: dev
   region: us-east-1
   iamRoleStatements:

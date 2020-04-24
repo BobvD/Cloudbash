@@ -16,6 +16,7 @@ options=(
 removeOptions=(
     "Configuration #1"
     "Configuration #2"
+    "Configuration #3"
 )
 
 printf "\e[95m"
@@ -49,7 +50,7 @@ select opt in "${options[@]}" "Quit"; do
         printf "\n\nStarting serverless... \n\n"; 
         sls deploy --config $SERVERLESS_CONFIGURATION_2; 
         break;;
-    3)  printf "\e[95m\nOption 2 selected\n${normal}"; 
+    3)  printf "\e[95m\nOption 3 selected\n${normal}"; 
         printf "Building source code... \n\n"; 
         ./build.sh; 
         printf "\n\nStarting serverless... \n\n"; 
@@ -65,6 +66,9 @@ select opt in "${options[@]}" "Quit"; do
                 break;;
             2 ) printf "\e[95mStarting to remove configuration #2...${normal}\n"; 
                 sls remove --config $SERVERLESS_CONFIGURATION_2;
+                break;;
+            3 ) printf "\e[95mStarting to remove configuration #3...${normal}\n"; 
+                sls remove --config $SERVERLESS_CONFIGURATION_3;
                 break;;
             esac
 

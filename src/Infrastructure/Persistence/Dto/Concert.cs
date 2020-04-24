@@ -5,7 +5,7 @@ using System;
 namespace Cloudbash.Infrastructure.Persistence.Dto
 {
     [DynamoDBTable("Cloudbash.Concerts")]
-    public class Concert : IMapFrom<Concert>
+    public class Concert : IMapFrom<Domain.ViewModels.Concert>
     {
         [DynamoDBHashKey]
         public Guid Id { get; set; }

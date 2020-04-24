@@ -1,4 +1,5 @@
-﻿using Cloudbash.Application.Common.Interfaces;
+﻿using AutoMapper;
+using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Infrastructure.Cache;
 using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.EventStream;
@@ -8,6 +9,7 @@ using Cloudbash.Infrastructure.Persistence.EventStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Cloudbash.Infrastructure
 {
@@ -55,7 +57,9 @@ namespace Cloudbash.Infrastructure
                 default:
                     break;
             }
-               
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             return services;
         }
         
