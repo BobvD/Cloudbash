@@ -1,5 +1,8 @@
-﻿using Amazon.Lambda.Core;
+﻿using Amazon.DynamoDBv2.Model;
+using Amazon.Lambda.Core;
 using Amazon.Lambda.DynamoDBEvents;
+using Newtonsoft.Json;
+using System;
 
 namespace Cloudbash.Lambda.Events.Functions
 {
@@ -8,7 +11,14 @@ namespace Cloudbash.Lambda.Events.Functions
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public void Run(DynamoDBEvent dynamoEvent)
         {
-           LambdaLogger.Log($"*** INFO: Event: " + dynamoEvent.ToString());
+            foreach (var record in dynamoEvent.Records)
+            {
+                AttributeValue @event = null;
+                AttributeValue type = null;
+                record.Dynamodb.NewImage.TryGetValue("Data", out @event);
+                record.Dynamodb.NewImage.TryGetValue("EventType", out type);
+                Consume(@event.S, type.S);
+            }
         }
     }
 }
