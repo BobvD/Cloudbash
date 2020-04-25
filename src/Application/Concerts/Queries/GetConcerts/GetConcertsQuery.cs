@@ -21,7 +21,7 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcerts
 
             public async Task<GetConcertsVm> Handle(GetConcertsQuery request, CancellationToken cancellationToken)
             {
-                var concerts = _repository.Get().ToList();
+                var concerts = await _repository.GetAllAsync();
 
                 var vm = new GetConcertsVm
                 {

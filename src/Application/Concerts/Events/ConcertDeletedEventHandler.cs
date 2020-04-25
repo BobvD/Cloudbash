@@ -19,10 +19,8 @@ namespace Cloudbash.Application.Concerts.Events
 
         public async Task Handle(DomainEventNotification<ConcertDeletedEvent> notification, CancellationToken cancellationToken)
         {
-            var @event = notification.DomainEvent;
-
-            var concert = _concertRepository.GetById(@event.AggregateId);           
-            _concertRepository.RemoveById(concert);            
+            var @event = notification.DomainEvent;       
+            await _concertRepository.DeleteAsync(@event.AggregateId);            
         }
     }
 }

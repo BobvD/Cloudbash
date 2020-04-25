@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence
 {
-    public class DynamoDBRepository<T> : IViewModelRepository<T>, IDisposable where T : ReadModelBase
+    public class DynamoDBRepository<T> : IViewModelRepository<T>, IDisposable where T : IReadModel
     {
         private readonly AmazonDynamoDBClient _amazonDynamoDBClient;
         private readonly DynamoDBOperationConfig _configuration;
@@ -32,16 +32,26 @@ namespace Cloudbash.Infrastructure.Persistence
                 SkipVersionCheck = true
             };
             
+        }        
+
+        public Task<List<T>> GetAllAsync()
+        {
+            throw new NotImplementedException();
         }
 
-        public async void Insert(T entity)
+        public Task<T> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<T> AddAsync(T entity)
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
                 try
                 {
                     await context.SaveAsync(entity, _configuration);
-
+                    return entity;
                 }
                 catch (Exception e)
                 {
@@ -49,36 +59,18 @@ namespace Cloudbash.Infrastructure.Persistence
                     Console.WriteLine(e.Message);
                 }
             }
-
-            /*
-            Run(_ => _.SaveAsync(Map(entity), _configuration));
-            */
+            return default(T);
         }
 
-        public IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate)
+        public Task<T> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> Get()
+        public Task<T> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
-
-        public T GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }             
-        
-        public void RemoveById(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(T entity)
-        {
-            throw new NotImplementedException();
-        }     
 
         private IDynamoDBContext GetDynamoClient()
         {

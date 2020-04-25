@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Interfaces
@@ -11,6 +10,6 @@ namespace Cloudbash.Application.Common.Interfaces
     {
         DbSet<Concert> Concerts { get; set; }
         IQueryable<object> GetSetByObject(Type t);
-        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

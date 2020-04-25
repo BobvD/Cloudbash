@@ -20,11 +20,7 @@ namespace Cloudbash.Infrastructure.Persistence
 
         public DbSet<Concert> Concerts { get; set; }
 
-        public override int SaveChanges()
-        {
-            return SaveChanges();
-        }
-
+      
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -38,5 +34,10 @@ namespace Cloudbash.Infrastructure.Persistence
             return this.Set(t);
         }
 
+        public Task<int> SaveChangesAsync()
+        {
+            var result = base.SaveChanges();
+            return Task.FromResult(result);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Cloudbash.Application.Concerts.Events
         public async Task Handle(DomainEventNotification<ConcertCreatedEvent> notification, CancellationToken cancellationToken)
         {
             var @event = notification.DomainEvent;
-            _concertRepository.Insert(
+            await _concertRepository.AddAsync(
                 new Concert { Id = @event.AggregateId, Name = @event.Name, Venue = @event.Venue, ImageUrl = @event.ImageUrl, Date = @event.Date });            
         }
     }

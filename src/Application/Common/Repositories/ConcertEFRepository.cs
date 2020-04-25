@@ -1,10 +1,12 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Repositories
 {
@@ -17,37 +19,42 @@ namespace Cloudbash.Application.Common.Repositories
             _context = context;
         }
 
-        public IEnumerable<Concert> FindAll(Expression<Func<Concert, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Concert> Get()
-        {
-            return _context.Concerts.ToList();
-        }
-
-        public Concert GetById(Guid id)
-        {
-            return _context.Concerts.Find(id);
-        }
-
-
-        public void Insert(Concert entity)
+        public async Task<Concert> AddAsync(Concert entity)
         {
             _context.Concerts.Add(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public void RemoveById(Concert concert)
+        public async Task<Concert> DeleteAsync(Guid id)
         {
-            _context.Concerts.Remove(concert);
-            _context.SaveChanges();
+            var entity = await _context.Concerts.FindAsync(id);
+            if (entity == null)
+            {
+                return entity;
+            }
+
+            _context.Concerts.Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return entity;
         }
 
-        public void Update(Concert entity)
+        public async Task<List<Concert>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Concerts.ToListAsync();
+        }
+
+        public async Task<Concert> GetAsync(Guid id)
+        {
+            return await _context.Concerts.FindAsync(id);
+        }
+
+        public async Task<Concert> UpdateAsync(Concert entity)
+        {
+            _context.Concerts.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
     }
 }
