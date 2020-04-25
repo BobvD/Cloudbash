@@ -34,9 +34,13 @@ namespace Cloudbash.Infrastructure.Persistence
             
         }        
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var context = new DynamoDBContext(_amazonDynamoDBClient))
+            {
+                var conditions = new List<ScanCondition>();
+                return await context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync();
+            }
         }
 
         public Task<T> GetAsync(Guid id)

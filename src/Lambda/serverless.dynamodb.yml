@@ -40,6 +40,14 @@ functions:
         method: post
         cors: true
 
+  getConcerts:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
+    events:
+    - http:
+        path: concerts
+        method: get
+        cors: true
+
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
     events:
