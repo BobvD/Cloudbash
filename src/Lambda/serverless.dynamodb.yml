@@ -34,6 +34,9 @@ functions:
   # Concert Endpoints
   createConcert:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
+    memorySize: 128
+    provisionedConcurrency: 1
+    reservedConcurrency: 1
     events:
     - http:
         path: concerts
