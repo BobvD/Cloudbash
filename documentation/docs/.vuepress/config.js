@@ -17,26 +17,34 @@ module.exports = {
         collapsable: false, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
-          ['/introduction/ES', 'Event Sourcing & CQRS'],
-          ['/introduction/DDD', 'Domain Driven Design']
+          ['/introduction/DDD', 'Getting started'],
+          ['/introduction/ES', 'Technical stack']          
         ]
-      },      
+      }, 
+      {
+        title: 'Event Sourcing & CQRS',
+        path: '/event_sourcing/',
+      },   
+      {
+        title: 'Domain Driven Design',
+        path: '/domain_driven_design/',
+      },     
       {
         title: 'Business Scenario and Analysis',
-        path: '/cloudbash/',
+        path: '/business_scenario/',
         collapsable: false
-      },
+      },      
       {
         title: 'Serverless Architecture',
-        children: [ /* ... */ ]
+        path: '/serverless_architecture/'
       },
       {
         title: 'Amazon Web Services',
-        children: [ /* ... */ ]
+        path: '/aws/'
       },
       {
         title: 'Dev Ops',
-        children: [ /* ... */ ]
+        path: '/dev_ops/'
       }
     ],
     nav: [
