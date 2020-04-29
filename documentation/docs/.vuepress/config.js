@@ -23,7 +23,11 @@ module.exports = {
       }, 
       {
         title: 'Event Sourcing & CQRS',
-        path: '/event_sourcing/',
+        children: [
+          ['/event_sourcing/', 'Introductie'],
+          ['/introduction/ES', 'Implementatie']          
+        ],
+        sidebarDepth: 1,   
       },   
       {
         title: 'Domain Driven Design',
@@ -57,6 +61,21 @@ module.exports = {
         link: 'https://github.com/BobvD/Cloudbash'
       }
     ],   
-    plugins: ['@vuepress/active-header-links']
+    plugins: [
+      '@vuepress/active-header-links',
+      'vuepress-plugin-table-of-contents',
+      [
+        'vuepress-plugin-medium-zoom',
+        {
+          selector: '.my-wrapper .my-img',
+          delay: 1000,
+          options: {
+            margin: 24,
+            background: '#BADA55',
+            scrollOffset: 0,
+          },
+        },
+      ]
+    ]
   }
 }
