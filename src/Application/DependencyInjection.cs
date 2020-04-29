@@ -3,7 +3,9 @@ using Cloudbash.Application.Common.Behaviours;
 using Cloudbash.Application.Common.EventSourcing;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Application.Common.Repositories;
-using Cloudbash.Domain.Entities;
+using Cloudbash.Domain.Concerts;
+using Cloudbash.Domain.Venues;
+using Cloudbash.Domain.Users;
 using Cloudbash.Infrastructure.Configs;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,7 @@ namespace Cloudbash.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
+            services.AddTransient<IRepository<Venue>, EventSourcedRepository<Venue>>();
             services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();
 
             switch (config.Database)

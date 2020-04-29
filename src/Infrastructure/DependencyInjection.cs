@@ -53,6 +53,7 @@ namespace Cloudbash.Infrastructure
                     break;
                 case DatabaseType.DYNAMO:
                     services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, DynamoDBRepository<Domain.ViewModels.Concert>>();
+                    services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, DynamoDBRepository<Domain.ViewModels.Venue>>();
                     break;
                 default:
                     break;

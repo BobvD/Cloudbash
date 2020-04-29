@@ -1,8 +1,8 @@
-﻿using Cloudbash.Domain.Events;
+﻿using Cloudbash.Domain.Concerts.Events;
 using Cloudbash.Domain.SeedWork;
 using System;
 
-namespace Cloudbash.Domain.Entities
+namespace Cloudbash.Domain.Concerts
 {
     public class Concert : AggregateRootBase
     {

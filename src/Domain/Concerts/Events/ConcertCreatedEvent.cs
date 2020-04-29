@@ -1,7 +1,7 @@
 ﻿using Cloudbash.Domain.SeedWork;
 using System;
 
-namespace Cloudbash.Domain.Events
+namespace Cloudbash.Domain.Concerts.Events
 {
     public class ConcertCreatedEvent : DomainEventBase
     {

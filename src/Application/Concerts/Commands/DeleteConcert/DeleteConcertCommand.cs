@@ -1,6 +1,6 @@
 ﻿using Cloudbash.Application.Common.Exceptions;
 using Cloudbash.Application.Common.Interfaces;
-using Cloudbash.Domain.Entities;
+using Cloudbash.Domain.Concerts;
 using MediatR;
 using System;
 using System.Threading;

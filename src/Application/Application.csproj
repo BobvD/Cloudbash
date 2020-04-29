@@ -27,6 +27,7 @@
     <Folder Include="Common\Definitions\" />
     <Folder Include="Users\Events\" />
     <Folder Include="Users\Queries\" />
+    <Folder Include="Venues\Queries\" />
   </ItemGroup>
 
 </Project>

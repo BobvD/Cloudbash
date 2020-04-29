@@ -5,19 +5,22 @@ using System;
 namespace Cloudbash.Infrastructure.Persistence.Dto
 {
     [DynamoDBTable("Cloudbash.Concerts")]
-    public class Concert : IMapFrom<Domain.ViewModels.Concert>
+    public class Venue : IMapFrom<Domain.ViewModels.Venue>
     {
         [DynamoDBHashKey]
         public Guid Id { get; set; }
         [DynamoDBProperty]
-        public string Name { get; set; }
+        public string Name { get; set; } 
         [DynamoDBProperty]
-        public string Venue { get; set; }
+        public string Description { get; set; }
         [DynamoDBProperty]
-        public string ImageUrl { get; set; }
+        public int Capacity { get; set; }
         [DynamoDBProperty]
-        public string Date { get; set; }
+        public string WebUrl { get; set; }
+        [DynamoDBProperty]
+        public string Address { get; set; }
 
-        public Concert() { }
+        public Venue() { }
+
     }
 }

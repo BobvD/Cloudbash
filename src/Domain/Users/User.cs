@@ -1,8 +1,8 @@
-﻿using Cloudbash.Domain.Events;
+﻿using Cloudbash.Domain.Users.Events;
 using Cloudbash.Domain.SeedWork;
 using System;
 
-namespace Cloudbash.Domain.Entities
+namespace Cloudbash.Domain.Users
 {
     public class User : AggregateRootBase
     {
