@@ -3,7 +3,7 @@
     trigger
   } from '@angular/animations';
 
-  import { Component } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
   
   import { Toast } from 'ngx-toastr';
   
@@ -16,8 +16,16 @@
     ],
     preserveWhitespaces: false,
   })
-  export class InfoBoxComponent extends Toast {
+  export class InfoBoxComponent extends Toast implements OnInit {
    
-  
-  
+    apiUrl: string = "";
+
+    ngOnInit(): void {
+      this.apiUrl = localStorage.getItem('apiUrl');
+      console.log(this.apiUrl);      
+    }
+    
+    saveApiUrl() {
+      localStorage.setItem('apiUrl', this.apiUrl);
+    }
   }

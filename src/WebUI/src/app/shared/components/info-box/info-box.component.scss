@@ -88,3 +88,19 @@ h4 {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+small {
+    font-family: monospace;
+}
+
+@keyframes blink { 
+    50% { border-color: #87499c; } 
+ }
+
+ .blink{ /*or other element you want*/
+     animation: blink .5s step-end infinite alternate;
+ } 
+
+ .active {
+     border-color: green;
+ }

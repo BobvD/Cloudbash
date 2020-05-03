@@ -6,10 +6,11 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root',
   })
 export class ConcertService {
+
     private _concertUrl: string;
 
     constructor(private http: HttpClient) {
-        this._concertUrl = 'https://tidyeiib71.execute-api.us-east-1.amazonaws.com/dev/concerts/';
+        this._concertUrl = localStorage.getItem('apiUrl') + '/concerts';
     }
 
     get(): Observable<any> {
@@ -23,6 +24,5 @@ export class ConcertService {
     delete(id: any): Observable<any> {
         return this.http.delete<any>(this._concertUrl + id);
     }
-
 
 }
