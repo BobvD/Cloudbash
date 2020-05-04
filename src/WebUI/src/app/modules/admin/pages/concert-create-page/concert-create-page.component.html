@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-8">
+
         <div class="card">
             <div class="card-body">
                 <form [formGroup]="concertForm" (ngSubmit)="submit()">
@@ -22,8 +23,16 @@
                 </form>
             </div>
         </div>
+
         <div class="card mt-3">
-            <div class="card-body">
+            <div class="card-body">      
+                <label>Image</label>       
+                <app-image-widget></app-image-widget>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">               
                 <div class="row p-1 py-0">
                     <div class="col-4 p-1" *ngFor="let item of images">
                         <img (click)="selectImage(item)" [src]="item" class="rounded  img-fluid" [ngClass]="{'selected': selectedImage == item}" />
@@ -32,6 +41,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-4">
         <div class="card">
             <div class="card-body">
@@ -40,4 +50,5 @@
             </div>
         </div>
     </div>
+
 </div>

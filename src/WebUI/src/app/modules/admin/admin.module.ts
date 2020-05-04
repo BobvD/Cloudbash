@@ -6,6 +6,7 @@ import { ConcertCreatePageComponent } from './pages/concert-create-page/concert-
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
-        
+        SharedModule        
      ],
     exports: [],
     providers: [],

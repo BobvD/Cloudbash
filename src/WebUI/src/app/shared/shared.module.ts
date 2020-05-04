@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // 3rd party
 import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 // Components
 import { HeaderComponent } from './components/header/header.component';
@@ -14,6 +15,8 @@ import { RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { InfoBoxComponent } from './components/info-box/info-box.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { ImageWidgetComponent } from './components/image-widget/image-widget.component';
+import { MediaService } from './services/media.service';
 
 @NgModule({
     declarations: [
@@ -22,7 +25,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
         NavbarComponent,
         AuthLayoutComponent,
         InfoBoxComponent,
-        AdminLayoutComponent
+        AdminLayoutComponent,
+        ImageWidgetComponent
     ],
     imports: [ 
         CommonModule,
@@ -30,13 +34,16 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
         NgbCollapseModule,
         FormsModule,
         RouterModule,        
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        ImageCropperModule
      ],
     exports: [
         HeaderComponent,
-        FooterComponent
-
+        FooterComponent,
+        ImageWidgetComponent
     ],
-    providers: [],
+    providers: [
+        MediaService
+    ],
 })
 export class SharedModule {}
