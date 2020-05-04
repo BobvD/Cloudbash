@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AmplifyService, AmplifyModules } from 'aws-amplify-angular';
 import Auth from '@aws-amplify/auth'; 
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -32,7 +33,8 @@ import { InfoBoxComponent } from './shared/components/info-box/info-box.componen
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       tapToDismiss: false
-    }) // ToastrModule added
+    }),
+    NgxSpinnerModule
   ],
   providers: [
     {

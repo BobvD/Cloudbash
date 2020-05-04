@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // 3rd party
 import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 // Components
 import { HeaderComponent } from './components/header/header.component';
@@ -28,7 +29,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
         NgbDropdownModule,
         NgbCollapseModule,
         FormsModule,
-        RouterModule
+        RouterModule,        
+        NgxSpinnerModule
      ],
     exports: [
         HeaderComponent,

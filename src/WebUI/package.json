@@ -25,6 +25,7 @@
     "aws-amplify": "^3.0.7",
     "aws-amplify-angular": "^5.0.7",
     "bootstrap": "^4.4.1",
+    "ngx-spinner": "^9.0.2",
     "ngx-toastr": "^11.3.3",
     "rxjs": "~6.5.4",
     "save-dev": "0.0.1-security",

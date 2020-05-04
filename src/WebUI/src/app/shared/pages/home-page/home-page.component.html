@@ -1,6 +1,14 @@
 <app-header></app-header>
 <main role="main">
   <div class="container">    
+    <div *ngIf="error">      
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Failed to load content.</strong> Did you provide a valid api url?
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    </div>
     <app-concert-grid [concerts]="concerts"></app-concert-grid>
   </div>
 </main>
