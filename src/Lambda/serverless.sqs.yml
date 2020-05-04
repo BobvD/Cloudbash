@@ -50,7 +50,7 @@ functions:
 
   getConcerts:
      handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
-     vpc: ${file(./resource/LambdaStorageSecurityGroupConfig.yml)}
+     vpc: ${file(./serverless/resources/LambdaStorageSecurityGroupConfig.yml)}
      events:
      - http:
          path: concerts
@@ -61,7 +61,7 @@ functions:
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.SQSEventProcessorFunction::Run
     timeout: 30
-    vpc: ${file(./resource/LambdaStorageSecurityGroupConfig.yml)}
+    vpc: ${file(./serverless/resources/LambdaStorageSecurityGroupConfig.yml)}
     events:
       - sqs: 
           arn:
@@ -71,34 +71,34 @@ resources:
   Resources:
   
     # Internet Gateway
-    CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}
+    CloudbashInternetGateway: ${file(./serverless/resources/InternetGateway.yml)}
 
     # Virtual Private Cloud
-    CloudbashVPC: ${file(./resource/VPC.yml)}
-    CloudbashVPCGA: ${file(./resource/VPCGA.yml)}
+    CloudbashVPC: ${file(./serverless/resources/VPC.yml)}
+    CloudbashVPCGA: ${file(./serverless/resources/VPCGA.yml)}
 
     # Subnets
-    CloudbashSubnetA: ${file(./resource/SubnetA.yml)}
-    CloudbashSubnetB: ${file(./resource/SubnetB.yml)}
-    CloudbashSubnetC: ${file(./resource/SubnetC.yml)}
+    CloudbashSubnetA: ${file(./serverless/resources/SubnetA.yml)}
+    CloudbashSubnetB: ${file(./serverless/resources/SubnetB.yml)}
+    CloudbashSubnetC: ${file(./serverless/resources/SubnetC.yml)}
 
     # Security GroupS
-    CloudbashSecurityGroup: ${file(./resource/SecurityGroup.yml)}
-    CloudbashStorageSecurityGroup : ${file(./resource/StorageSecurityGroup.yml)}
+    CloudbashSecurityGroup: ${file(./serverless/resources/SecurityGroup.yml)}
+    CloudbashStorageSecurityGroup : ${file(./serverless/resources/StorageSecurityGroup.yml)}
 
     # Routing
-    RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
-    RoutePublic: ${file(./resource/RoutePublic.yml)}
-    RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
-    RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
-    RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
+    RouteTablePublic: ${file(./serverless/resources/RouteTablePublic.yml)}
+    RoutePublic: ${file(./serverless/resources/RoutePublic.yml)}
+    RouteTableAssociationSubnetA: ${file(./serverless/resources/RouteTableAssociationSubnetA.yml)}
+    RouteTableAssociationSubnetB: ${file(./serverless/resources/RouteTableAssociationSubnetB.yml)}
+    RouteTableAssociationSubnetC: ${file(./serverless/resources/RouteTableAssociationSubnetC.yml)}
     
     # Event Bus = Simple Queue Service
-    eventBus: ${file(./resource/SQSQueue.yml)}
+    eventBus: ${file(./serverless/resources/SQSQueue.yml)}
 
     # Event Store = DynamoDB
-    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
+    eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
 
     # Read Databse = ELASTICACHE
-    CloudbashElasticacheSubnetGroup: ${file(./resource/ElastiCacheSubnetGroup.yml)}
-    ElasticCacheCluster: ${file(./resource/ElastiCacheCluster.yml)}
+    CloudbashElasticacheSubnetGroup: ${file(./serverless/resources/ElastiCacheSubnetGroup.yml)}
+    ElasticCacheCluster: ${file(./serverless/resources/ElastiCacheCluster.yml)}

@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PostConfirmationFunction::Run
+events:
+- cognitoUserPool:
+    pool: Cloudbash
+    trigger: PostConfirmation
+    existing: true

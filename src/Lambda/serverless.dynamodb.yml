@@ -30,33 +30,17 @@ custom:
   EVENT_STORE_NAME: EventStore_config3
   
 functions:
-
   # Concert Endpoints
-  createConcert:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
-    events:
-    - http:
-        path: concerts
-        method: post
-        cors: true
-
-  getConcerts:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
-    events:
-    - http:
-        path: concerts
-        method: get
-        cors: true
+  createConcert: ${file(./serverless/functions/concerts/create.yml)}
+  getConcerts: ${file(./serverless/functions/concerts/get.yml)}
+  deleteConcert: ${file(./serverless/functions/concerts/delete.yml)} 
+  # Cognito Triggers
+  preSignUp: ${file(./serverless/functions/cognito/pre_signup.yml)} 
+  postAuthentication: ${file(./serverless/functions/cognito/post_authentication.yml)} 
+  postConfirmation: ${file(./serverless/functions/cognito/post_confirmation.yml)} 
   # Venue Endpoints
-
-  createVenue:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Venues.CreateVenueFunction::Run
-    events:
-    - http:
-        path: venues
-        method: post
-        cors: true
-
+  createVenue: ${file(./serverless/functions/venues/create.yml)}
+  # Eventstream Handler
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
     events:
@@ -71,7 +55,8 @@ functions:
 resources:
   Resources:
     # Event Store = DynamoDB
-    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
-    readDatabase:  ${file(./resource/DynamoDBReadDB.yml)}
+    eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
+    readDatabase:  ${file(./serverless/resources/DynamoDBReadDB.yml)}
+
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip

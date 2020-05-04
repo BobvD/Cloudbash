@@ -59,58 +59,15 @@ package:
 
 functions:
 
-  # Concert Endpoints
-  createConcert:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
-    events:
-    - http:
-        path: concerts
-        method: post
-        cors: true
+   # Concert Endpoints
+  createConcert: ${file(./serverless/functions/concerts/create.yml)}
+  getConcerts: ${file(./serverless/functions/concerts/get.yml)}
+  deleteConcert: ${file(./serverless/functions/concerts/delete.yml)} 
 
-  getConcerts:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.GetConcertsFunction::Run
-    events:
-    - http:
-        path: concerts
-        method: get
-        cors: true
-
-  deleteConcert:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.DeleteConcertFunction::Run
-    events:
-      - http:
-          path: concerts/{id}
-          method: delete
-          cors: true
-          request:
-            parameters:
-              paths:
-                id: true
-
-  preSignUp:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PreSignUpFunction::Run
-    events:
-    - cognitoUserPool:
-        pool: Cloudbash
-        trigger: PreSignUp
-        existing: true
-
-  postAuthentication:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PostAuthenticationFunction::Run
-    events:
-    - cognitoUserPool:
-        pool: Cloudbash
-        trigger: PostAuthentication
-        existing: true
-
-  postConfirmation:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PostConfirmationFunction::Run
-    events:
-    - cognitoUserPool:
-        pool: Cloudbash
-        trigger: PostConfirmation
-        existing: true
+  # Cognito Triggers
+  preSignUp: ${file(./serverless/functions/cognito/pre_signup.yml)} 
+  postAuthentication: ${file(./serverless/functions/cognito/post_authentication.yml)} 
+  postConfirmation: ${file(./serverless/functions/cognito/post_confirmation.yml)} 
 
   # lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
@@ -126,41 +83,41 @@ resources:
   Resources:
 
     # Cognito User Pool
-    CloudbashCognitoUserPool: ${file(./resource/CognitoUserPool.yml)}
+    CloudbashCognitoUserPool: ${file(./serverless/resources/CognitoUserPool.yml)}
     # Cognito Client - lambda
-    CloudbashCognitoUserPoolClient: ${file(./resource/CognitoUserPoolClient.yml)}
+    CloudbashCognitoUserPoolClient: ${file(./serverless/resources/CognitoUserPoolClient.yml)}
     # Cognito Client - Angular
-    CloudbashCognitoUserPoolClientWeb: ${file(./resource/CognitoUserPoolClientWeb.yml)}
+    CloudbashCognitoUserPoolClientWeb: ${file(./serverless/resources/CognitoUserPoolClientWeb.yml)}
 
     # Internet Gateway
-    CloudbashInternetGateway: ${file(./resource/InternetGateway.yml)}
+    CloudbashInternetGateway: ${file(./serverless/resources/InternetGateway.yml)}
 
     # Virtual Private Cloud
-    CloudbashVPC: ${file(./resource/VPC.yml)}
-    CloudbashVPCGA: ${file(./resource/VPCGA.yml)}
+    CloudbashVPC: ${file(./serverless/resources/VPC.yml)}
+    CloudbashVPCGA: ${file(./serverless/resources/VPCGA.yml)}
 
     # Subnets
-    CloudbashSubnetA: ${file(./resource/SubnetA.yml)}
-    CloudbashSubnetB: ${file(./resource/SubnetB.yml)}
-    CloudbashSubnetC: ${file(./resource/SubnetC.yml)}
+    CloudbashSubnetA: ${file(./serverless/resources/SubnetA.yml)}
+    CloudbashSubnetB: ${file(./serverless/resources/SubnetB.yml)}
+    CloudbashSubnetC: ${file(./serverless/resources/SubnetC.yml)}
 
     # Subnet Group
-    CloudbashRDSSubnetGroup: ${file(./resource/RDSSubnetGroup.yml)}
+    CloudbashRDSSubnetGroup: ${file(./serverless/resources/RDSSubnetGroup.yml)}
 
     # Security Group
-    CloudbashSecurityGroup: ${file(./resource/SecurityGroup.yml)}
+    CloudbashSecurityGroup: ${file(./serverless/resources/SecurityGroup.yml)}
     
     # Routing
-    RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
-    RoutePublic: ${file(./resource/RoutePublic.yml)}
-    RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
-    RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
-    RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
+    RouteTablePublic: ${file(./serverless/resources/RouteTablePublic.yml)}
+    RoutePublic: ${file(./serverless/resources/RoutePublic.yml)}
+    RouteTableAssociationSubnetA: ${file(./serverless/resources/RouteTableAssociationSubnetA.yml)}
+    RouteTableAssociationSubnetB: ${file(./serverless/resources/RouteTableAssociationSubnetB.yml)}
+    RouteTableAssociationSubnetC: ${file(./serverless/resources/RouteTableAssociationSubnetC.yml)}
     
-    CloudbashStorageSecurityGroup : ${file(./resource/StorageSecurityGroup.yml)}
+    CloudbashStorageSecurityGroup : ${file(./serverless/resources/StorageSecurityGroup.yml)}
 
     # POSTGRESQL RDS Database
-    PostgreSqlRDSInstance: ${file(./resource/PostgresSQL.yml)}
+    PostgreSqlRDSInstance: ${file(./serverless/resources/PostgresSQL.yml)}
 
     # create the Kinesis EventStream
     eventStream: 
@@ -184,7 +141,7 @@ resources:
         StartingPosition: TRIM_HORIZON
 
     # Event Store = DynamoDB
-    eventStore: ${file(./resource/DynamoDBEventStore.yml)}
+    eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
 
 plugins:
   - serverless-plugin-scripts

@@ -1,0 +1,10 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.DeleteConcertFunction::Run
+events:
+- http:
+    path: concerts/{id}
+    method: delete
+    cors: true
+    request:
+    parameters:
+        paths:
+        id: true
