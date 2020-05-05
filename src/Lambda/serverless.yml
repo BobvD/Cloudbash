@@ -53,6 +53,7 @@ custom:
       hello: echo Hello from ${self:service} service!
     hooks:
       'deploy:finalize': serverless invoke --function dbInit -d
+  S3_BUCKET_NAME: cb-c1
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
@@ -118,6 +119,9 @@ resources:
 
     # POSTGRESQL RDS Database
     PostgreSqlRDSInstance: ${file(./serverless/resources/PostgresSQL.yml)}
+
+    # S3 BUcket
+    bucket: ${file(./serverless/resources/S3Bucket.yml)}
 
     # create the Kinesis EventStream
     eventStream: 

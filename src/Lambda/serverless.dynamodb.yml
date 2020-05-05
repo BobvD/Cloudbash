@@ -22,12 +22,14 @@ provider:
         - readDatabase
         - Arn 
   environment:   
-    ServerlessConfiguration__EventBus: 'DYNAMO'    
+    ServerlessConfiguration__EventBus: 'DYNAMO'
+    ServerlessConfiguration__BucketName: ${self:custom.S3_BUCKET_NAME}
     ServerlessConfiguration__Database: 'DYNAMO'
-    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
+    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}  
 
 custom:
   EVENT_STORE_NAME: EventStore_config3
+  S3_BUCKET_NAME: cb-c3
   
 functions:
   # Concert Endpoints
@@ -42,6 +44,8 @@ functions:
   createVenue: ${file(./serverless/functions/venues/create.yml)}
   # File Endpoints
   uploadFile: ${file(./serverless/functions/files/upload.yml)}
+  getFileUploadUrl: ${file(./serverless/functions/files/get_s3_url.yml)}
+   
   # Eventstream Handler
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
@@ -59,6 +63,8 @@ resources:
     # Event Store = DynamoDB
     eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
     readDatabase:  ${file(./serverless/resources/DynamoDBReadDB.yml)}
+    # S3 BUcket
+    bucket: ${file(./serverless/resources/S3Bucket.yml)}
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip

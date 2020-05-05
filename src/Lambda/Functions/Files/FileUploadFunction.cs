@@ -1,6 +1,7 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Lambda.Functions.Files
@@ -11,6 +12,7 @@ namespace Cloudbash.Lambda.Functions.Files
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run(JObject input, ILambdaContext context)
         {
+            Console.WriteLine(input.ToString());
 
             return new APIGatewayProxyResponse
             {

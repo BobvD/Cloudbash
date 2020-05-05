@@ -6,6 +6,7 @@ using Cloudbash.Infrastructure.EventStream;
 using Cloudbash.Infrastructure.Extensions;
 using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Infrastructure.Persistence.EventStore;
+using Cloudbash.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,9 @@ namespace Cloudbash.Infrastructure
             
             // Inject Event Store
             services.AddTransient<IEventStore, DynamoDBEventStore>();
+
+            // Inject Services
+            services.AddTransient<IFileService, S3FileService>();
 
             // Inject AWS Configuration
             services

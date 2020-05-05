@@ -27,7 +27,7 @@
         <div class="card mt-3">
             <div class="card-body">      
                 <label>Image</label>       
-                <app-image-widget></app-image-widget>
+                <app-image-widget (imageResult)="croppedImage = $event;"></app-image-widget>
             </div>
         </div>
 

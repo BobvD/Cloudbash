@@ -37,6 +37,7 @@ custom:
     HOST: 
         Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address] 
     PORT: '6379'
+  S3_BUCKET_NAME: cb-c2
 
 functions:
   # Concert Endpoints
@@ -99,6 +100,9 @@ resources:
     # Event Store = DynamoDB
     eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
 
-    # Read Databse = ELASTICACHE
+    # Read Database = ELASTICACHE
     CloudbashElasticacheSubnetGroup: ${file(./serverless/resources/ElastiCacheSubnetGroup.yml)}
     ElasticCacheCluster: ${file(./serverless/resources/ElastiCacheCluster.yml)}
+
+    # S3 BUcket
+    bucket: ${file(./serverless/resources/S3Bucket.yml)}

@@ -20,7 +20,7 @@ export class ImageWidgetComponent implements OnInit {
       constructor(private mediaService: MediaService) { }
   
       ngOnInit(): void {
-          this.setImageInCropper(this.images[0]);
+          // this.setImageInCropper(this.images[0]);
       }
   
       fileChangeEvent(event: any): void {

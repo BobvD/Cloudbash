@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Files.GetS3PreSignedURLFunction::Run
+events:
+- http:
+    path: files/get_upload_url
+    method: post
+    cors: true

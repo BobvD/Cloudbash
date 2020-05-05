@@ -1,4 +1,4 @@
-﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Files.FileUpload::Run
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Files.FileUploadFunction::Run
 events:
 - http:
     path: files
