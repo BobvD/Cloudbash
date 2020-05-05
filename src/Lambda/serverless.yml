@@ -122,6 +122,7 @@ resources:
 
     # S3 BUcket
     bucket: ${file(./serverless/resources/S3Bucket.yml)}
+    bucketPolicy: ${file(./serverless/resources/S3BucketPolicy.yml)}
 
     # create the Kinesis EventStream
     eventStream: 

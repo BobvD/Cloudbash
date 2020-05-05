@@ -1,0 +1,16 @@
+<form #formEl novalidate (ngSubmit)="onSubmit()" [formGroup]="form" id="server-error">
+    <div>    
+      <input
+        id="fileUpload"
+        name="fileUpload"
+        type="file"
+        [formControlName]="'fileUpload'"
+        (change)="onFilesSelection($event)"/>
+    </div>  
+    <div>
+      <button type="submit" class="govuk-button">
+        Upload files
+      </button>  
+    </div>
+  </form>
+  

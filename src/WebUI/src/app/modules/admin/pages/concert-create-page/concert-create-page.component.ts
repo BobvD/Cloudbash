@@ -4,7 +4,7 @@ import { Concert } from 'src/app/shared/models/concert.model';
 import { ConcertService } from 'src/app/shared/services/concert.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { MediaService } from 'src/app/shared/services/media.service';
+import { FileService } from 'src/app/shared/services/file.service';
 
 @Component({
     selector: 'app-concert-create-page',
@@ -28,13 +28,11 @@ export class ConcertCreatePageComponent implements OnInit {
     concertForm: FormGroup;
     concert = new Concert();
 
-    croppedImage;
 
     constructor(private formBuilder: FormBuilder,
                 private concertService: ConcertService,
                 private toastr: ToastrService,
-                private router: Router,
-                private mediaService: MediaService) { }
+                private router: Router) { }
 
     ngOnInit(): void {
         this.concertForm = this.createFormGroup();
@@ -59,11 +57,8 @@ export class ConcertCreatePageComponent implements OnInit {
          
 
           this.setValues();
-
-          this.mediaService.upload(this.concert.Name, this.croppedImage).subscribe(res => {
-            console.log(res);
-          });
-          
+         
+          /*
           console.log(this.concert);
 
           this.concertService.create(this.concert).subscribe(res => {
@@ -72,6 +67,7 @@ export class ConcertCreatePageComponent implements OnInit {
           }, err => {
             this.toastr.error(`Could not create concert.`, 'Error');
           });
+          */
       }
 
 

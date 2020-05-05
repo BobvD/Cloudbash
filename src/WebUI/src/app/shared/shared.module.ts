@@ -10,13 +10,13 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { InfoBoxComponent } from './components/info-box/info-box.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { ImageWidgetComponent } from './components/image-widget/image-widget.component';
-import { MediaService } from './services/media.service';
+import { FileService } from './services/file.service';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -26,13 +26,14 @@ import { MediaService } from './services/media.service';
         AuthLayoutComponent,
         InfoBoxComponent,
         AdminLayoutComponent,
-        ImageWidgetComponent
+        FileUploadComponent
     ],
     imports: [ 
         CommonModule,
         NgbDropdownModule,
         NgbCollapseModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,        
         NgxSpinnerModule,
         ImageCropperModule
@@ -40,10 +41,10 @@ import { MediaService } from './services/media.service';
     exports: [
         HeaderComponent,
         FooterComponent,
-        ImageWidgetComponent
+        FileUploadComponent
     ],
     providers: [
-        MediaService
+        FileService
     ],
 })
 export class SharedModule {}

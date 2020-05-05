@@ -10,7 +10,7 @@
         string SQSUrl { get;  }
         RedisConfiguration Redis { get; set; }
         string RedisConnectionString { get; }
-        string S3BucketName { get; }
+        string BucketName { get; }
     }
 
     public class ServerlessConfiguration : IServerlessConfiguration
@@ -23,7 +23,7 @@
         public string EventStoreTableName { get; set; }
         public RedisConfiguration Redis { get; set; }
         public string RedisConnectionString { get { return $"{Redis?.Host}:{Redis?.Port}"; } }
-        public string S3BucketName { get; set; }
+        public string BucketName { get; set; }
     }
 
     public enum EventBusType

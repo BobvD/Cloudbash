@@ -1,9 +1,0 @@
-<div class="d-flex flex-row">
-    <input type="file" #file placeholder="Choose file"  accept="image/jpeg" (change)="fileChangeEvent($event)" class="mr-2 p-2 file-input" />
-    <button class="btn btn-secondary" (click)="cropImage()" type="button" *ngIf="croppedImage">Crop image</button>
-</div>
-<image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="aspectRatio"
-    format="jpg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-    (cropperReady)="cropperReady()" [imageFile]="imageFile" [imageBase64]="imageBase64"
-    (loadImageFailed)="loadImageFailed()" *ngIf="imageChangedEvent">
-</image-cropper>

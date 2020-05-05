@@ -2,6 +2,6 @@
 {
     public interface IFileService
     {
-        string GetUploadUrl(string filename);
+        string GetUploadUrl(string filename, string type);
     }
 }
