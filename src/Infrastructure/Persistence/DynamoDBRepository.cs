@@ -43,9 +43,12 @@ namespace Cloudbash.Infrastructure.Persistence
             }
         }
 
-        public Task<T> GetAsync(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new DynamoDBContext(_amazonDynamoDBClient))
+            {
+                return await context.LoadAsync<T>(id, _configuration);
+            }
         }
 
         public async Task<T> AddAsync(T entity)
@@ -66,14 +69,26 @@ namespace Cloudbash.Infrastructure.Persistence
             return default(T);
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new DynamoDBContext(_amazonDynamoDBClient))
+            {
+                try
+                {
+                    Console.WriteLine("Removing entity with id: " + id);
+                    await context.DeleteAsync<T>(id, _configuration);                   
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
 
         private IDynamoDBContext GetDynamoClient()

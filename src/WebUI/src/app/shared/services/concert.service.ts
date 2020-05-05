@@ -10,7 +10,7 @@ export class ConcertService {
     private _concertUrl: string;
 
     constructor(private http: HttpClient) {
-        this._concertUrl = localStorage.getItem('apiUrl') + '/concerts';
+        this._concertUrl = localStorage.getItem('apiUrl') + '/concerts/';
     }
 
     get(): Observable<any> {

@@ -26,18 +26,16 @@ namespace Cloudbash.Application.Common.Repositories
             return entity;
         }
 
-        public async Task<Concert> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var entity = await _context.Concerts.FindAsync(id);
             if (entity == null)
             {
-                return entity;
+                throw new ArgumentException();
             }
 
             _context.Concerts.Remove(entity);
             await _context.SaveChangesAsync();
-
-            return entity;
         }
 
         public async Task<List<Concert>> GetAllAsync()

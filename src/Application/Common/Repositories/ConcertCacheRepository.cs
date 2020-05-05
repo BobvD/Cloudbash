@@ -22,7 +22,7 @@ namespace Cloudbash.Application.Common.Repositories
             return Task.FromResult(entity);
         }
 
-        public Task<Concert> DeleteAsync(Guid id)
+        public Task DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }

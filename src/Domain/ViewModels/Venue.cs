@@ -9,5 +9,7 @@ namespace Cloudbash.Domain.ViewModels
         public int Capacity { get; set; }
         public string WebUrl { get; set; }
         public string Address { get; set; }
+
+        public Venue() { }
     }
 }

@@ -5,7 +5,7 @@ namespace Cloudbash.Domain.Concerts.Events
 {
     public class ConcertDeletedEvent : DomainEventBase
     {
-        internal ConcertDeletedEvent() { }
+        public ConcertDeletedEvent() { }
 
         internal ConcertDeletedEvent(Guid aggregateId) : base(aggregateId) { }
 

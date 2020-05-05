@@ -12,6 +12,6 @@ namespace Cloudbash.Application.Common.Interfaces
         Task<T> GetAsync(Guid id);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
-        Task<T> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
     }
 }

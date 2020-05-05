@@ -40,6 +40,8 @@ functions:
   postConfirmation: ${file(./serverless/functions/cognito/post_confirmation.yml)} 
   # Venue Endpoints
   createVenue: ${file(./serverless/functions/venues/create.yml)}
+  # File Endpoints
+  uploadFile: ${file(./serverless/functions/files/upload.yml)}
   # Eventstream Handler
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
