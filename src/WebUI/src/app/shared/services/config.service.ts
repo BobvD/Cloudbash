@@ -57,4 +57,8 @@ export class ConfigService {
         return config;
     } 
 
+    getS3BucketName() {
+        return "cb-c" + this.currentConfig;
+    }
+
 }
