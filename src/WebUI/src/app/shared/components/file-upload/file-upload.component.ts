@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FileService } from '../../services/file.service';
+import { tap, map } from 'rxjs/operators';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
     selector: 'app-file-upload',
@@ -12,6 +14,10 @@ export class FileUploadComponent implements OnInit {
     @ViewChild('formEl', { static: false }) formEl: ElementRef;
     public form: FormGroup;
     public selectedFile: File;    
+
+
+    uploadResponse = { status: '', message: '', filePath: '' };    
+    error: string;
 
 
     constructor(
@@ -41,14 +47,25 @@ export class FileUploadComponent implements OnInit {
 
       onSubmit() {
         this.fileService.getS3PresignedUrl(this.selectedFile.name, this.selectedFile.type).subscribe(url => {
+            /*
             console.log(url);
             console.log(this.selectedFile);
 
             this.fileService.uploadFileToS3(this.selectedFile, url).subscribe(res => {
                 console.log(res);
             })
+            */
+
+
+            this.fileService.uploadFileToS3(this.selectedFile, url).subscribe(
+                (res) => this.uploadResponse = res,
+                (err) => this.error = err
+              );
 
         })
+
+
+     
       }
     
 }

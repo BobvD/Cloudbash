@@ -1,16 +1,18 @@
-<form #formEl novalidate (ngSubmit)="onSubmit()" [formGroup]="form" id="server-error">
-    <div>    
-      <input
-        id="fileUpload"
-        name="fileUpload"
-        type="file"
-        [formControlName]="'fileUpload'"
-        (change)="onFilesSelection($event)"/>
-    </div>  
+<form #formEl novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="d-flex">
     <div>
-      <button type="submit" class="govuk-button">
-        Upload files
-      </button>  
+        <input id="fileUpload" name="fileUpload" type="file"  class="mr-2"
+            [formControlName]="'fileUpload'" (change)="onFilesSelection($event)" />
     </div>
-  </form>
-  
+    <div>
+        <button type="submit" class="btn btn-secondary">
+            Upload image
+        </button>
+    </div>
+</form>
+
+<div *ngIf="uploadResponse.status === 'progress'" class="progress mt-2">
+    <div class="progress-bar progress-bar-striped" role="progressbar"
+            [style.width.%]="uploadResponse.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        {{uploadResponse.message}}%
+    </div>
+</div>
