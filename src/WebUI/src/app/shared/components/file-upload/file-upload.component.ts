@@ -1,9 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { FileService } from '../../services/file.service';
-import { tap, map } from 'rxjs/operators';
-import { HttpEventType } from '@angular/common/http';
 
 @Component({
     selector: 'app-file-upload',
@@ -13,59 +10,37 @@ import { HttpEventType } from '@angular/common/http';
 export class FileUploadComponent implements OnInit {
     @ViewChild('formEl', { static: false }) formEl: ElementRef;
     public form: FormGroup;
-    public selectedFile: File;    
+    public fileToUpload: File;
 
-
-    uploadResponse = { status: '', message: '', filePath: '' };    
+    uploadResponse = { status: '', message: '', filePath: '' };
     error: string;
-
 
     constructor(
         private formBuilder: FormBuilder,
-        private fileService: FileService
-      ) {}
+        private fileService: FileService) { }
 
+    ngOnInit() {
+        this.createForm();
+    }
 
-      ngOnInit() {
-        this.createForm();       
-      }
-    
-     
-      public onFilesSelection($event: Event): void {
-        console.log($event);
-        const target = $event.target || $event.srcElement;
-        this.selectedFile = target[`files`][0];
-      }
-    
-    
-      createForm() {
+    createForm() {
         this.form = this.formBuilder.group({
-          fileUpload: [null, Validators.required],
+            fileUpload: [null, Validators.required],
         });
-      }
+    }
 
+    public onFilesSelection($event: Event): void {
+        const target = $event.target || $event.srcElement;
+        this.fileToUpload = target[`files`][0];
+    }
 
-      onSubmit() {
-        this.fileService.getS3PresignedUrl(this.selectedFile.name, this.selectedFile.type).subscribe(url => {
-            /*
-            console.log(url);
-            console.log(this.selectedFile);
-
-            this.fileService.uploadFileToS3(this.selectedFile, url).subscribe(res => {
-                console.log(res);
-            })
-            */
-
-
-            this.fileService.uploadFileToS3(this.selectedFile, url).subscribe(
+    onSubmit() {
+        this.fileService.getS3PresignedUrl(this.fileToUpload.name, this.fileToUpload.type).subscribe(url => {
+            this.fileService.uploadFileToS3(this.fileToUpload, url).subscribe(
                 (res) => this.uploadResponse = res,
                 (err) => this.error = err
-              );
-
+            );
         })
+    }
 
-
-     
-      }
-    
 }

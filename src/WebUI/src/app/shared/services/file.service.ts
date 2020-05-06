@@ -17,7 +17,6 @@ export class FileService {
         headers.append('Content-Type', file.type);
         headers.append("x-amz-acl", 'public-read');
         
-        console.log('Trying to upload');
         return this.http.put(signedURL, file, { headers, reportProgress: true, observe: 'events' }) 
         .pipe(map((event) => {
             switch (event.type) {
