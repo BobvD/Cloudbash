@@ -7,7 +7,7 @@ import { Config } from '../models/config.model';
 export class ConfigService {
 
     configs: Config[] = [
-        { id: 1, name: "Config 1", apiUrl: "https://hwhewc41ge.execute-api.us-east-1.amazonaws.com/dev/", eventBusType: "DynamoDB Streams", eventStoreType: "DynamoDB", readDatabaseType: "DynamoDB", documentationUrl: "" },
+        { id: 1, name: "Config 1", apiUrl: "https://s71ddkqqtj.execute-api.us-east-1.amazonaws.com/dev/", eventBusType: "DynamoDB Streams", eventStoreType: "DynamoDB", readDatabaseType: "DynamoDB", documentationUrl: "" },
         { id: 2, name: "Config 2", apiUrl: "",eventBusType: "Kinesis", eventStoreType: "DynamoDB", readDatabaseType: "RDS (Postgres)", documentationUrl: "" },        
         { id: 3, name: "Config 3", apiUrl: "", eventBusType: "SQS", eventStoreType: "DynamoDB", readDatabaseType: "ElastiCache (Redis)", documentationUrl: "" },
         { id: 4, name: "custom", apiUrl: "", eventBusType: "Unknown", eventStoreType: "Unknown", readDatabaseType: "Unknown", documentationUrl: "" }           
@@ -57,8 +57,8 @@ export class ConfigService {
         return config;
     } 
 
-    getS3BucketName() {
-        return "cb-c" + this.currentConfig;
+    getS3BucketUrl() {
+        return `https://cb-c${this.currentConfig}.s3.amazonaws.com/`
     }
 
 }

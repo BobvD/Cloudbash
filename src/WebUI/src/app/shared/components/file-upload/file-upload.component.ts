@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileService } from '../../services/file.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'app-file-upload',
@@ -9,6 +10,7 @@ import { FileService } from '../../services/file.service';
 })
 export class FileUploadComponent implements OnInit {
     @ViewChild('formEl', { static: false }) formEl: ElementRef;
+    @Output() imageUrl = new EventEmitter<any>();
     public form: FormGroup;
     public fileToUpload: File;
 
@@ -17,7 +19,8 @@ export class FileUploadComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private fileService: FileService) { }
+        private fileService: FileService,
+        private configService: ConfigService) { }
 
     ngOnInit() {
         this.createForm();
@@ -37,7 +40,13 @@ export class FileUploadComponent implements OnInit {
     onSubmit() {
         this.fileService.getS3PresignedUrl(this.fileToUpload.name, this.fileToUpload.type).subscribe(url => {
             this.fileService.uploadFileToS3(this.fileToUpload, url).subscribe(
-                (res) => this.uploadResponse = res,
+                (res) => {
+                    if(res) {
+                        this.uploadResponse = res   
+                    } else {
+                        this.imageUrl.emit(this.configService.getS3BucketUrl() + this.fileToUpload.name);
+                    }                 
+                },
                 (err) => this.error = err
             );
         })

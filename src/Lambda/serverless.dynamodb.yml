@@ -35,8 +35,8 @@ provider:
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}  
 
 custom:
-  EVENT_STORE_NAME: EventStore_config3
-  S3_BUCKET_NAME: cb-c3
+  EVENT_STORE_NAME: es-c1
+  S3_BUCKET_NAME: cb-c1
   
 functions:
   # Concert Endpoints

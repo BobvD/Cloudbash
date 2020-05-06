@@ -10,8 +10,6 @@ namespace Cloudbash.Lambda.Functions.Files
 {
     public class GetS3PreSignedURLFunction : FunctionBase
     {
-
-
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {           
