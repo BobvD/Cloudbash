@@ -104,3 +104,12 @@ small {
  .active {
      border-color: green;
  }
+
+ select {
+    padding: 0.6875rem .3rem!important;
+    width: 110px!important;
+ }
+
+ .alert {
+     line-height: .5rem!important;
+ }

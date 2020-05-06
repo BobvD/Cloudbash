@@ -1,11 +1,11 @@
 
-  import {
-    trigger
-  } from '@angular/animations';
-
-  import { Component, OnInit } from '@angular/core';
-  
-  import { Toast } from 'ngx-toastr';
+import {
+  trigger
+} from '@angular/animations';
+import { Component, OnInit, NgZone } from '@angular/core';  
+import { Toast, ToastPackage, ToastrService } from 'ngx-toastr';
+import { ConfigService } from '../../services/config.service';
+import { Config } from '../../models/config.model';
   
   @Component({
     selector: '[pink-toast-component]',
@@ -17,15 +17,28 @@
     preserveWhitespaces: false,
   })
   export class InfoBoxComponent extends Toast implements OnInit {
-   
-    apiUrl: string = "";
+    selectedConfig: Config;
+    configs = [];
+    showAlert =  false;
+
+    constructor(private configService: ConfigService,
+                toastrService: ToastrService, 
+                toastPackage: ToastPackage, 
+                ngZone?: NgZone){
+      super(toastrService, toastPackage, ngZone);
+    }
 
     ngOnInit(): void {
-      this.apiUrl = localStorage.getItem('apiUrl');
-      console.log(this.apiUrl);      
+      this.selectedConfig = this.configService.getConfigFromStorage();
+      this.configs = this.configService.getAllConfigs();    
     }
+
+    onConfigChange($event) {
+      this.configService.setConfig(this.selectedConfig.id);
+      this.showAlert = true;
+    } 
     
     saveApiUrl() {
-      localStorage.setItem('apiUrl', this.apiUrl);
+      this.configService.setApiUrl(this.selectedConfig.apiUrl);
     }
   }

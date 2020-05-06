@@ -43,11 +43,14 @@
         </div>
     </div>
     <div>
-        <form class="d-flex flex-row" (ngSubmit)="saveApiUrl()">
-            <input class="form-control mr-1" placeholder="web api url" type="text" name="apiUrl" [(ngModel)]="apiUrl"
-                 [ngClass]="{ 'blink': !apiUrl, 'active': apiUrl }"/>
-            <button type="submit" class="btn btn-primary" *ngIf="!apiUrl">Save</button>
-            <button type="submit" class="btn btn-success" *ngIf="apiUrl">
+        <form class="d-flex flex-row" (ngSubmit)="saveApiUrl()" *ngIf="selectedConfig">
+            <input class="form-control mr-1" placeholder="web api url" type="text" name="apiUrl" [(ngModel)]="selectedConfig.apiUrl"
+                 [ngClass]="{ 'blink': !selectedConfig.apiUrl, 'active': selectedConfig.apiUrl }" [disabled]="selectedConfig.id != 4" />
+            <select name="configSelect" class="form-control mr-1" [(ngModel)]="selectedConfig" (ngModelChange)="onConfigChange($event)">         
+                <option *ngFor="let c of configs" [ngValue]="c">{{c.name}}</option>  
+            </select>
+            <button type="submit" class="btn btn-primary" *ngIf="!selectedConfig.apiUrl">Save</button>
+            <button type="submit" class="btn btn-success" *ngIf="selectedConfig.apiUrl">
                 <svg class="svg-icon-user" viewBox="0 0 20 20">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check"
                         class="svg-inline--fa fa-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +62,12 @@
                     </svg>
                 </svg>
             </button>
-        </form>
+        </form>    
+    <div class="alert alert-primary mt-1 py-1 px-2" role="alert" *ngIf="showAlert">
+      <small>Refresh the page for the changes to take effect.</small>  
     </div>
+    </div>
+    
     <div class="details mt-3">
         <h6>Stack</h6>
         <table class="table table-striped">
@@ -92,15 +99,15 @@
                     <td>Content Delivery Network</td>
                 </tr>
                 <tr>
-                    <td>Kinesis</td>
+                    <td class="text-primary font-weight-bold">{{ selectedConfig?.eventBusType }}</td>
                     <td>Event bus</td>
                 </tr>
                 <tr>
-                    <td>DynamoDB</td>
+                    <td class="text-primary font-weight-bold">{{ selectedConfig?.eventStoreType }}</td>
                     <td>Event store</td>
                 </tr>
                 <tr>
-                    <td>RDS (PostgreSQL)</td>
+                    <td class="text-primary font-weight-bold">{{ selectedConfig?.readDatabaseType }}</td>
                     <td>Read database</td>
                 </tr>
                 <tr>

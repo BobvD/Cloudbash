@@ -23,3 +23,7 @@
 input, select, .btn {
     font-family: 'Work Sans', sans-serif;
 }
+
+input[type="text"]:disabled {
+    background: #dddddd;
+}
