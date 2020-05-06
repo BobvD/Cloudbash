@@ -29,7 +29,7 @@
                 <label>Image</label>       
                 <app-file-upload></app-file-upload>
                 
-                <small>Upload a new image or selected a generic one below.</small> 
+                <small>Upload a new image or selected a default one from below.</small> 
                 <div class="row mt-1" style="margin-left: -5px; margin-right: -5px;">
                     <div class="col-4 p-1" *ngFor="let item of images">
                         <img (click)="selectImage(item)" [src]="item" class="rounded  img-fluid" [ngClass]="{'selected': selectedImage == item}" />

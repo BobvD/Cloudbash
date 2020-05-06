@@ -15,7 +15,7 @@ module.exports = {
         title: 'Introduction',   // required
         path: '/introduction/',      // optional, which should be a absolute path.
         collapsable: false, // optional, defaults to true
-        sidebarDepth: 1,    // optional, defaults to 1
+        sidebarDepth: 0,    // optional, defaults to 1
         children: [
           ['/introduction/DDD', 'Getting started'],
           ['/introduction/ES', 'Technical stack']          
@@ -27,7 +27,8 @@ module.exports = {
           ['/event_sourcing/', 'Introductie'],
           ['/introduction/ES', 'Implementatie']          
         ],
-        sidebarDepth: 1,   
+        collapsable: false,
+        sidebarDepth: 0,   
       },   
       {
         title: 'Domain Driven Design',
@@ -43,9 +44,15 @@ module.exports = {
         path: '/serverless_architecture/'
       },
       {
-        title: 'Amazon Web Services',
-        path: '/aws/'
-      },
+        title: 'Serverless Web development',
+        children: [
+          ['/aws_serverless/static_website_hosting.md', 'Static Website Hosting'],
+          ['/aws_serverless/s3_file_uploads.md', 'S3 File Uploads'],
+          ['/aws_serverless/cognito_auth.md', 'Access Control with Cognito']          
+        ],
+        collapsable: false,
+        sidebarDepth: 0,   
+      }, 
       {
         title: 'Dev Ops',
         path: '/dev_ops/'
@@ -54,7 +61,7 @@ module.exports = {
     nav: [
       {
         text: 'Home',
-        link: '/'
+        link: 'https://d2bgpsr44efzwn.cloudfront.net/'
       },
       {
         text: 'Live Example',

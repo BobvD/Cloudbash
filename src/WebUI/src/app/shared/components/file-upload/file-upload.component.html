@@ -1,7 +1,7 @@
 <form #formEl novalidate (ngSubmit)="onSubmit()" [formGroup]="form" class="d-flex">
     <div>
         <input id="fileUpload" name="fileUpload" type="file"  class="mr-2"
-            [formControlName]="'fileUpload'" (change)="onFilesSelection($event)" />
+            [formControlName]="'fileUpload'" (change)="onFilesSelection($event)" accept="image/*"  />
     </div>
     <div>
         <button type="submit" class="btn btn-secondary">
