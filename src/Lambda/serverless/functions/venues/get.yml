@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Venues.GetVenuesFunction::Run
+events:
+- http:
+    path: venues
+    method: get
+    cors: true
