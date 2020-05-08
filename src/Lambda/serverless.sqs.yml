@@ -29,7 +29,7 @@ package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
 
 custom: 
-  EVENT_STORE_NAME: EventStore_config2
+  EVENT_STORE_NAME: es-c3
   SQS:
     URL: 
        Ref: eventBus
@@ -37,7 +37,7 @@ custom:
     HOST: 
         Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address] 
     PORT: '6379'
-  S3_BUCKET_NAME: cb-c2
+  S3_BUCKET_NAME: cb-c3
 
 functions:
   # Concert Endpoints

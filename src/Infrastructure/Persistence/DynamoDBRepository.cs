@@ -4,12 +4,9 @@ using AutoMapper;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Configs;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence

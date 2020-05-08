@@ -38,7 +38,7 @@ provider:
       - Arn     
 
 custom:
-  EVENT_STORE_NAME: EventStore_config1
+  EVENT_STORE_NAME: es-c2
   KINESIS_STREAM_NAME: eventStream
   DB_NAME: cloudbash
   USERNAME: master
@@ -53,7 +53,7 @@ custom:
       hello: echo Hello from ${self:service} service!
     hooks:
       'deploy:finalize': serverless invoke --function dbInit -d
-  S3_BUCKET_NAME: cb-c1
+  S3_BUCKET_NAME: cb-c2
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
@@ -64,7 +64,9 @@ functions:
   createConcert: ${file(./serverless/functions/concerts/create.yml)}
   getConcerts: ${file(./serverless/functions/concerts/get.yml)}
   deleteConcert: ${file(./serverless/functions/concerts/delete.yml)} 
-
+   # Venue Endpoints
+  createVenue: ${file(./serverless/functions/venues/create.yml)}
+  getVenues: ${file(./serverless/functions/venues/get.yml)}
   # Cognito Triggers
   preSignUp: ${file(./serverless/functions/cognito/pre_signup.yml)} 
   postAuthentication: ${file(./serverless/functions/cognito/post_authentication.yml)} 

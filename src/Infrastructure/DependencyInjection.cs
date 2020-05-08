@@ -18,7 +18,7 @@ namespace Cloudbash.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot, IServerlessConfiguration config)
         {
-            
+
             // Inject Event Store
             services.AddTransient<IEventStore, DynamoDBEventStore>();
 
@@ -29,7 +29,7 @@ namespace Cloudbash.Infrastructure
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
                 .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
-            
+
             // Inject Event stream
             switch (config.EventBus)
             {
@@ -47,32 +47,48 @@ namespace Cloudbash.Infrastructure
             switch (config.Database)
             {
                 case DatabaseType.POSTGRES:
-                    services.AddDbContext<ApplicationDbContext>(opt =>
-                        opt.UseNpgsql(GetPostgresConnectionString(configurationRoot), 
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-                    services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+                    AddEFRepositories(services, configurationRoot);
                     break;
                 case DatabaseType.REDIS:
-                    services.AddTransient<ICache, RedisCache>();
+                    AddRedisRepositories(services);
                     break;
                 case DatabaseType.DYNAMO:
-                    services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, DynamoDBRepository<Domain.ViewModels.Concert>>();
-                    services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, DynamoDBRepository<Domain.ViewModels.Venue>>();
+                    AddDynamoDBRepositories(services);
                     break;
                 default:
                     break;
-            }
-
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            }            
 
             return services;
         }
-        
+
         public static string GetPostgresConnectionString(IConfigurationRoot configurationRoot)
         {
             var host = configurationRoot.GetSection("POSTGRESQL_HOST").Value;
             var port = configurationRoot.GetSection("POSTGRESQL_PORT").Value;
             return $"Server={host};Port={port};Username=master;Password=password;Database=cloudbash;";
+        }
+
+        private static void AddEFRepositories(IServiceCollection services, IConfigurationRoot configurationRoot)
+        {
+            services.AddDbContext<ApplicationDbContext>(opt =>
+                        opt.UseNpgsql(GetPostgresConnectionString(configurationRoot),
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, EFRepository<Domain.ViewModels.Concert>>();
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, EFRepository<Domain.ViewModels.Venue>>();
+        }
+
+        private static void AddRedisRepositories(IServiceCollection services)
+        {
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, RedisRepository<Domain.ViewModels.Concert>>();
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, RedisRepository<Domain.ViewModels.Venue>>();
+        }
+
+        private static void AddDynamoDBRepositories(IServiceCollection services)
+        {
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, DynamoDBRepository<Domain.ViewModels.Concert>>();
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, DynamoDBRepository<Domain.ViewModels.Venue>>();
         }
     }
 }

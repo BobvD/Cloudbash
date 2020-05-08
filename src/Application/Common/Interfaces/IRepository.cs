@@ -8,5 +8,6 @@ namespace Cloudbash.Application.Common.Interfaces
     {
         Task<TAggregate> GetByIdAsync(Guid id);
         Task SaveAsync(TAggregate aggregate);
+
     }
 }
