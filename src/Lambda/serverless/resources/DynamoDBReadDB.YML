@@ -1,6 +1,6 @@
 ﻿Type: AWS::DynamoDB::Table
 Properties:
-  TableName: Cloudbash.Concerts
+  TableName: Cloudbash
   AttributeDefinitions:
     - AttributeName: Id
       AttributeType: S

@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Cloudbash.Domain.SeedWork
+﻿namespace Cloudbash.Domain.SeedWork
 {
     public abstract class ReadModelBase : IReadModel
     {        
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

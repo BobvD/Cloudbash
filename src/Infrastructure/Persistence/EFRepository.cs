@@ -40,7 +40,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             return await _context.Set<T>()
                         .AsNoTracking()
-                        .FirstOrDefaultAsync(e => e.Id == id);
+                        .FirstOrDefaultAsync(e => e.Id == id.ToString());
         }
 
         public async Task<T> UpdateAsync(T entity)

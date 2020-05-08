@@ -22,7 +22,7 @@ namespace Cloudbash.Application.Venues.Events
         {
             var @event = notification.DomainEvent;
             await _repository.AddAsync(
-                    new Venue { Id = @event.AggregateId, 
+                    new Venue { Id = @event.AggregateId.ToString(), 
                                 Name = @event.Name, 
                                 Description = @event.Description, 
                                 Capacity = @event.Capacity, 

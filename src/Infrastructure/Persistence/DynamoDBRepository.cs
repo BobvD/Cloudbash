@@ -1,11 +1,13 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using AutoMapper;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Configs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -25,7 +27,7 @@ namespace Cloudbash.Infrastructure.Persistence
             _mapper = mapper;
             _configuration = new DynamoDBOperationConfig
             {
-                OverrideTableName = "Cloudbash.Concerts",
+                OverrideTableName = "Cloudbash" ,
                 SkipVersionCheck = true
             };
             
@@ -35,8 +37,15 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
-                var conditions = new List<ScanCondition>();
-                return await context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync();
+                var prefixLength = typeof(T).Name.Length;
+
+                var conditions = new List<ScanCondition> {
+                 new ScanCondition("Id", ScanOperator.BeginsWith, typeof(T).Name)
+                };
+                
+                var x =  context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync()
+                    .Result.Select(t => { t.Id = t.Id.Remove(0, prefixLength); return t; }).ToList();
+                return x;
             }
         }
 
@@ -54,6 +63,7 @@ namespace Cloudbash.Infrastructure.Persistence
             {
                 try
                 {
+                    entity.Id = typeof(T).Name + entity.Id; 
                     await context.SaveAsync(entity, _configuration);
                     return entity;
                 }
@@ -92,29 +102,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             return new DynamoDBContext(_amazonDynamoDBClient);
         }
-
-        private T Run<T>(Func<IDynamoDBContext, T> action)
-        {
-            using (var client = GetDynamoClient())
-            {
-                return action(client);
-            }
-        }
-
-        // THE GREATEST HACK IN HISTORY?
-        private object Map(T t)
-        {
-            Type type = Type.GetType(this.GetType().Namespace + ".Dto." + t.GetType().Name + "," + Assembly.GetExecutingAssembly(), true);
-            var entity = _mapper.Map(t, t.GetType(), type);
-            return entity;
-        }
-
-
-        public T CastObject<T>(object input)
-        {
-            return (T)input;
-        }
-
+        
         public void Dispose()
         {
             _amazonDynamoDBClient.Dispose();
