@@ -1,14 +1,11 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
-using AutoMapper;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
-using Cloudbash.Infrastructure.Configs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence
@@ -17,20 +14,15 @@ namespace Cloudbash.Infrastructure.Persistence
     {
         private readonly AmazonDynamoDBClient _amazonDynamoDBClient;
         private readonly DynamoDBOperationConfig _configuration;
-        private readonly IMapper _mapper;
 
-        public DynamoDBRepository(IAwsClientFactory<AmazonDynamoDBClient> clientFactory,
-                                  IServerlessConfiguration config, 
-                                  IMapper mapper)
+        public DynamoDBRepository(IAwsClientFactory<AmazonDynamoDBClient> clientFactory)
         {
             _amazonDynamoDBClient = clientFactory.GetAwsClient();
-            _mapper = mapper;
             _configuration = new DynamoDBOperationConfig
             {
                 OverrideTableName = "Cloudbash" ,
                 SkipVersionCheck = true
-            };
-            
+            };            
         }        
 
         public async Task<List<T>> GetAllAsync()
@@ -53,7 +45,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
-                return await context.LoadAsync<T>(id, _configuration);
+                return await context.LoadAsync<T>(GenerateEntityID(id.ToString()), _configuration);
             }
         }
 
@@ -63,7 +55,7 @@ namespace Cloudbash.Infrastructure.Persistence
             {
                 try
                 {
-                    entity.Id = typeof(T).Name + entity.Id; 
+                    entity.Id = GenerateEntityID(entity.Id); 
                     await context.SaveAsync(entity, _configuration);
                     return entity;
                 }
@@ -87,8 +79,7 @@ namespace Cloudbash.Infrastructure.Persistence
             {
                 try
                 {
-                    Console.WriteLine("Removing entity with id: " + id);
-                    await context.DeleteAsync<T>(id, _configuration);                   
+                    await context.DeleteAsync<T>(GenerateEntityID(id.ToString()), _configuration);                   
                 }
                 catch (Exception e)
                 {
@@ -98,11 +89,11 @@ namespace Cloudbash.Infrastructure.Persistence
             }
         }
 
-        private IDynamoDBContext GetDynamoClient()
+        private string GenerateEntityID(string id)
         {
-            return new DynamoDBContext(_amazonDynamoDBClient);
+            return typeof(T).Name + id;
         }
-        
+
         public void Dispose()
         {
             _amazonDynamoDBClient.Dispose();
