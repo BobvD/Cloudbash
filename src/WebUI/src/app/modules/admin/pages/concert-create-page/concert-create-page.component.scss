@@ -13,3 +13,7 @@ img:hover, .selected {
     border: 2px solid purple;
     cursor: pointer;
 }
+
+.svg-icon path, .svg-icon polygon, .svg-icon rect {
+     fill: #fff!important;
+}

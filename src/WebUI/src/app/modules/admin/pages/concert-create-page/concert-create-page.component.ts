@@ -5,6 +5,10 @@ import { ConcertService } from 'src/app/shared/services/concert.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/shared/services/file.service';
+import { Observable } from 'rxjs';
+import { Venue } from 'src/app/shared/models/venue.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { VenueCreateModalComponent } from '../../components/venue-create-modal/venue-create-modal.component';
 
 @Component({
   selector: 'app-concert-create-page',
@@ -28,9 +32,13 @@ export class ConcertCreatePageComponent implements OnInit {
   concertForm: FormGroup;
   concert = new Concert();
 
+  venues$: Observable<Venue[]>;
+  selectedVenueId = '5a15b13c36e7a7f00cf0d7cb';
+
   constructor(private formBuilder: FormBuilder,
     private concertService: ConcertService,
     private toastr: ToastrService,
+    private modalService: NgbModal,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -60,7 +68,6 @@ export class ConcertCreatePageComponent implements OnInit {
     }, err => {
       this.toastr.error(`Could not create concert.`, 'Error');
     });
-
   }
 
   setValues() {
@@ -68,6 +75,11 @@ export class ConcertCreatePageComponent implements OnInit {
     this.concert.Venue = this.concertForm.controls['venue'].value;
     this.concert.Date = this.concertForm.controls['date'].value;
     this.concert.ImageUrl = this.selectedImage;
+  }
+
+
+  openVenueCreateModal() {
+    const modalRef = this.modalService.open(VenueCreateModalComponent, { centered: true });   
   }
 
 }

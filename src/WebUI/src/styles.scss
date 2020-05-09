@@ -3,6 +3,9 @@ $primary: #78418b;
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
 @import "~bootstrap/scss/bootstrap";
 @import '~ngx-toastr/toastr-bs4-alert';
 
@@ -11,7 +14,8 @@ $primary: #78418b;
 @import './assets/sass/components/alert';
 @import './assets/sass/components/card';
 @import './assets/sass/components/amplify';
-
+@import './assets/sass/components/modal';
+@import './assets/sass/components/ng-select';
 
 
 .svg-icon {
@@ -70,6 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   background: #fafafc;
+  overflow-y: scroll;
 }
 
 .svg-icon-user {
@@ -116,4 +121,13 @@ body {
   background: #222;
   color: #ededed;
   margin-top: -1px;
+}
+
+.sticky-offset {
+  top: 135px;
+}
+
+.modal-open {
+  width: calc(100% + 17px);
+  overflow-y: scroll;  
 }

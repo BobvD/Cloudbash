@@ -7,12 +7,15 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { VenueCreateModalComponent } from './components/venue-create-modal/venue-create-modal.component';
 
 @NgModule({
     declarations: [
         ConcertOverviewPageComponent,
-        ConcertCreatePageComponent
+        ConcertCreatePageComponent,
+        VenueCreateModalComponent
     ],
     imports: [ 
         CommonModule,
@@ -21,9 +24,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
-        SharedModule        
+        SharedModule,
+        NgbModalModule,
+        NgSelectModule       
      ],
     exports: [],
     providers: [],
+    entryComponents: [
+        VenueCreateModalComponent
+    ]
 })
 export class AdminModule {}
