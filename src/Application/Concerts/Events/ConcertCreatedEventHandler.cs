@@ -21,7 +21,7 @@ namespace Cloudbash.Application.Concerts.Events
         {
             var @event = notification.DomainEvent;
             await _concertRepository.AddAsync(
-                new Concert { Id = @event.AggregateId.ToString(), Name = @event.Name, Venue = @event.Venue, ImageUrl = @event.ImageUrl, Date = @event.Date });            
+                new Concert { Id = @event.AggregateId.ToString(), Name = @event.Name, VenueId = @event.VenueId, ImageUrl = @event.ImageUrl, Date = @event.Date });            
         }
     }
 }

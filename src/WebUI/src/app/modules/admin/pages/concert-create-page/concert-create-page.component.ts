@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { Venue } from 'src/app/shared/models/venue.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VenueCreateModalComponent } from '../../components/venue-create-modal/venue-create-modal.component';
+import { VenueService } from 'src/app/shared/services/venue.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-concert-create-page',
@@ -33,16 +35,19 @@ export class ConcertCreatePageComponent implements OnInit {
   concert = new Concert();
 
   venues$: Observable<Venue[]>;
-  selectedVenueId = '5a15b13c36e7a7f00cf0d7cb';
 
   constructor(private formBuilder: FormBuilder,
     private concertService: ConcertService,
+    private venueService: VenueService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private router: Router) { }
 
   ngOnInit(): void {
     this.concertForm = this.createFormGroup();
+    this.venues$ = this.venueService.get().pipe(
+      map(x => x.Venues)
+    );
   }
 
   selectImage(image) {
@@ -61,6 +66,7 @@ export class ConcertCreatePageComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.concert)
     this.setValues();
     this.concertService.create(this.concert).subscribe(res => {
       this.toastr.success(`The concert has been created with id: ` + res, 'Success!');

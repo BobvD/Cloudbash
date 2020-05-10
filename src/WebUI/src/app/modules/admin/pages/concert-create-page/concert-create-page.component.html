@@ -40,11 +40,10 @@
                 </div>
                 <div class="mt-3">
                     <ng-select [items]="venues$ | async"
-                        bindLabel="name"
-                        autofocus
-                        classs="w-100"
-                        bindValue="id"
-                        [(ngModel)]="selectedVenueId">
+                        bindLabel="Name"
+                        bindValue="Id"
+                        [(ngModel)]="concert.VenueId"
+                        appendTo="body">
                     </ng-select>
                 </div>
             </div>
