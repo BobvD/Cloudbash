@@ -8,7 +8,7 @@ namespace Cloudbash.Domain.Concerts
     {
         private Concert() { }
 
-        public Concert(string name, string venueId, string imageUrl, string date)
+        public Concert(string name, Guid venueId, string imageUrl, string date)
         {
             
             Id = Guid.NewGuid();
@@ -17,7 +17,7 @@ namespace Cloudbash.Domain.Concerts
         }        
 
         public string Name { get; set; }
-        public string VenueId { get; set; }
+        public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
         public bool IsDeleted { get; set; }

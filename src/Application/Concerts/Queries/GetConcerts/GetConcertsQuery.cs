@@ -23,6 +23,7 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcerts
             {
                 var concerts = await _repository.GetAllAsync();
 
+
                 var vm = new GetConcertsVm
                 {
                     Concerts = concerts,

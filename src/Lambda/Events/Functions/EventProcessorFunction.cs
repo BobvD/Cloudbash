@@ -11,20 +11,37 @@ namespace Cloudbash.Lambda.Events.Functions
     {
         public void Consume(string eventEnveloppe)
         {
-            var @event = DomainFromEnveloppe(eventEnveloppe);          
-            Publish(@event);
+            try
+            {
+                var @event = DomainFromEnveloppe(eventEnveloppe);
+                Publish(@event);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to publish Event: " + eventEnveloppe);
+            }
+          
         }
 
         public void Consume(string ev, string type)
         {
-            var @event = DomainFromEnveloppe(new EventEnveloppe { Event = ev, Type = type + ", Cloudbash.Domain" });
-            Publish(@event);
+            try
+            {
+                var @event = DomainFromEnveloppe(new EventEnveloppe { Event = ev, Type = type + ", Cloudbash.Domain" });
+                Publish(@event);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to publish Event: " + ev);
+            }
+            
         }
 
         public void Publish(IDomainEvent @event)
         {            
             var domainEventNotification = CreateDomainEventNotification((dynamic)@event);
             Mediator.Publish(domainEventNotification);
+            Console.WriteLine("Event published: " + @event.GetType().Name);
         }
 
         public IDomainEvent DomainFromEnveloppe(string eventData)

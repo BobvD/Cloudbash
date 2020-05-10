@@ -45,9 +45,7 @@ export class ConcertCreatePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.concertForm = this.createFormGroup();
-    this.venues$ = this.venueService.get().pipe(
-      map(x => x.Venues)
-    );
+    this.loadVenues();
   }
 
   selectImage(image) {
@@ -86,6 +84,21 @@ export class ConcertCreatePageComponent implements OnInit {
 
   openVenueCreateModal() {
     const modalRef = this.modalService.open(VenueCreateModalComponent, { centered: true });   
+    modalRef.componentInstance.modalClose.subscribe(($e) => {
+      console.log($e);
+      this.loadVenues();
+      this.concert.VenueId = $e.id;
+
+      
+
+    })
+  }
+
+  loadVenues() {
+    this.venues$ = null;
+    this.venues$ = this.venueService.get().pipe(
+      map(x => x.Venues)
+    );
   }
 
 }

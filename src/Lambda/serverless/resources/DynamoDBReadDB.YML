@@ -8,5 +8,5 @@ Properties:
     - AttributeName: Id
       KeyType: HASH
   ProvisionedThroughput:
-    ReadCapacityUnits: 1
-    WriteCapacityUnits: 1
+    ReadCapacityUnits: 20
+    WriteCapacityUnits: 10

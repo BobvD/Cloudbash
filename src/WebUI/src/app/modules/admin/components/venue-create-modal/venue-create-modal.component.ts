@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { VenueService } from 'src/app/shared/services/venue.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,6 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VenueCreateModalComponent implements OnInit {
 
+    @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
+
+    
     submitted = false;
     error = false;
 
@@ -59,8 +62,14 @@ export class VenueCreateModalComponent implements OnInit {
         this.setValues();
         if(this.venueForm.valid) {        
             this.venueService.create(this.venue).subscribe(res => {
-                this.toastr.success(`'${this.venue.Name}' has been created with id: ${res}`, 'The Venue had been added');
-                this.activeModal.close();
+                this.toastr.success(`'${this.venue.Name}' has been created with id: ${res}`, 'The Venue had been added');                
+                this.venue.Id = res;
+
+                this.modalClose.next(this.venue);
+                setTimeout(() => {
+                    this.activeModal.close();
+                }, 2000);
+                
             }, err => {
                 this.error = true;
                 console.log(err);

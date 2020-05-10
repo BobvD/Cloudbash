@@ -10,12 +10,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { VenueCreateModalComponent } from './components/venue-create-modal/venue-create-modal.component';
+import { TicketTypeCreateModalComponent } from './components/ticket-type-create-modal/ticket-type-create-modal.component';
 
 @NgModule({
     declarations: [
         ConcertOverviewPageComponent,
         ConcertCreatePageComponent,
-        VenueCreateModalComponent
+        VenueCreateModalComponent,
+        TicketTypeCreateModalComponent
     ],
     imports: [ 
         CommonModule,
@@ -31,7 +33,8 @@ import { VenueCreateModalComponent } from './components/venue-create-modal/venue
     exports: [],
     providers: [],
     entryComponents: [
-        VenueCreateModalComponent
+        VenueCreateModalComponent,
+        TicketTypeCreateModalComponent
     ]
 })
 export class AdminModule {}

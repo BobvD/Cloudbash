@@ -45,8 +45,32 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
-                return await context.LoadAsync<T>(GenerateEntityID(id.ToString()), _configuration);
+                Console.WriteLine("DynamoDB - Retrieving entity: " + id);
+                try
+                {
+                    /*
+                    await context.LoadAsync<T>(GenerateEntityID(id.ToString()), _configuration);
+                    return context.QueryAsync<T>(GenerateEntityID(id.ToString()), _configuration)
+                            .GetRemainingAsync().Result.First<T>();
+                    */
+
+                    var conditions = new List<ScanCondition> {
+                     new ScanCondition("Id", ScanOperator.Equal, GenerateEntityID(id.ToString()))
+                    };
+
+                    return context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync().Result.First<T>();
+                 
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine("Failed to retrieve entity from DynamoDB");
+                    Console.WriteLine(e.Message);
+                }              
+               
             }
+
+            return default(T);
         }
 
         public async Task<T> AddAsync(T entity)
@@ -55,13 +79,16 @@ namespace Cloudbash.Infrastructure.Persistence
             {
                 try
                 {
-                    entity.Id = GenerateEntityID(entity.Id); 
-                    await context.SaveAsync(entity, _configuration);
+                    entity.Id = GenerateEntityID(entity.Id);
+
+                    Console.WriteLine("DynamoDB - Saving entity: " + entity.Id);   
+                    
+                    await context.SaveAsync<T>(entity, _configuration);
                     return entity;
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine("Failed to save entity to DynamoDB");
                     Console.WriteLine(e.Message);
                 }
             }

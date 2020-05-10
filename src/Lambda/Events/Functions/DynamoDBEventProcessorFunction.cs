@@ -18,7 +18,7 @@ namespace Cloudbash.Lambda.Events.Functions
                     AttributeValue @event = null;
                     AttributeValue type = null;
                     record.Dynamodb.NewImage.TryGetValue("Data", out @event);
-                    record.Dynamodb.NewImage.TryGetValue("EventType", out type);
+                    record.Dynamodb.NewImage.TryGetValue("EventType", out type);                   
                     Consume(@event.S, type.S);
                 } else
                 {

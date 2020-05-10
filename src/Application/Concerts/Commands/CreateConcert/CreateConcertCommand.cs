@@ -11,7 +11,7 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
     {
 
         public string Name { get; set; }
-        public string VenueId { get; set; }
+        public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
 

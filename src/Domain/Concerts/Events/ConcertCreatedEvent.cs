@@ -9,7 +9,7 @@ namespace Cloudbash.Domain.Concerts.Events
         {
         }
 
-        internal ConcertCreatedEvent(Guid aggregateId, string name, string venueId, string imageUrl, string date) 
+        internal ConcertCreatedEvent(Guid aggregateId, string name, Guid venueId, string imageUrl, string date) 
             : base(aggregateId)
         {
             Name = name;
@@ -18,7 +18,7 @@ namespace Cloudbash.Domain.Concerts.Events
             Date = date;
         }
 
-        internal ConcertCreatedEvent(Guid aggregateId, long aggregateVersion, string name, string venueId, string imageUrl, string date) 
+        internal ConcertCreatedEvent(Guid aggregateId, long aggregateVersion, string name, Guid venueId, string imageUrl, string date) 
             : base(aggregateId, aggregateVersion)
         {
             Name = name;
@@ -28,7 +28,7 @@ namespace Cloudbash.Domain.Concerts.Events
         }
                
         public string Name { get; private set; }
-        public string VenueId { get; set; }
+        public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
 
