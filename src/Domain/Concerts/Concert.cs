@@ -8,16 +8,16 @@ namespace Cloudbash.Domain.Concerts
     {
         private Concert() { }
 
-        public Concert(string name, string venue, string imageUrl, string date)
+        public Concert(string name, string venueId, string imageUrl, string date)
         {
             
             Id = Guid.NewGuid();
             // Create and add a new ConcertCreatedEvent
-            AddEvent(new ConcertCreatedEvent(Id, name, venue, imageUrl, date));
+            AddEvent(new ConcertCreatedEvent(Id, name, venueId, imageUrl, date));
         }        
 
         public string Name { get; set; }
-        public string Venue { get; set; }
+        public string VenueId { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
         public bool IsDeleted { get; set; }
@@ -32,7 +32,7 @@ namespace Cloudbash.Domain.Concerts
         {
             Id = @event.AggregateId;
             Name = @event.Name;
-            Venue = @event.Venue;
+            VenueId = @event.VenueId;
             ImageUrl = @event.ImageUrl;
             Date = @event.Date;
         }
