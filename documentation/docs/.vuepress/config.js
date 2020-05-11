@@ -24,8 +24,8 @@ module.exports = {
       {
         title: 'Event Sourcing & CQRS',
         children: [
-          ['/event_sourcing/', 'Introductie'],
-          ['/introduction/ES', 'Implementatie']          
+          ['/event_sourcing/', 'Introduction'],
+          ['/event_sourcing/implementation.md', 'Implementation']          
         ],
         collapsable: false,
         sidebarDepth: 0,   

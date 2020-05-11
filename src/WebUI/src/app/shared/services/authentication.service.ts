@@ -10,12 +10,12 @@ import { Role } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root',
-  })
+})
 export class AuthenticationService {
     public loggedIn: BehaviorSubject<boolean>;
-    signedIn: boolean;
     public user: any;
     public currentUserRole: Role;
+    signedIn: boolean;
 
     constructor(private amplifyService: AmplifyService,
         private router: Router) {
@@ -28,12 +28,10 @@ export class AuthenticationService {
                 } else {
                     this.user = authState.user;
                     this.currentUserRole = this.getRole(authState.user);
-                    // this.router.navigate(['/']);
                 }
             });
     }
 
-    /** get authenticat state */
     public isAuthenticated(): Observable<boolean> {
         return fromPromise(Auth.currentAuthenticatedUser())
             .pipe(
@@ -48,7 +46,6 @@ export class AuthenticationService {
             );
     }
 
-    /** signout */
     public signOut() {
         fromPromise(Auth.signOut())
             .subscribe(
@@ -58,10 +55,6 @@ export class AuthenticationService {
                 },
                 error => console.log(error)
             );
-    }
-
-    get isAdmin() {
-        return true;
     }
 
     public getRole(user: any): Role {
@@ -75,6 +68,5 @@ export class AuthenticationService {
             }
         }
     }
-
 
 }
