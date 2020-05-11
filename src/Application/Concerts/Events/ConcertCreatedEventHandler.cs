@@ -25,13 +25,18 @@ namespace Cloudbash.Application.Concerts.Events
         {
             Console.WriteLine("ConcertCreatedEventHandler called");
             var @event = notification.DomainEvent;
-            var venue = await _venueRepository.GetAsync(@event.VenueId);
-            Console.WriteLine("Venue name: " + venue.Name);
+
+            Venue venue = null;
+            if(@event.VenueId != default)
+            {
+                venue = await _venueRepository.GetAsync(@event.VenueId);
+            }
+
             await _concertRepository.AddAsync(
                 new Concert { 
                     Id = @event.AggregateId.ToString(), 
                     Name = @event.Name, 
-                    VenueId = @event.VenueId.ToString(), 
+                    VenueId = venue?.Id.ToString(), 
                     Venue = venue,
                     ImageUrl = @event.ImageUrl, 
                     Date = @event.Date 

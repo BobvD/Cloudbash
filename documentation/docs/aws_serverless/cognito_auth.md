@@ -89,8 +89,39 @@ Making use of the AuthGuard to secure routes. The example below makes sure that 
 },
 ```
 ## Server-side
-### Securing REST Endpoints
 
+### Serverless Framework
+**ApiGateWayAuthorizer.yml** - [source]() <br />
+Most simple way of authorizing REST Endpoints against a Cognito user pool.
+``` yaml
+Type: AWS::ApiGateway::Authorizer
+Properties: 
+    AuthorizerResultTtlInSeconds: 300
+    IdentitySource: method.request.header.Authorization
+    Name: cognito-authorizer
+    RestApiId: 
+        Ref: "ApiGatewayRestApi"
+    Type: COGNITO_USER_POOLS
+    ProviderARNs: 
+      - [COGNITO USER POOL ARN]
+```
+**ApiGateWayAuthorizer.yml** - [source]() <br />
+Example of an Lambda (exposed as an REST Endpoint with API Gateway) secured with the ApiGateWayAuthorizer.
+``` yaml
+handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
+events:
+- http:
+    path: concerts
+    method: post
+    cors:
+        origin: '*'
+        headers:
+            - Authorization
+    authorizer:
+        type: COGNITO_USER_POOLS
+        authorizerId: 
+            Ref: apiGatewayAuthorizer
+```
 
 
 ## Further reading

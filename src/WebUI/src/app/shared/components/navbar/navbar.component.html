@@ -36,6 +36,7 @@
                         {{ authService?.user?.username }}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                        <a ngbDropdownItem [routerLink]="[ '/admin' ]" *ngIf="authService.isAdmin()">Admin Dashboard</a>
                         <button ngbDropdownItem (click)="signOut()">Uitloggen</button>
                     </div>
                 </div>

@@ -122,7 +122,7 @@ resources:
     # POSTGRESQL RDS Database
     PostgreSqlRDSInstance: ${file(./serverless/resources/PostgresSQL.yml)}
 
-    # S3 BUcket
+    # S3 Bucket
     bucket: ${file(./serverless/resources/S3Bucket.yml)}
     bucketPolicy: ${file(./serverless/resources/S3BucketPolicy.yml)}
 
@@ -149,6 +149,9 @@ resources:
 
     # Event Store = DynamoDB
     eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
+
+    # Lambda Authorizer
+    apiGatewayAuthorizer: ${file(./serverless/resources/ApiGatewayAuthorizer.yml)}
 
 plugins:
   - serverless-plugin-scripts

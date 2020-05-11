@@ -57,6 +57,10 @@ export class AuthenticationService {
             );
     }
 
+    public isAdmin() : boolean {
+        return this.currentUserRole === Role.Admin;
+    }
+
     public getRole(user: any): Role {
         const roles: any[] = user.signInUserSession
             .idToken.payload['cognito:groups'];
