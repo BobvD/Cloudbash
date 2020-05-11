@@ -3,4 +3,11 @@ events:
 - http:
     path: concerts
     method: post
-    cors: true
+    cors:
+        origin: '*'
+        headers:
+            - Authorization
+    authorizer:
+        type: COGNITO_USER_POOLS
+        authorizerId: 
+            Ref: apiGatewayAuthorizer

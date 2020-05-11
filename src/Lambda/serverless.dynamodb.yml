@@ -71,9 +71,11 @@ resources:
     # Event Store = DynamoDB
     eventStore: ${file(./serverless/resources/DynamoDBEventStore.yml)}
     readDatabase:  ${file(./serverless/resources/DynamoDBReadDB.yml)}
-    # S3 BUcket
+    # S3 Bucket
     bucket: ${file(./serverless/resources/S3Bucket.yml)}
     bucketPolicy: ${file(./serverless/resources/S3BucketPolicy.yml)}
+    # Lambda Authorizer
+    apiGatewayAuthorizer: ${file(./serverless/resources/ApiGatewayAuthorizer.yml)}
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip

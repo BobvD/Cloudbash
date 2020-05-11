@@ -73,6 +73,11 @@ The AutGuard can be used to authorize users when they visit a specific page. Whe
 
 <<< @/../src/WebUI/src/app/shared/guards/auth.guard.ts
 
+**jwt.interceptor.ts** - [source](https://github.com/BobvD/Cloudbash/blob/dev/src/WebUI/src/app/shared/helpers/jwt.interceptor.ts) <br />
+The JWT Interceptor automatically adds an Authorization header with the JWT Token when a HTTP call is made.
+
+<<< @/../src/WebUI/src/app/shared/helpers/jwt.interceptor.ts
+
 **app-routing.module.ts** - [source]() <br />
 Making use of the AuthGuard to secure routes. The example below makes sure that only authenticated users with the admin rule can visit the page on the /admin path.
 ``` ts
@@ -85,3 +90,8 @@ Making use of the AuthGuard to secure routes. The example below makes sure that 
 ```
 ## Server-side
 ### Securing REST Endpoints
+
+
+
+## Further reading
+- [AWS Cognito integration with lambda functions using the Serverless Framework](http://www.andyfrench.info/2018/10/aws-cognito-integration-with-lambda.html) <br /> - by Andy French
