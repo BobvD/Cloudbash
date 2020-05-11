@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Config } from '../models/config.model';
+import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 
 @Injectable({
     providedIn: 'root',
@@ -7,20 +8,25 @@ import { Config } from '../models/config.model';
 export class ConfigService {
 
     configs: Config[] = [
-        { id: 1, name: "Config 1", apiUrl: "https://u6ah3ubpa0.execute-api.us-east-1.amazonaws.com/dev/", eventBusType: "DynamoDB Streams", eventStoreType: "DynamoDB", readDatabaseType: "DynamoDB", documentationUrl: "" },
-        { id: 2, name: "Config 2", apiUrl: "",eventBusType: "Kinesis", eventStoreType: "DynamoDB", readDatabaseType: "RDS (Postgres)", documentationUrl: "" },        
-        { id: 3, name: "Config 3", apiUrl: "", eventBusType: "SQS", eventStoreType: "DynamoDB", readDatabaseType: "ElastiCache (Redis)", documentationUrl: "" },
-        { id: 4, name: "custom", apiUrl: "", eventBusType: "Unknown", eventStoreType: "Unknown", readDatabaseType: "Unknown", documentationUrl: "" }           
+        { id: 1, name: "Config 1", apiUrl: "https://u6ah3ubpa0.execute-api.us-east-1.amazonaws.com/dev", websocketUrl: "wss://4pcnw9kl9b.execute-api.us-east-1.amazonaws.com/dev/", eventBusType: "DynamoDB Streams", eventStoreType: "DynamoDB", readDatabaseType: "DynamoDB", documentationUrl: "" },
+        { id: 2, name: "Config 2", apiUrl: "",eventBusType: "Kinesis", eventStoreType: "DynamoDB", websocketUrl: "", readDatabaseType: "RDS (Postgres)", documentationUrl: "" },        
+        { id: 3, name: "Config 3", apiUrl: "", eventBusType: "SQS", eventStoreType: "DynamoDB", websocketUrl: "", readDatabaseType: "ElastiCache (Redis)", documentationUrl: "" },
+        { id: 4, name: "custom", apiUrl: "", eventBusType: "Unknown", eventStoreType: "Unknown", websocketUrl: "", readDatabaseType: "Unknown", documentationUrl: "" }           
         
     ]
 
     defaultConfig = 1;
     currentConfig = this.defaultConfig;
     
-    
+    myWebSocket: WebSocketSubject<any>;
+
     getApiBaseUrl() : string{
         return localStorage.getItem('apiUrl');  
     }  
+
+    private getWebSocketUrl(): string {
+        return this.getConfig(this.currentConfig).websocketUrl;
+    }
 
     getConfig(id: number) : Config {
         return this.configs.find(c => c.id === id);        
@@ -56,6 +62,23 @@ export class ConfigService {
         }
         return config;
     } 
+
+    connectToEventStore() {
+        this.myWebSocket = webSocket(this.getWebSocketUrl());
+        this.myWebSocket.subscribe(    
+            msg => console.log('message received: ' + msg), 
+            // Called whenever there is a message from the server    
+            err => console.log(err), 
+            // Called if WebSocket API signals some kind of error    
+            () => console.log('complete') 
+            // Called when connection is closed (for whatever reason)  
+         );
+
+        this.myWebSocket.asObservable().subscribe(dataFromServer => {
+            console.log("connected")
+            console.log(dataFromServer);
+        });
+    }
 
     getS3BucketUrl() {
         return `https://cb-c${this.currentConfig}.s3.amazonaws.com/`

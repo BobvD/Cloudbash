@@ -53,7 +53,10 @@ functions:
   # File Endpoints
   uploadFile: ${file(./serverless/functions/files/upload.yml)}
   getFileUploadUrl: ${file(./serverless/functions/files/get_s3_url.yml)}
-   
+  # Event Store WebSocket
+  eventStoreWebSocket: ${file(./serverless/functions/websockets/eventStore.yml)}
+  
+
   # Eventstream Handler
   eventStreamHandler:
     handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run

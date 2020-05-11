@@ -1,0 +1,19 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Util.EventStoreWebSocketFunction::Run
+events:
+    - websocket:
+        # Handles new connection requests
+        route: $connect
+
+    - websocket:
+        # Route messages here if '$request.body.action' is 'routeA'.
+        # You can adjust which property to use for routing by adjusting
+        # 'websocketsApiRouteSelectionExpression'.
+        route: routeA
+
+    - websocket:
+        # Handles all unrouted messages
+        route: $default
+
+    - websocket:
+        # Handles disconnect messages
+        route: $disconnect
