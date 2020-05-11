@@ -3,7 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { AuthenticationService } from '../services/authentication.service';
 import { tap } from 'rxjs/internal/operators/tap';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
@@ -15,13 +17,13 @@ export class AuthGuard implements CanActivate {
             .pipe(
                 tap(loggedIn => {
                     if (!loggedIn) {
-                        this.router.navigate(['/log-in']);
+                        this.router.navigate(['/sign-in']);
                     } else {
                         const role = this.auth.currentUserRole;
                         console.log(role);
                         if (route.data.roles && route.data.roles.indexOf(role) === -1) {
                             // role not authorised so redirect to home page
-                            this.router.navigate(['/log-in']);
+                            this.router.navigate(['/sign-in']);
                             return false;
                         }
                         // authorised so return true

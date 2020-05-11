@@ -1,7 +1,9 @@
+import { Venue } from './venue.model';
+
 export class Concert {
     Id: string;
     Name: string;
-    Venue: string;
+    Venue: Venue;
     VenueId: string;
     ImageUrl: string;
     Date: string;
