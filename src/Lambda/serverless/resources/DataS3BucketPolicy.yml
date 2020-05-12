@@ -1,7 +1,7 @@
 ﻿Type: AWS::S3::BucketPolicy
 Properties:
     Bucket:
-        Ref: bucket
+        Ref: dataBucket
     PolicyDocument:
         Statement:
         - Sid: PublicReadGetObject
@@ -10,4 +10,4 @@ Properties:
           Action:
           - s3:GetObject
           - s3:PutObject
-          Resource: arn:aws:s3:::${self:custom.S3_BUCKET_NAME}/*
+          Resource: arn:aws:s3:::${self:custom.DATA_S3_BUCKET_NAME}/*

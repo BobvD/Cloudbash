@@ -1,6 +1,6 @@
 ﻿Type: AWS::S3::Bucket
 Properties:
-    BucketName: ${self:custom.S3_BUCKET_NAME}
+    BucketName: ${self:custom.DATA_S3_BUCKET_NAME}
     BucketEncryption:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:

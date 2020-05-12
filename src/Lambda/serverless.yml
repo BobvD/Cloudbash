@@ -13,6 +13,7 @@ provider:
     ServerlessConfiguration__Database: 'POSTGRES'
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
     ServerlessConfiguration__KinesisStreamName: ${self:custom.KINESIS_STREAM_NAME}
+    ServerlessConfiguration__BucketName: ${self:custom.STATIC_FILE_S3_BUCKET_NAME}
 
   iamRoleStatements:
   # Grant privileges to read from kinesis stream
@@ -36,7 +37,13 @@ provider:
       Fn::GetAtt: 
       - eventStore
       - Arn     
-
+  - Effect: Allow
+      Action:
+      - s3:*
+      Resource:
+        Fn::GetAtt: 
+        - staticFileBucket
+        - Arn 
 custom:
   EVENT_STORE_NAME: es-c2
   KINESIS_STREAM_NAME: eventStream
@@ -53,7 +60,7 @@ custom:
       hello: echo Hello from ${self:service} service!
     hooks:
       'deploy:finalize': serverless invoke --function dbInit -d
-  S3_BUCKET_NAME: cb-c2
+  STATIC_FILE_S3_BUCKET_NAME: cb-c2
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
@@ -123,8 +130,8 @@ resources:
     PostgreSqlRDSInstance: ${file(./serverless/resources/PostgresSQL.yml)}
 
     # S3 Bucket
-    bucket: ${file(./serverless/resources/S3Bucket.yml)}
-    bucketPolicy: ${file(./serverless/resources/S3BucketPolicy.yml)}
+    dataBucket: ${file(./serverless/resources/DataS3Bucket.yml)}
+    dataBucketPolicy: ${file(./serverless/resources/DataS3BucketPolicy.yml)}
 
     # create the Kinesis EventStream
     eventStream: 

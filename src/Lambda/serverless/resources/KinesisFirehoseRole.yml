@@ -1,0 +1,20 @@
+﻿Type: AWS::IAM::Role
+Properties:
+    RoleName: ${self:service}-${self:provider.stage}-FirehoseRole
+    AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+                - firehose.amazonaws.com
+          Action: sts:AssumeRole
+    Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action: s3:*
+              Resource:
+                Fn::Sub: arn:aws:s3:::${self:service}-${self:provider.stage}-data

@@ -1,0 +1,16 @@
+﻿Type: AWS::S3::Bucket
+Properties:
+    BucketName: ${self:custom.STATIC_FILE_S3_BUCKET_NAME}
+    BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+    VersioningConfiguration:
+        Status: Enabled
+    CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders: ['*']
+          AllowedMethods: [GET, PUT]
+          AllowedOrigins: ['*']
+          Id: CORSRuleId1
+          MaxAge: '3600'

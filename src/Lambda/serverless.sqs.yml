@@ -17,13 +17,21 @@ provider:
         - dynamodb:*
       Resource:
         - Fn::GetAtt: [ eventStore, Arn ]         
+    - Effect: Allow
+      Action:
+      - s3:*
+      Resource:
+        Fn::GetAtt: 
+        - staticFileBucket
+        - Arn 
   environment:   
     ServerlessConfiguration__EventBus: 'SQS'    
     ServerlessConfiguration__Database: 'REDIS'
+    ServerlessConfiguration__BucketName: ${self:custom.STATIC_FILE_S3_BUCKET_NAME}
     ServerlessConfiguration__SQSUrl: ${self:custom.SQS.URL}
     ServerlessConfiguration__Redis__Host: ${self:custom.REDIS.HOST}
     ServerlessConfiguration__Redis__Port: ${self:custom.REDIS.PORT}
-    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
+    ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}    
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
@@ -37,7 +45,7 @@ custom:
     HOST: 
         Fn::GetAtt: [ElasticCacheCluster, RedisEndpoint.Address] 
     PORT: '6379'
-  S3_BUCKET_NAME: cb-c3
+  STATIC_FILE_S3_BUCKET_NAME: cb-c3
 
 functions:
   # Concert Endpoints
@@ -105,8 +113,8 @@ resources:
     ElasticCacheCluster: ${file(./serverless/resources/ElastiCacheCluster.yml)}
 
     # S3 Bucket
-    bucket: ${file(./serverless/resources/S3Bucket.yml)}
-    bucketPolicy: ${file(./serverless/resources/S3BucketPolicy.yml)}
+    dataBucket: ${file(./serverless/resources/DataS3Bucket.yml)}
+    dataBucketPolicy: ${file(./serverless/resources/DataS3BucketPolicy.yml)}
 
     # Lambda Authorizer
     apiGatewayAuthorizer: ${file(./serverless/resources/ApiGatewayAuthorizer.yml)}
