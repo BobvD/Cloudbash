@@ -26,7 +26,7 @@ namespace Cloudbash.Infrastructure.Firehose
                 DeliveryStreamName = _config.ConfigName + "-firehose",
                 Record = new Record
                 {
-                    Data = Compress(data)
+                    Data = new MemoryStream(data)
                 }
             };
 
