@@ -48,7 +48,8 @@ module.exports = {
         children: [
           ['/aws_serverless/static_website_hosting.md', 'Static Website Hosting'],
           ['/aws_serverless/s3_file_uploads.md', 'S3 File Uploads'],
-          ['/aws_serverless/cognito_auth.md', 'Access Control with Cognito']          
+          ['/aws_serverless/cognito_auth.md', 'Access Control with Cognito'],
+          ['/aws_serverless/data_lake.md', 'Data Lake with S3, Glue & Athena']             
         ],
         collapsable: false,
         sidebarDepth: 0,   
