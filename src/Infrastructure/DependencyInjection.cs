@@ -4,6 +4,7 @@ using Cloudbash.Infrastructure.Cache;
 using Cloudbash.Infrastructure.Configs;
 using Cloudbash.Infrastructure.EventStream;
 using Cloudbash.Infrastructure.Extensions;
+using Cloudbash.Infrastructure.Firehose;
 using Cloudbash.Infrastructure.Persistence;
 using Cloudbash.Infrastructure.Persistence.EventStore;
 using Cloudbash.Infrastructure.Services;
@@ -23,7 +24,8 @@ namespace Cloudbash.Infrastructure
             services.AddTransient<IEventStore, DynamoDBEventStore>();
 
             // Inject Services
-            services.AddTransient<IFileService, S3FileService>();
+            services.AddTransient<IFileService, S3FileService>(); 
+            services.AddTransient<IFirehoseClient, FirehoseClient>();
 
             // Inject AWS Configuration
             services

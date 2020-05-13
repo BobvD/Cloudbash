@@ -2,6 +2,7 @@
 {
     public interface IServerlessConfiguration
     {
+        string ConfigName { get; }
         EventBusType EventBus { get; }
         DatabaseType Database { get; }
         string EventStoreTableName { get; }
@@ -11,10 +12,12 @@
         RedisConfiguration Redis { get; set; }
         string RedisConnectionString { get; }
         string BucketName { get; }
+        
     }
 
     public class ServerlessConfiguration : IServerlessConfiguration
     {
+        public string ConfigName { get; set; }
         public EventBusType EventBus { get; set; }
         public DatabaseType Database { get; set; }
         public string SQSUrl { get; set; }

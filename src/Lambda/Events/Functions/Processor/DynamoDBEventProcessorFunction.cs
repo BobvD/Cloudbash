@@ -1,10 +1,8 @@
 ﻿using Amazon.DynamoDBv2.Model;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.DynamoDBEvents;
-using Newtonsoft.Json;
-using System;
 
-namespace Cloudbash.Lambda.Events.Functions
+namespace Cloudbash.Lambda.Events.Functions.Processor
 {
     public class DynamoDBEventProcessorFunction : EventProcessorFunction
     {

@@ -2,7 +2,7 @@
 using Amazon.Lambda.SQSEvents;
 using static Amazon.Lambda.SQSEvents.SQSEvent;
 
-namespace Cloudbash.Lambda.Events.Functions
+namespace Cloudbash.Lambda.Events.Functions.Processor
 {
     public class SQSEventProcessorFunction : EventProcessorFunction
     {

@@ -1,9 +1,8 @@
 ﻿using Amazon.Lambda.Core;
 using Amazon.Lambda.KinesisEvents;
-using Newtonsoft.Json;
 using System.Text;
 
-namespace Cloudbash.Lambda.Events.Functions
+namespace Cloudbash.Lambda.Events.Functions.Processor
 {
     public class KinesisEventProcessorFunction : EventProcessorFunction
     {

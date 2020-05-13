@@ -1,11 +1,11 @@
 ﻿Type: AWS::KinesisFirehose::DeliveryStream
 Properties:
-    DeliveryStreamName: firehose
+    DeliveryStreamName: ${self:custom.CONFIG_NAME}-firehose
     S3DestinationConfiguration:
         BucketARN:
             Fn::Sub: arn:aws:s3:::${self:custom.DATA_S3_BUCKET_NAME}
         BufferingHints:
-            IntervalInSeconds: 300
+            IntervalInSeconds: 60
             SizeInMBs: 5 
         CompressionFormat: UNCOMPRESSED
         RoleARN:

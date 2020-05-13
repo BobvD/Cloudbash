@@ -5,7 +5,7 @@ using Cloudbash.Lambda.Functions;
 using Newtonsoft.Json;
 using System;
 
-namespace Cloudbash.Lambda.Events.Functions
+namespace Cloudbash.Lambda.Events.Functions.Processor
 {
     public abstract class EventProcessorFunction : FunctionBase
     {

@@ -68,7 +68,7 @@ functions:
 
   # lambda for catching events from the eventstream (SQS)
   eventStreamHandler:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.SQSEventProcessorFunction::Run
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.Processor.SQSEventProcessorFunction::Run
     timeout: 30
     vpc: ${file(./serverless/resources/LambdaStorageSecurityGroupConfig.yml)}
     events:

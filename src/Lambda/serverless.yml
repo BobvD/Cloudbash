@@ -9,6 +9,7 @@ provider:
   environment:   
     POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
     POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
+    ServerlessConfiguration__ConfigName: ${self:custom.CONFIG_NAME}
     ServerlessConfiguration__EventBus: 'KINESIS'
     ServerlessConfiguration__Database: 'POSTGRES'
     ServerlessConfiguration__EventStoreTableName: ${self:custom.EVENT_STORE_NAME}
@@ -38,13 +39,30 @@ provider:
       - eventStore
       - Arn     
   - Effect: Allow
-      Action:
-      - s3:*
-      Resource:
-        Fn::GetAtt: 
-        - staticFileBucket
-        - Arn 
+    Action:
+    - s3:*
+    Resource:
+      Fn::GetAtt: 
+      - staticFileBucket
+      - Arn 
+  - Effect: Allow
+    Action:
+    - s3:*
+    Resource:
+      Fn::GetAtt: 
+      - dataBucket
+      - Arn 
+  - Effect: Allow
+    Action:
+    - firehose:*
+    Resource:
+      Fn::GetAtt: 
+      - firehose
+      - Arn
+
+
 custom:
+  CONFIG_NAME: cb-c2
   EVENT_STORE_NAME: es-c2
   KINESIS_STREAM_NAME: eventStream
   DB_NAME: cloudbash
@@ -61,6 +79,7 @@ custom:
     hooks:
       'deploy:finalize': serverless invoke --function dbInit -d
   STATIC_FILE_S3_BUCKET_NAME: cb-c2
+  DATA_S3_BUCKET_NAME: cb-c2-data
 
 package:
   artifact: bin/release/netcoreapp3.1/deploy-package.zip
@@ -81,7 +100,19 @@ functions:
 
   # lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.KinesisEventProcessorFunction::Run
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.Processor.KinesisEventProcessorFunction::Run
+
+  # Dynamo Firehose to S3
+  firehoseHandler:
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.Firehose.DynamoToFirehose::Run
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - eventStore
+              - StreamArn
+          batchSize: 1
 
   # lambda for initiliazing the database on deployment
   dbInit:    
@@ -130,6 +161,14 @@ resources:
     PostgreSqlRDSInstance: ${file(./serverless/resources/PostgresSQL.yml)}
 
     # S3 Bucket
+    staticFileBucket: ${file(./serverless/resources/StaticFileS3Bucket.yml)}
+    staticFileBucketPolicy: ${file(./serverless/resources/StaticFileS3BucketPolicy.yml)}
+
+    # Kinesis Firehose    
+    firehoseRole: ${file(./serverless/resources/KinesisFirehoseRole.yml)}
+    firehose: ${file(./serverless/resources/KinesisFirehose.yml)}
+
+    # Data S3 Bucket
     dataBucket: ${file(./serverless/resources/DataS3Bucket.yml)}
     dataBucketPolicy: ${file(./serverless/resources/DataS3BucketPolicy.yml)}
 

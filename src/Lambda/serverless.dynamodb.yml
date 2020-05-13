@@ -55,12 +55,11 @@ functions:
   uploadFile: ${file(./serverless/functions/files/upload.yml)}
   getFileUploadUrl: ${file(./serverless/functions/files/get_s3_url.yml)}
   # Event Store WebSocket
-  eventStoreWebSocket: ${file(./serverless/functions/websockets/eventStore.yml)}
-  
+  eventStoreWebSocket: ${file(./serverless/functions/websockets/eventStore.yml)} 
 
   # Eventstream Handler
   eventStreamHandler:
-    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.DynamoDBEventProcessorFunction::Run
+    handler: Cloudbash.Lambda::Cloudbash.Lambda.Events.Functions.Processor.DynamoDBEventProcessorFunction::Run
     events:
       - stream:
           type: dynamodb
@@ -84,6 +83,7 @@ resources:
     # S3 Data Bucket
     dataBucket: ${file(./serverless/resources/DataS3Bucket.yml)}
     dataBucketPolicy: ${file(./serverless/resources/DataS3BucketPolicy.yml)}
+
     # Kinesis Firehose    
     firehoseRole: ${file(./serverless/resources/KinesisFirehoseRole.yml)}
     firehose: ${file(./serverless/resources/KinesisFirehose.yml)}

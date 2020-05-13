@@ -17,4 +17,6 @@ Properties:
             - Effect: Allow
               Action: s3:*
               Resource:
-                Fn::Sub: arn:aws:s3:::${self:service}-${self:provider.stage}-data
+                Fn::Sub: arn:aws:s3:::${self:custom.DATA_S3_BUCKET_NAME}
+
+              
