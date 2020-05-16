@@ -27,7 +27,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             var entity = await GetAsync(id);
             _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -38,9 +38,7 @@ namespace Cloudbash.Infrastructure.Persistence
 
         public async Task<T> GetAsync(Guid id)
         {
-            return await _context.Set<T>()
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(e => e.Id == id.ToString());
+            return _context.Set<T>().Find(id.ToString()); 
         }
 
         public async Task<T> UpdateAsync(T entity)

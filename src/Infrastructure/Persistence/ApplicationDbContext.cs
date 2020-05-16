@@ -1,17 +1,15 @@
 ﻿
-using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ViewModels;
 using Cloudbash.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

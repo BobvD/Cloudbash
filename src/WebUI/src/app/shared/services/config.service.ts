@@ -9,13 +9,13 @@ export class ConfigService {
 
     configs: Config[] = [
         { id: 1, name: "Config 1", apiUrl: "https://u6ah3ubpa0.execute-api.us-east-1.amazonaws.com/dev", websocketUrl: "wss://4pcnw9kl9b.execute-api.us-east-1.amazonaws.com/dev/", eventBusType: "DynamoDB Streams", eventStoreType: "DynamoDB", readDatabaseType: "DynamoDB", documentationUrl: "" },
-        { id: 2, name: "Config 2", apiUrl: "",eventBusType: "Kinesis", eventStoreType: "DynamoDB", websocketUrl: "", readDatabaseType: "RDS (Postgres)", documentationUrl: "" },        
+        { id: 2, name: "Config 2", apiUrl: "https://z65ppv9o49.execute-api.us-east-1.amazonaws.com/dev/",eventBusType: "Kinesis", eventStoreType: "DynamoDB", websocketUrl: "", readDatabaseType: "RDS (Postgres)", documentationUrl: "" },        
         { id: 3, name: "Config 3", apiUrl: "", eventBusType: "SQS", eventStoreType: "DynamoDB", websocketUrl: "", readDatabaseType: "ElastiCache (Redis)", documentationUrl: "" },
         { id: 4, name: "custom", apiUrl: "", eventBusType: "Unknown", eventStoreType: "Unknown", websocketUrl: "", readDatabaseType: "Unknown", documentationUrl: "" }           
         
     ]
 
-    defaultConfig = 1;
+    defaultConfig = 2;
     currentConfig = this.defaultConfig;
     
     myWebSocket: WebSocketSubject<any>;

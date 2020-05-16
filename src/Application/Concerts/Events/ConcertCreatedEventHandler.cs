@@ -5,7 +5,6 @@ using Cloudbash.Domain.Concerts.Events;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Cloudbash.Application.Concerts.Events
 {
@@ -22,8 +21,7 @@ namespace Cloudbash.Application.Concerts.Events
         }
 
         public async Task Handle(DomainEventNotification<ConcertCreatedEvent> notification, CancellationToken cancellationToken)
-        {
-            Console.WriteLine("ConcertCreatedEventHandler called");
+        {           
             var @event = notification.DomainEvent;
 
             Venue venue = null;
