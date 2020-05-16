@@ -3,6 +3,8 @@ using Cloudbash.Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence
@@ -20,6 +22,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             await _context.Set<T>().AddAsync(entity);
             _context.SaveChanges();
+
             return entity;
         }
 
@@ -30,10 +33,31 @@ namespace Cloudbash.Infrastructure.Persistence
             _context.SaveChanges();
         }
 
+        public async Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children)
+        {
+            IQueryable<T> query = _context.Set<T>(); 
+            foreach (string entity in children)
+            {
+                query = query.Include(entity);
+
+            }
+            return await query.Where(filter).ToListAsync();
+        }
+
         public async Task<List<T>> GetAllAsync()
         {
-            return await _context.Set<T>()
-                        .AsNoTracking().ToListAsync();
+            return await _context.Set<T>().AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<T>> GetAllAsync(string[] children)
+        {
+            IQueryable<T> query = _context.Set<T>();
+            foreach (string entity in children)
+            {
+                query = query.Include(entity);
+            }
+            
+            return await query.ToListAsync();    
         }
 
         public async Task<T> GetAsync(Guid id)
@@ -45,6 +69,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
+
             return entity;
         }
     }

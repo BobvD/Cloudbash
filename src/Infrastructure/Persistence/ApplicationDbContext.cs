@@ -14,7 +14,7 @@ namespace Cloudbash.Infrastructure.Persistence
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
             
-        }
+        }   
 
         public DbSet<Concert> Concerts { get; set; }
 

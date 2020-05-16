@@ -1,6 +1,7 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ViewModels;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,8 +20,8 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcerts
 
             public async Task<GetConcertsVm> Handle(GetConcertsQuery request, CancellationToken cancellationToken)
             {
-                var concerts = await _repository.GetAllAsync();
-
+                var children = new string[] { "Venue", "Venue" };
+                var concerts = await _repository.GetAllAsync(children);
 
                 var vm = new GetConcertsVm
                 {

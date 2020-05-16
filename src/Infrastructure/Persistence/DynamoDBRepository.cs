@@ -6,6 +6,7 @@ using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Persistence
@@ -126,5 +127,14 @@ namespace Cloudbash.Infrastructure.Persistence
             _amazonDynamoDBClient.Dispose();
         }
 
+        public Task<List<T>> GetAllAsync(string[] children)
+        {
+            return GetAllAsync();
+        }
+
+        public Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
