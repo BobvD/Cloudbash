@@ -1,9 +1,12 @@
 $primary: #78418b;
+
 @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import '../node_modules/angular-archwizard/archwizard.css';
 
 
 @import "~bootstrap/scss/bootstrap";

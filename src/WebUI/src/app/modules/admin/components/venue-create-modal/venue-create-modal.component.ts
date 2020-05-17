@@ -17,6 +17,7 @@ export class VenueCreateModalComponent implements OnInit {
     
     submitted = false;
     error = false;
+    busy = false;
 
     venueForm: FormGroup;
     name: FormControl;
@@ -59,6 +60,7 @@ export class VenueCreateModalComponent implements OnInit {
     submit(){
         this.error = false;
         this.submitted = true;
+        this.busy = true;
         this.setValues();
         if(this.venueForm.valid) {        
             this.venueService.create(this.venue).subscribe(res => {
@@ -72,6 +74,8 @@ export class VenueCreateModalComponent implements OnInit {
                 
             }, err => {
                 this.error = true;
+                this.submitted = false;
+                this.busy = false;
                 console.log(err);
             });
         }        

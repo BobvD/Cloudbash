@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.2.2",
     "@ng-select/ng-select": "^3.7.3",
     "@swimlane/ngx-datatable": "^16.1.0",
+    "angular-archwizard": "^5.0.1",
     "aws-amplify": "^3.0.7",
     "aws-amplify-angular": "^5.0.7",
     "bootstrap": "^4.4.1",

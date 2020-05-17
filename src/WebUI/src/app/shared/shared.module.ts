@@ -22,6 +22,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { InfoBoxComponent } from './components/info-box/info-box.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
         AuthLayoutComponent,
         InfoBoxComponent,
         AdminLayoutComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        LoadingSpinnerComponent
     ],
     imports: [ 
         CommonModule,
@@ -47,7 +49,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     exports: [
         HeaderComponent,
         FooterComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        LoadingSpinnerComponent
     ],
     providers: [
         FileService,

@@ -40,8 +40,10 @@
             </div>  
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancel</button>
-        <button class="btn btn-primary" type="submit" [disabled]="submitted">Save</button>
+        <button class="btn btn-primary btn-lg btn-block" [disabled]="!venueForm.valid ||submitted || busy">
+            <span *ngIf="!busy">Save</span>                    
+            <app-loading-spinner *ngIf="busy" class="mt-1"></app-loading-spinner>                    
+        </button>
         <div class="alert alert-danger d-block w-100 mt-1" role="alert" *ngIf="error">
             Failed to create Venue.
         </div>
