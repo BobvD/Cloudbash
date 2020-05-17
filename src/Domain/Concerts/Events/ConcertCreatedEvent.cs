@@ -9,32 +9,32 @@ namespace Cloudbash.Domain.Concerts.Events
         {
         }
 
-        internal ConcertCreatedEvent(Guid aggregateId, string name, Guid venueId, string imageUrl, string date) 
+        internal ConcertCreatedEvent(Guid aggregateId, string name, Guid venueId, string imageUrl, DateTime created) 
             : base(aggregateId)
         {
             Name = name;
             VenueId = venueId;
             ImageUrl = imageUrl;
-            Date = date;
+            Created = created;
         }
 
-        internal ConcertCreatedEvent(Guid aggregateId, long aggregateVersion, string name, Guid venueId, string imageUrl, string date) 
+        internal ConcertCreatedEvent(Guid aggregateId, long aggregateVersion, string name, Guid venueId, string imageUrl, DateTime created) 
             : base(aggregateId, aggregateVersion)
         {
             Name = name;
             VenueId = venueId;
             ImageUrl = imageUrl;
-            Date = date;
+            Created = created;
         }
                
         public string Name { get; private set; }
         public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
-        public string Date { get; set; }
+        public DateTime Created { get; set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new ConcertCreatedEvent(aggregateId, aggregateVersion, Name, VenueId, ImageUrl, Date);
+            return new ConcertCreatedEvent(aggregateId, aggregateVersion, Name, VenueId, ImageUrl, Created);
         }
 
         public override string ToString()

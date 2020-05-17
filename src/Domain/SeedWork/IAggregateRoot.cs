@@ -7,6 +7,7 @@ namespace Cloudbash.Domain.SeedWork
     {
         Guid Id { get; }
         long Version { get; }
+        DateTime Created { get; }
         // void AddEvent(IDomainEvent @event);
         void ApplyEvent(IDomainEvent @event, long version);
         IEnumerable<IDomainEvent> GetUncommittedEvents();

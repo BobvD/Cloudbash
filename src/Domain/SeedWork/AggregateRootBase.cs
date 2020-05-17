@@ -8,10 +8,10 @@ namespace Cloudbash.Domain.SeedWork
     {
         public const long NewAggregateVersion = -1;
         private long _version = NewAggregateVersion;
-        long IAggregateRoot.Version => _version;
-        
+        long IAggregateRoot.Version => _version;       
 
         public Guid Id { get; protected set; }
+        public DateTime Created { get; protected set; }
 
         private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 

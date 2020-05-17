@@ -9,11 +9,11 @@ namespace Cloudbash.Domain.Concerts
         private Concert() { }
 
         public Concert(string name, Guid venueId, string imageUrl, string date)
-        {
-            
+        {            
             Id = Guid.NewGuid();
+            Created = DateTime.Now;
             // Create and add a new ConcertCreatedEvent
-            AddEvent(new ConcertCreatedEvent(Id, name, venueId, imageUrl, date));
+            AddEvent(new ConcertCreatedEvent(Id, name, venueId, imageUrl, Created));
         }        
 
         public string Name { get; set; }
@@ -34,7 +34,7 @@ namespace Cloudbash.Domain.Concerts
             Name = @event.Name;
             VenueId = @event.VenueId;
             ImageUrl = @event.ImageUrl;
-            Date = @event.Date;
+            Created = @event.Created;
             Status = ConcertStatus.DRAFT;
            
         }

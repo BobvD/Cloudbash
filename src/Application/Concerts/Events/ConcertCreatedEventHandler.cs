@@ -37,7 +37,8 @@ namespace Cloudbash.Application.Concerts.Events
                     VenueId = venue?.Id.ToString(), 
                     Venue = venue,
                     ImageUrl = @event.ImageUrl, 
-                    Date = @event.Date 
+                    Created = @event.Created,
+                    Status = Domain.Concerts.ConcertStatus.DRAFT
                 });            
         }
     }
