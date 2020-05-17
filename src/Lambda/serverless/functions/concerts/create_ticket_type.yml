@@ -1,0 +1,13 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateTicketTypeFunction::Run
+events:
+- http:
+    path: concerts/{id}/ticket_type
+    method: post
+    cors:
+        origin: '*'
+        headers:
+            - Authorization
+    authorizer:
+        type: COGNITO_USER_POOLS
+        authorizerId: 
+            Ref: apiGatewayAuthorizer

@@ -90,6 +90,7 @@ functions:
   createConcert: ${file(./serverless/functions/concerts/create.yml)}
   getConcerts: ${file(./serverless/functions/concerts/get.yml)}
   deleteConcert: ${file(./serverless/functions/concerts/delete.yml)} 
+  createConcertTicketType: ${file(./serverless/functions/concerts/create_ticket_type.yml)}
    # Venue Endpoints
   createVenue: ${file(./serverless/functions/venues/create.yml)}
   getVenues: ${file(./serverless/functions/venues/get.yml)}
