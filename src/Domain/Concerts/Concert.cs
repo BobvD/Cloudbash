@@ -20,11 +20,11 @@ namespace Cloudbash.Domain.Concerts
         public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
-        public bool IsDeleted { get; set; }
+        public ConcertStatus Status { get; set; }
 
         public void MarkAsDeleted()
         {
-            if(!IsDeleted)
+            if(!Status.Equals(ConcertStatus.DELETED))
                 AddEvent(new ConcertDeletedEvent(Id));
         }
 
@@ -35,11 +35,13 @@ namespace Cloudbash.Domain.Concerts
             VenueId = @event.VenueId;
             ImageUrl = @event.ImageUrl;
             Date = @event.Date;
+            Status = ConcertStatus.DRAFT;
+           
         }
 
         internal void Apply(ConcertDeletedEvent @event)
         {
-            IsDeleted = true;
+            Status = ConcertStatus.DELETED;
         }
 
         public override string ToString()

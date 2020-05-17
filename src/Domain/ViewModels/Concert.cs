@@ -1,4 +1,5 @@
-﻿using Cloudbash.Domain.SeedWork;
+﻿using Cloudbash.Domain.Concerts;
+using Cloudbash.Domain.SeedWork;
 
 namespace Cloudbash.Domain.ViewModels
 {
@@ -9,6 +10,7 @@ namespace Cloudbash.Domain.ViewModels
         public virtual Venue Venue { get; set; }
         public string ImageUrl { get; set; }
         public string Date { get; set; }
+        public ConcertStatus Status { get; set; }
 
         public Concert() { }
     }
