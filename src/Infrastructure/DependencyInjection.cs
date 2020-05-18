@@ -78,6 +78,7 @@ namespace Cloudbash.Infrastructure
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, EFRepository<Domain.ViewModels.Concert>>();
+            services.AddTransient<IViewModelRepository<Domain.ViewModels.TicketType>, EFRepository<Domain.ViewModels.TicketType>>();
             services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, EFRepository<Domain.ViewModels.Venue>>();
         }
 

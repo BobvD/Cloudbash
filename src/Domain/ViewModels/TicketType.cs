@@ -1,11 +1,13 @@
 ﻿using Cloudbash.Domain.SeedWork;
 
-namespace Cloudbash.Domain.Concerts
+namespace Cloudbash.Domain.ViewModels
 {
-    public class TicketType : EntityBase
-    {
+    public class TicketType : ReadModelBase
+    {  
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+        public Concert Concert { get; set; }
+        public TicketType() { }
     }
 }

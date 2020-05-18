@@ -1,6 +1,7 @@
 ﻿using Cloudbash.Domain.Concerts;
 using Cloudbash.Domain.SeedWork;
 using System;
+using System.Collections.Generic;
 
 namespace Cloudbash.Domain.ViewModels
 {
@@ -13,7 +14,10 @@ namespace Cloudbash.Domain.ViewModels
         public string Date { get; set; }
         public ConcertStatus Status { get; set; }
         public DateTime Created { get; set; }
-
-        public Concert() { }
+        public List<TicketType> TicketTypes { get; set; }
+        public Concert()
+        {
+            TicketTypes = new List<TicketType>();
+        }
     }
 }

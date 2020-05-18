@@ -21,8 +21,7 @@ namespace Cloudbash.Infrastructure.Persistence
         public async Task<T> AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            _context.SaveChanges();
-
+            Save();
             return entity;
         }
 
@@ -30,7 +29,7 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             var entity = await GetAsync(id);
             _context.Set<T>().Remove(entity);
-            _context.SaveChanges();
+            Save();
         }
 
         public async Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children)
@@ -68,9 +67,21 @@ namespace Cloudbash.Infrastructure.Persistence
         public async Task<T> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);
-            _context.SaveChanges();
-
+            Save();
             return entity;
+        }
+
+        private bool Save()
+        {
+            try
+            {
+                return Convert.ToBoolean(_context.SaveChanges());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
     }
 }
