@@ -93,5 +93,10 @@ namespace Cloudbash.Infrastructure.Persistence
         {
             throw new NotImplementedException();
         }
+
+        public Task<T> GetAsync(Guid id, string[] children)
+        {
+            return GetAsync(id);
+        }
     }
 }

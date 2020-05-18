@@ -12,6 +12,7 @@ namespace Cloudbash.Application.Common.Interfaces
         Task<List<T>> GetAllAsync(string[] children);
         Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children);
         Task<T> GetAsync(Guid id);
+        Task<T> GetAsync(Guid id, string[] children);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task DeleteAsync(Guid id);

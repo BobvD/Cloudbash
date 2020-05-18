@@ -64,6 +64,18 @@ namespace Cloudbash.Infrastructure.Persistence
             return _context.Set<T>().Find(id.ToString()); 
         }
 
+        public async Task<T> GetAsync(Guid id, string[] children)
+        {
+            IQueryable<T> query = _context.Set<T>();
+            foreach (string entity in children)
+            {
+                query = query.Include(entity);
+            }
+            
+            return query.FirstOrDefault(e => e.Id == id.ToString());
+
+        }
+
         public async Task<T> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);

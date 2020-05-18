@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Concerts.Commands.CreateTicketType
 {
-    public class CreateTicketTypeCommand : IRequest<bool>
+    public class CreateTicketTypeCommand : IRequest<Guid>
     {
         public Guid ConcertId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCommand, bool>
+        public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCommand, Guid>
         {
 
             IRepository<Concert> _repository;
@@ -26,9 +26,8 @@ namespace Cloudbash.Application.Concerts.Commands.CreateTicketType
                 _repository = repository;
             }
 
-            public async Task<bool> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
-            {
-                Console.WriteLine("Create Ticket Type Command.");
+            public async Task<Guid> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
+            {               
 
                 var concert = await _repository.GetByIdAsync(request.ConcertId);
 
@@ -37,17 +36,18 @@ namespace Cloudbash.Application.Concerts.Commands.CreateTicketType
                     throw new NotFoundException(nameof(Concert), request.ConcertId);
                 }
 
-                Console.WriteLine("concert retrieved: " + concert.Id + " - " + concert.Name);
+                var ticketType = new TicketType
+                {
+                    Name = request.Name,
+                    Price = request.Price,
+                    Quantity = request.Quantity
+                };
 
-                concert.AddTicketType(
-                    new TicketType { 
-                        Name = request.Name, 
-                        Price = request.Price, 
-                        Quantity = request.Quantity 
-                    });
+                concert.AddTicketType(ticketType);
 
                 await _repository.SaveAsync(concert);
-                return true;
+
+                return ticketType.Id;
                 
             }
         }
