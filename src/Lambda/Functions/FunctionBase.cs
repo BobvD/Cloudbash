@@ -1,4 +1,5 @@
-﻿using Amazon.Runtime.Internal.Transform;
+﻿using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Runtime.Internal.Transform;
 using Cloudbash.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,16 @@ namespace Cloudbash.Lambda.Functions
                 new KeyValuePair<string, string>("Access-Control-Allow-Credentials", "true"),
                 new KeyValuePair<string, string>("Access-Control-Allow-Methods", "*")
             };
+        }
+
+        protected string GetPathParameter(APIGatewayProxyRequest request, string key)
+        {
+            if (request.PathParameters == null || !request.PathParameters.ContainsKey(key))
+                throw new Exception();
+            string value;
+            if (!request.PathParameters.TryGetValue(key, out value))
+                throw new Exception();
+            return value;
         }
     }
 }
