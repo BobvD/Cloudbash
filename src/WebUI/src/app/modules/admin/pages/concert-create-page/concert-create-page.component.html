@@ -5,11 +5,11 @@
         <aw-wizard>
             <aw-wizard-step stepTitle="Info">
                 <div class="mb-3"></div>
-                <app-concert-details-form (status)="details_status = $event" (concert)="concert"></app-concert-details-form>
+                <app-concert-details-form (status)="details_status = $event" [(concert)]="concert"></app-concert-details-form>
             </aw-wizard-step>
             <aw-wizard-step stepTitle="Tickets">
                 <div class="mb-3"></div>
-                <app-concert-tickets-form></app-concert-tickets-form>     
+                <app-concert-tickets-form [(concert)]="concert"></app-concert-tickets-form>     
             </aw-wizard-step>
             <aw-wizard-step stepTitle="Date and Time">
                 Content of Step 3
@@ -22,7 +22,8 @@
         <div class="card sticky-top sticky-offset">
             <div class="card-body">
                 <p>{{ date | date: 'short' }}</p>
-                <button class="btn btn-primary btn-lg btn-block" [disabled]="details_status !== 'VALID' || busy" (click)="submit()">
+                <!-- [disabled]="details_status !== 'VALID' || busy" -->
+                <button class="btn btn-primary btn-lg btn-block"  (click)="submit()">
                     <span *ngIf="!busy">Next</span>                    
                     <app-loading-spinner *ngIf="busy" class="mt-1"></app-loading-spinner>                    
                 </button>

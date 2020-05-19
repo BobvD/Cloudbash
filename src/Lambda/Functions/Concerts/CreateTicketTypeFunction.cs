@@ -14,10 +14,11 @@ namespace Cloudbash.Lambda.Functions.Concerts
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
+           
             string id;
             if (!request.PathParameters.TryGetValue("id", out id))
                 return new APIGatewayProxyResponse { StatusCode = (int)HttpStatusCode.InternalServerError };
-
+          
             var requestModel = JsonConvert.DeserializeObject<CreateTicketTypeCommand>(request.Body);
             
             try

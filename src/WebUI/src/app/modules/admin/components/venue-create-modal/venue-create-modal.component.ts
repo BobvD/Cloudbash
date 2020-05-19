@@ -87,5 +87,5 @@ export class VenueCreateModalComponent implements OnInit {
         this.venue.Capacity = +this.capacity.value;
         this.venue.WebUrl = this.weburl.value;
         this.venue.Address = this.address.value;
-      }
+    }
 }

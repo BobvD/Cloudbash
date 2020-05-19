@@ -1,0 +1,34 @@
+<form [formGroup]="ticketTypeForm" (ngSubmit)="submit()">
+    <div class="modal-header">
+        <h4 class="mt-2">Ticket Type <span class="badge badge-secondary">New</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">    
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name" 
+                [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched || submitted )}">
+        </div> 
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" class="form-control" formControlName="price" 
+                [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched || submitted )}">
+        </div> 
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" class="form-control" formControlName="quantity" 
+                [ngClass]="{'is-invalid': quantity.invalid && (quantity.dirty || quantity.touched || submitted )}">
+        </div> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-lg btn-block" [disabled]="!ticketTypeForm.valid ||submitted || busy">
+            <span *ngIf="!busy">Save</span>                    
+            <app-loading-spinner *ngIf="busy" class="mt-1"></app-loading-spinner>                    
+        </button>
+        <div class="alert alert-danger d-block w-100 mt-1" role="alert" *ngIf="error">
+            Failed to create Ticket type.
+        </div> 
+    </div>
+</form>

@@ -1,4 +1,5 @@
 import { Venue } from './venue.model';
+import { TicketType } from './ticket-type.model';
 
 export class Concert {
     Id: string;
@@ -7,4 +8,5 @@ export class Concert {
     VenueId: string;
     ImageUrl: string;
     Date: string;
+    TicketTypes: TicketType[] = [];
 }

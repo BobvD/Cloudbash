@@ -27,11 +27,6 @@
                     </div>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column prop="Id" name="Id">
-                <ng-template let-value="value" ngx-datatable-cell-template>
-                    <a href="">{{ value }}</a>
-                </ng-template>
-            </ngx-datatable-column>
             <ngx-datatable-column prop="Name" name="Name">
                 <ng-template let-value="value" ngx-datatable-cell-template>
                     <a href="">{{ value }}</a>
@@ -40,6 +35,11 @@
             <ngx-datatable-column prop="Venue" name="Venue">
                 <ng-template let-value="value" ngx-datatable-cell-template>
                     {{ value.Name }}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="Created" name="Created on">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value | date:'short' }}
                 </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
