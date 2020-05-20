@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.ScheduleConcertFunction::Run
+events:
+- http:
+    path: concerts/{id}/schedule/
+    method: post
+    cors: true

@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { TicketType } from '../models/ticket-type.model';
-
 @Injectable({
     providedIn: 'root',
   })
@@ -32,6 +31,11 @@ export class ConcertService {
     removeTicketType(ticketId: string, concertId: string): Observable<any> {
         const url = `${this._concertUrl}${concertId}/ticket_type/${ticketId}`;
         return this.http.delete<any>(url);
+    }
+
+    schedule(concertId: string, startDate: Date, endDate: Date) {
+        const url = `${this._concertUrl}${concertId}/schedule`
+        return this.http.post<any>(url, { StartDate: startDate, EndDate: endDate });
     }
 
     delete(id: any): Observable<any> {

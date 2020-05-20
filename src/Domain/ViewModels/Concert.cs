@@ -11,7 +11,8 @@ namespace Cloudbash.Domain.ViewModels
         public string VenueId { get; set; }
         public virtual Venue Venue { get; set; }
         public string ImageUrl { get; set; }
-        public string Date { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public ConcertStatus Status { get; set; }
         public DateTime Created { get; set; }
         public List<TicketType> TicketTypes { get; set; }

@@ -3,25 +3,25 @@ using System;
 
 namespace Cloudbash.Domain.Concerts.Events
 {
-    public class ConcertTicketTypeAdded : DomainEventBase
+    public class ConcertTicketTypeAddedEvent : DomainEventBase
     {
         public TicketType Type { get; set; }
 
-        public ConcertTicketTypeAdded() { }
+        public ConcertTicketTypeAddedEvent() { }
 
-        internal ConcertTicketTypeAdded(Guid aggregateId, TicketType type) 
+        internal ConcertTicketTypeAddedEvent(Guid aggregateId, TicketType type) 
             : base(aggregateId) {
             Type = type;
         }
 
-        internal ConcertTicketTypeAdded(Guid aggregateId, long aggregateVersion, TicketType type) 
+        internal ConcertTicketTypeAddedEvent(Guid aggregateId, long aggregateVersion, TicketType type) 
             : base(aggregateId, aggregateVersion) {
             Type = type;
         }
         
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new ConcertTicketTypeAdded(aggregateId, aggregateVersion, Type);
+            return new ConcertTicketTypeAddedEvent(aggregateId, aggregateVersion, Type);
         }
     }
 }

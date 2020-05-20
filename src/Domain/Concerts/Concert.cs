@@ -15,7 +15,8 @@ namespace Cloudbash.Domain.Concerts
         public string Name { get; set; }
         public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
-        public string Date { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public ConcertStatus Status { get; set; }
         private List<TicketType> TicketTypes { get; set; }
 
@@ -34,13 +35,18 @@ namespace Cloudbash.Domain.Concerts
 
         public void AddTicketType(TicketType type)
         {
-            AddEvent(new ConcertTicketTypeAdded(Id, type));
+            AddEvent(new ConcertTicketTypeAddedEvent(Id, type));
         }
 
         public void RemoveTicketType(Guid ticketTypeId)
         {
             if(TicketTypes.Any(t => t.Id.Equals(ticketTypeId)))
-                AddEvent(new ConcertTicketTypeRemoved(Id, ticketTypeId));    
+                AddEvent(new ConcertTicketTypeRemovedEvent(Id, ticketTypeId));    
+        }
+
+        public void Schedule(DateTime start, DateTime end)
+        {
+            AddEvent(new ConcertScheduledEvent(Id, start, end));
         }
 
         internal void Apply(ConcertCreatedEvent @event)
@@ -58,12 +64,12 @@ namespace Cloudbash.Domain.Concerts
             Status = ConcertStatus.DELETED;
         }
 
-        internal void Apply(ConcertTicketTypeAdded @event)
+        internal void Apply(ConcertTicketTypeAddedEvent @event)
         {
             TicketTypes.Add(@event.Type);
         }
 
-        internal void Apply(ConcertTicketTypeRemoved @event)
+        internal void Apply(ConcertTicketTypeRemovedEvent @event)
         {
             var ticketType = TicketTypes
                 .SingleOrDefault(t => t.Id == @event.TicketTypeId);
@@ -71,6 +77,12 @@ namespace Cloudbash.Domain.Concerts
             {
                 TicketTypes.Remove(ticketType);
             }
+        }
+
+        internal void Apply(ConcertScheduledEvent @event)
+        {
+            StartDate = @event.StartDate;
+            EndDate = @event.EndDate;
         }
 
         public override string ToString()

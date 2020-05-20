@@ -4,6 +4,7 @@ import { ConcertDetailsFormComponent } from '../../components/concert-details-fo
 import { WizardComponent } from 'angular-archwizard';
 import { ToastrService } from 'ngx-toastr';
 import { TicketType } from 'src/app/shared/models/ticket-type.model';
+import { ConcertDatetimeFormComponent } from '../../components/concert-datetime-form/concert-datetime-form.component';
 
 @Component({
   selector: 'app-concert-create-page',
@@ -14,6 +15,7 @@ export class ConcertCreatePageComponent {
   
 
   @ViewChild(ConcertDetailsFormComponent, null) details: ConcertDetailsFormComponent;
+  @ViewChild(ConcertDatetimeFormComponent, null) dateTime: ConcertDatetimeFormComponent;
   @ViewChild(WizardComponent, null) public wizard: WizardComponent;
   
   concert = new Concert();
@@ -21,18 +23,31 @@ export class ConcertCreatePageComponent {
   busy = false;
   details_status: string;
   
+  step_1 = "Info";
+  step_2 = "Tickets";
+  step_3 = "Date and Time";
 
   constructor(private toastr: ToastrService){}
   
   submit(){
-    this.wizard.goToNextStep(); 
-    /*
-     if(this.concert.Id) {
+    
+    // this.wizard.goToNextStep();     
+
+    const currentStep = this.wizard.currentStep.stepTitle;
+
+     if(this.concert.Id && currentStep == this.step_1) {
       this.wizard.goToNextStep();   
-     } else {
+     }
+     if(!this.concert.Id && currentStep == this.step_1) {
       this.createConcert();
      }
-     */
+     if(currentStep == this.step_2) {
+      this.wizard.goToNextStep(); 
+     }
+     if(currentStep == this.step_3) {
+       this.scheduleConcert();
+     }     
+     
   }
 
   deleteTicketType(type: TicketType) {
@@ -49,6 +64,15 @@ export class ConcertCreatePageComponent {
         this.toastr.error(`Could not create concert.`, 'Error');    
         this.busy = false;
     });     
+  }
+
+  scheduleConcert() {
+    this.busy = true;   
+    this.dateTime.submit().subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
   }
 
 }

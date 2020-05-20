@@ -3,15 +3,15 @@
 <div class="row">
     <div class="col-8 mt-3">
         <aw-wizard>
-            <aw-wizard-step stepTitle="Info">
+            <aw-wizard-step [stepTitle]="step_1">
                 <div class="mb-3"></div>
                 <app-concert-details-form (status)="details_status = $event" [(concert)]="concert"></app-concert-details-form>
             </aw-wizard-step>
-            <aw-wizard-step stepTitle="Tickets">
+            <aw-wizard-step [stepTitle]="step_2">
                 <div class="mb-3"></div>
                 <app-concert-tickets-form [(concert)]="concert" (deleteTicketType)="deleteTicketType($event)"></app-concert-tickets-form>     
             </aw-wizard-step>
-            <aw-wizard-step stepTitle="Date and Time">
+            <aw-wizard-step [stepTitle]="step_3">
                 <app-concert-datetime-form [(concert)]="concert"></app-concert-datetime-form>
             </aw-wizard-step>
         </aw-wizard>

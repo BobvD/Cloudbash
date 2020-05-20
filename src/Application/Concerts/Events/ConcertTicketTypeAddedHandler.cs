@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Concerts.Events
 {
-    public class ConcertTicketTypeAddedHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeAdded>>
+    public class ConcertTicketTypeAddedHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeAddedEvent>>
     {
         private readonly IViewModelRepository<Concert> _concertRepository;
 
@@ -18,7 +18,7 @@ namespace Cloudbash.Application.Concerts.Events
             _concertRepository = concertRepository;
         }
 
-        public async Task Handle(DomainEventNotification<ConcertTicketTypeAdded> notification, CancellationToken cancellationToken)
+        public async Task Handle(DomainEventNotification<ConcertTicketTypeAddedEvent> notification, CancellationToken cancellationToken)
         {
             var @event = notification.DomainEvent;
             
