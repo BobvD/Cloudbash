@@ -3,18 +3,17 @@ using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.Concerts.Events;
 using Cloudbash.Domain.ViewModels;
 using MediatR;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Concerts.Events
 {
-    public class ConcertTicketTypeRemovedHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeRemovedEvent>>
+    public class ConcertTicketTypeRemovedEventHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeRemovedEvent>>
     {
         private readonly IViewModelRepository<Concert> _concertRepository;
 
-        public ConcertTicketTypeRemovedHandler(IViewModelRepository<Concert> concertRepository)
+        public ConcertTicketTypeRemovedEventHandler(IViewModelRepository<Concert> concertRepository)
         {
             _concertRepository = concertRepository;
         }

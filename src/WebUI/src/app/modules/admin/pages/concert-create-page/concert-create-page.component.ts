@@ -5,6 +5,7 @@ import { WizardComponent } from 'angular-archwizard';
 import { ToastrService } from 'ngx-toastr';
 import { TicketType } from 'src/app/shared/models/ticket-type.model';
 import { ConcertDatetimeFormComponent } from '../../components/concert-datetime-form/concert-datetime-form.component';
+import { ConcertService } from 'src/app/shared/services/concert.service';
 
 @Component({
   selector: 'app-concert-create-page',
@@ -27,12 +28,12 @@ export class ConcertCreatePageComponent {
   step_2 = "Tickets";
   step_3 = "Date and Time";
 
-  constructor(private toastr: ToastrService){}
-  
+  constructor(private toastr: ToastrService,
+              private concertService: ConcertService){}
+
   submit(){
     
-    // this.wizard.goToNextStep();     
-
+    // this.wizard.goToNextStep();    
     const currentStep = this.wizard.currentStep.stepTitle;
 
      if(this.concert.Id && currentStep == this.step_1) {
@@ -47,7 +48,6 @@ export class ConcertCreatePageComponent {
      if(currentStep == this.step_3) {
        this.scheduleConcert();
      }     
-     
   }
 
   deleteTicketType(type: TicketType) {
@@ -69,6 +69,15 @@ export class ConcertCreatePageComponent {
   scheduleConcert() {
     this.busy = true;   
     this.dateTime.submit().subscribe(res => {
+      this.publish();
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  publish() {
+    this.concertService.publish(this.concert.Id).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);

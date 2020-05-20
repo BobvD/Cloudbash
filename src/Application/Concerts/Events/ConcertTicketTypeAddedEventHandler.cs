@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Concerts.Events
 {
-    public class ConcertTicketTypeAddedHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeAddedEvent>>
+    public class ConcertTicketTypeAddedEventHandler : INotificationHandler<DomainEventNotification<ConcertTicketTypeAddedEvent>>
     {
         private readonly IViewModelRepository<Concert> _concertRepository;
 
-        public ConcertTicketTypeAddedHandler(IViewModelRepository<Concert> concertRepository)
+        public ConcertTicketTypeAddedEventHandler(IViewModelRepository<Concert> concertRepository)
         {
             _concertRepository = concertRepository;
         }

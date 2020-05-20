@@ -32,10 +32,7 @@ namespace Cloudbash.Application.Concerts.Commands.ScheduleConcert
                 {
                     throw new NotFoundException(nameof(Concert), request.ConcertId);
                 }
-
-                Console.WriteLine("start date: " + request.StartDate.Date);
-                Console.WriteLine("start date: " + request.EndDate.Date);
-
+                
                 concert.Schedule(request.StartDate, request.EndDate);
 
                 await _repository.SaveAsync(concert);

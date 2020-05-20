@@ -21,8 +21,9 @@
             <div class="card-body">
                 <p>{{ date | date: 'short' }}</p>
                 <!-- [disabled]="details_status !== 'VALID' || busy" -->
-                <button class="btn btn-primary btn-lg btn-block"  (click)="submit()">
-                    <span *ngIf="!busy">Next</span>                    
+                <button class="btn btn-primary btn-lg btn-block" [disabled]="busy"  (click)="submit()">
+                    <span *ngIf="!busy && (wizard?.currentStep?.stepTitle != step_3)">Next</span>       
+                    <span *ngIf="!busy && (wizard?.currentStep?.stepTitle == step_3)">Publish</span>               
                     <app-loading-spinner *ngIf="busy" class="mt-1"></app-loading-spinner>                    
                 </button>
             </div>

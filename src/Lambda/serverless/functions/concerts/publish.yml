@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.PublishConcertFunction::Run
+events:
+- http:
+    path: concerts/{id}/publish/
+    method: post
+    cors: true

@@ -27,6 +27,12 @@ namespace Cloudbash.Domain.Concerts
             AddEvent(new ConcertCreatedEvent(Id, name, venueId, imageUrl, Created));
         }
 
+        public void Publish()
+        {
+            if (Status.Equals(ConcertStatus.DRAFT))
+                AddEvent(new ConcertPublishedEvent(Id));
+        }
+
         public void MarkAsDeleted()
         {
             if(!Status.Equals(ConcertStatus.DELETED))
@@ -62,6 +68,12 @@ namespace Cloudbash.Domain.Concerts
         internal void Apply(ConcertDeletedEvent @event)
         {
             Status = ConcertStatus.DELETED;
+        }
+
+
+        internal void Apply(ConcertPublishedEvent @event)
+        {
+            Status = ConcertStatus.PUBLISHED;
         }
 
         internal void Apply(ConcertTicketTypeAddedEvent @event)
