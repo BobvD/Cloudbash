@@ -2,41 +2,40 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConcertService } from 'src/app/shared/services/concert.service';
 import { DatatableComponent, ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
+import { ConcertStatus } from 'src/app/shared/models/concert.model';
 
 @Component({
-    selector: 'app-concert-overview-page',
-    templateUrl: './concert-overview-page.component.html',
-    styleUrls: ['./concert-overview-page.component.scss']
+  selector: 'app-concert-overview-page',
+  templateUrl: './concert-overview-page.component.html',
+  styleUrls: ['./concert-overview-page.component.scss']
 })
 export class ConcertOverviewPageComponent implements OnInit {
-    rows = [];
+  rows = [];
 
   loadingIndicator = true;
   reorderable = true;
   selected = [];
   temp = [];
+  states = ConcertStatus;
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
 
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
-    constructor(private concertService: ConcertService,
-        private toastr: ToastrService) { }
+  constructor(private concertService: ConcertService,
+    private toastr: ToastrService) { }
 
-    ngOnInit(): void {
-        this.concertService.get().subscribe(res => {
-            this.temp = [...res.Concerts];
-            this.rows = res.Concerts;
-        })
-     }
-
-      onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+  ngOnInit(): void {
+    this.concertService.get().subscribe(res => {
+      this.temp = [...res.Concerts];
+      this.rows = res.Concerts;
+    })
   }
 
-  onActivate(event) {
+  onSelect({ selected }) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
   }
 
   updateFilter(event) {
@@ -49,7 +48,6 @@ export class ConcertOverviewPageComponent implements OnInit {
   }
 
   removeSelected() {
-      
     this.selected.forEach(concert => {
       this.concertService.delete(concert.Id).subscribe(res => {
         this.toastr.success(`'${concert.Id}' has been deleted.`, 'The concert had been deleted');
@@ -61,7 +59,20 @@ export class ConcertOverviewPageComponent implements OnInit {
       });
     });
     this.selected = [];
-    
+  }
+
+  publishSelected() {
+    this.selected.forEach(concert => {
+      if (concert.Status == ConcertStatus.DRAFT) {
+        this.concertService.publish(concert.Id).subscribe(res => {
+          this.toastr.success(`'${concert.Id}' has been published.`, 'The concert had been published');
+          concert.Status = ConcertStatus.PUBLISHED;
+        }, err => {
+          this.toastr.error(`Could not published concert: '${concert.Id}'`, 'Error');
+        });
+      }
+    });
+    this.selected = [];
   }
 
 }

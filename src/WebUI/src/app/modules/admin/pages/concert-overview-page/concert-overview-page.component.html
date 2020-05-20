@@ -4,10 +4,11 @@
         <a class="btn btn-light ml-auto mr-2" [routerLink]="[ '/admin/concerts/new']">create new</a>
         <button class="btn btn-danger" [disabled]="selected.length < 1"
         (click)="removeSelected()">delete</button>
+        <button class="btn btn-light" [disabled]="selected.length < 1" (click)="publishSelected()">publish</button>
         <div class="mt-3">
             <ngx-datatable #table class="bootstrap" [rows]="rows" [columnMode]="ColumnMode.force" [headerHeight]="50"
             [footerHeight]="50" rowHeight="auto" [limit]="25" [selected]="selected"
-            [selectionType]="SelectionType.checkbox" (activate)="onActivate($event)" (select)="onSelect($event)">
+            [selectionType]="SelectionType.checkbox" (select)="onSelect($event)">
             <ngx-datatable-column [cellClass]="'pl-3'" [headerClass]="'pl-3'" [width]="60" [sortable]="false"
                 [canAutoResize]="false" [draggable]="false" [resizeable]="false">
                 <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
@@ -35,6 +36,11 @@
             <ngx-datatable-column prop="Venue" name="Venue">
                 <ng-template let-value="value" ngx-datatable-cell-template>
                     {{ value.Name }}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="Status" name="Status">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ states[value] }}
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column prop="Created" name="Created on">
