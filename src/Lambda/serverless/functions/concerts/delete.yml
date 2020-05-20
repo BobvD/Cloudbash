@@ -5,6 +5,6 @@ events:
     method: delete
     cors: true
     request:
-    parameters:
-        paths:
-        id: true
+        parameters:
+            paths:
+                id: true

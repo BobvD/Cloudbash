@@ -1,0 +1,11 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.RemoveTicketTypeFunction::Run
+events:
+- http:
+    path: concerts/{id}/ticket_type/{ticketTypeId}
+    method: delete
+    cors: true
+    request:
+        parameters:
+            paths:
+                id: true
+                ticketTypeId: true

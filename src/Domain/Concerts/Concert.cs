@@ -2,6 +2,7 @@
 using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cloudbash.Domain.Concerts
 {
@@ -22,7 +23,6 @@ namespace Cloudbash.Domain.Concerts
         {
             Id = Guid.NewGuid();
             Created = DateTime.Now;
-            // Create and add a new ConcertCreatedEvent
             AddEvent(new ConcertCreatedEvent(Id, name, venueId, imageUrl, Created));
         }
 
@@ -35,6 +35,12 @@ namespace Cloudbash.Domain.Concerts
         public void AddTicketType(TicketType type)
         {
             AddEvent(new ConcertTicketTypeAdded(Id, type));
+        }
+
+        public void RemoveTicketType(Guid ticketTypeId)
+        {
+            if(TicketTypes.Any(t => t.Id.Equals(ticketTypeId)))
+                AddEvent(new ConcertTicketTypeRemoved(Id, ticketTypeId));    
         }
 
         internal void Apply(ConcertCreatedEvent @event)
@@ -55,6 +61,16 @@ namespace Cloudbash.Domain.Concerts
         internal void Apply(ConcertTicketTypeAdded @event)
         {
             TicketTypes.Add(@event.Type);
+        }
+
+        internal void Apply(ConcertTicketTypeRemoved @event)
+        {
+            var ticketType = TicketTypes
+                .SingleOrDefault(t => t.Id == @event.TicketTypeId);
+            if(ticketType != null)
+            {
+                TicketTypes.Remove(ticketType);
+            }
         }
 
         public override string ToString()
