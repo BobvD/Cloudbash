@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TicketTypeCreateModalComponent } from '../ticket-type-create-modal/ticket-type-create-modal.component';
 import { Concert } from 'src/app/shared/models/concert.model';
+import { ConcertService } from 'src/app/shared/services/concert.service';
+import { TicketType } from 'src/app/shared/models/ticket-type.model';
 
 @Component({
     selector: 'app-concert-tickets-form',
@@ -10,20 +12,31 @@ import { Concert } from 'src/app/shared/models/concert.model';
 })
 export class ConcertTicketsFormComponent implements OnInit {
     
+    @Output() deleteTicketType:EventEmitter<TicketType> = new EventEmitter<TicketType>();
     @Input() concert: Concert;
     
-    constructor(private modalService: NgbModal) { }
+    busy = false;
+
+    constructor(private modalService: NgbModal,
+                private concertService: ConcertService) { }
 
     ngOnInit(): void { }
 
-
     openTicketTypeCreateModal(){
         const modalRef = this.modalService.open(TicketTypeCreateModalComponent, { centered: true });
-        this.concert.Id = "04621d47-0507-4c37-9b4a-a29b00a2d09a";
         modalRef.componentInstance.concert = this.concert;
         modalRef.componentInstance.modalClose.subscribe(($e) => {
-            console.log($e);
             this.concert.TicketTypes.push($e);
         });
+    }
+
+    removeTicketType(type: TicketType) {
+        this.busy = true;
+        this.concertService.removeTicketType(type.Id, this.concert.Id).subscribe(res => {           
+            this.deleteTicketType.emit(type);
+        }, err => {
+            this.busy = false;
+            console.log(err);
+        })        
     }
 }

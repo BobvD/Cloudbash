@@ -9,7 +9,7 @@
             </aw-wizard-step>
             <aw-wizard-step stepTitle="Tickets">
                 <div class="mb-3"></div>
-                <app-concert-tickets-form [(concert)]="concert"></app-concert-tickets-form>     
+                <app-concert-tickets-form [(concert)]="concert" (deleteTicketType)="deleteTicketType($event)"></app-concert-tickets-form>     
             </aw-wizard-step>
             <aw-wizard-step stepTitle="Date and Time">
                 Content of Step 3

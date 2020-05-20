@@ -25,13 +25,13 @@ export class ConcertService {
     }
 
     addTicketType(ticketType: TicketType, concertId: string): Observable<any> {
-        const url = this._concertUrl + concertId + '/ticket_type';
+        const url = `${this._concertUrl}${concertId}/ticket_type`
         return this.http.post<any>(url, ticketType);
     }
 
-
-    removeTicketType(ticketType: TicketType, concertId: string): Observable<any> {
-        return this.http.delete<any>(this._concertUrl + concertId + '/ticket_type/' + ticketType.Id);
+    removeTicketType(ticketId: string, concertId: string): Observable<any> {
+        const url = `${this._concertUrl}${concertId}/ticket_type/${ticketId}`;
+        return this.http.delete<any>(url);
     }
 
     delete(id: any): Observable<any> {

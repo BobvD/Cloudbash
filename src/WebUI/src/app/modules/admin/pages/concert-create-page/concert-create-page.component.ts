@@ -27,8 +27,7 @@ export class ConcertCreatePageComponent {
               private concertService: ConcertService){}
   
   submit(){
-    this.wizard.goToNextStep();    
-    /*
+    // this.wizard.goToNextStep();   
     this.busy = true;
     this.details.submit().subscribe(res => {
       this.concert.Id = res;
@@ -37,10 +36,11 @@ export class ConcertCreatePageComponent {
     }, err => {
         this.toastr.error(`Could not create concert.`, 'Error');    
         this.busy = false;
-    });
-    */
-    
-  
+    });      
+  }
+
+  deleteTicketType(type: TicketType) {
+    this.concert.TicketTypes = this.concert.TicketTypes.filter(t => t !== type);
   }
 
 }
