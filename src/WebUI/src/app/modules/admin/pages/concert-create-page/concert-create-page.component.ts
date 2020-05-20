@@ -3,7 +3,6 @@ import { Concert } from 'src/app/shared/models/concert.model';
 import { ConcertDetailsFormComponent } from '../../components/concert-details-form/concert-details-form.component';
 import { WizardComponent } from 'angular-archwizard';
 import { ToastrService } from 'ngx-toastr';
-import { ConcertService } from 'src/app/shared/services/concert.service';
 import { TicketType } from 'src/app/shared/models/ticket-type.model';
 
 @Component({
@@ -23,12 +22,25 @@ export class ConcertCreatePageComponent {
   details_status: string;
   
 
-  constructor(private toastr: ToastrService,
-              private concertService: ConcertService){}
+  constructor(private toastr: ToastrService){}
   
   submit(){
-    // this.wizard.goToNextStep();   
-    this.busy = true;
+    this.wizard.goToNextStep(); 
+    /*
+     if(this.concert.Id) {
+      this.wizard.goToNextStep();   
+     } else {
+      this.createConcert();
+     }
+     */
+  }
+
+  deleteTicketType(type: TicketType) {
+    this.concert.TicketTypes = this.concert.TicketTypes.filter(t => t !== type);
+  }
+
+  createConcert() {
+    this.busy = true;    
     this.details.submit().subscribe(res => {
       this.concert.Id = res;
       this.wizard.goToNextStep();
@@ -36,11 +48,7 @@ export class ConcertCreatePageComponent {
     }, err => {
         this.toastr.error(`Could not create concert.`, 'Error');    
         this.busy = false;
-    });      
-  }
-
-  deleteTicketType(type: TicketType) {
-    this.concert.TicketTypes = this.concert.TicketTypes.filter(t => t !== type);
+    });     
   }
 
 }

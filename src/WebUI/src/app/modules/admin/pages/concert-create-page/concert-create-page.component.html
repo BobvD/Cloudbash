@@ -12,9 +12,7 @@
                 <app-concert-tickets-form [(concert)]="concert" (deleteTicketType)="deleteTicketType($event)"></app-concert-tickets-form>     
             </aw-wizard-step>
             <aw-wizard-step stepTitle="Date and Time">
-                Content of Step 3
-                <button type="button" awPreviousStep>Previous Step</button>
-                <button type="button">Finish</button>
+                <app-concert-datetime-form [(concert)]="concert"></app-concert-datetime-form>
             </aw-wizard-step>
         </aw-wizard>
     </div>

@@ -7,6 +7,7 @@ export class Concert {
     Venue: Venue;
     VenueId: string;
     ImageUrl: string;
-    Date: string;
+    StartDate: Date = new Date();
+    EndDate: Date = new Date();
     TicketTypes: TicketType[] = [];
 }

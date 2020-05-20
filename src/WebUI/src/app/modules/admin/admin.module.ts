@@ -21,6 +21,7 @@ import { TicketTypeCreateModalComponent } from './components/ticket-type-create-
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ConcertDetailsFormComponent } from './components/concert-details-form/concert-details-form.component';
 import { ConcertTicketsFormComponent } from './components/concert-tickets-form/concert-tickets-form.component';
+import { ConcertDatetimeFormComponent } from './components/concert-datetime-form/concert-datetime-form.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { ConcertTicketsFormComponent } from './components/concert-tickets-form/c
         TicketTypeCreateModalComponent,
         DashboardPageComponent,
         ConcertDetailsFormComponent,
-        ConcertTicketsFormComponent
+        ConcertTicketsFormComponent,
+        ConcertDatetimeFormComponent
     ],
     imports: [ 
         CommonModule,

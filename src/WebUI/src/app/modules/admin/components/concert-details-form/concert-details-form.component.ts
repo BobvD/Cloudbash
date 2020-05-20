@@ -78,7 +78,7 @@ export class ConcertDetailsFormComponent implements OnInit {
     }
 
     submit(): Observable<any> {
-        console.log(this.concert)
+        this.submitted = !this.submitted;
         this.setValues();
         return this.concertService.create(this.concert);
     }

@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 // 3rd party
-import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbCollapseModule, NgbTimepickerModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ImageCropperModule } from 'ngx-image-cropper';
 
@@ -23,6 +23,7 @@ import { InfoBoxComponent } from './components/info-box/info-box.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { DateTimeComponent } from './components/date-time/date-time.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         InfoBoxComponent,
         AdminLayoutComponent,
         FileUploadComponent,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        DateTimeComponent
     ],
     imports: [ 
         CommonModule,
@@ -44,13 +46,17 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         ReactiveFormsModule,
         RouterModule,        
         NgxSpinnerModule,
-        ImageCropperModule
+        ImageCropperModule,        
+        NgbTimepickerModule,
+        NgbDatepickerModule,
      ],
     exports: [
         HeaderComponent,
         FooterComponent,
         FileUploadComponent,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        DateTimeComponent
+
     ],
     providers: [
         FileService,
