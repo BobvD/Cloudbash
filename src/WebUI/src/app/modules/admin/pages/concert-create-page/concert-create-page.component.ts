@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TicketType } from 'src/app/shared/models/ticket-type.model';
 import { ConcertDatetimeFormComponent } from '../../components/concert-datetime-form/concert-datetime-form.component';
 import { ConcertService } from 'src/app/shared/services/concert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-concert-create-page',
@@ -29,11 +30,10 @@ export class ConcertCreatePageComponent {
   step_3 = "Date and Time";
 
   constructor(private toastr: ToastrService,
-              private concertService: ConcertService){}
+              private concertService: ConcertService,
+              private router: Router){}
 
-  submit(){
-    
-    // this.wizard.goToNextStep();    
+  submit(){ 
     const currentStep = this.wizard.currentStep.stepTitle;
 
      if(this.concert.Id && currentStep == this.step_1) {
@@ -78,7 +78,8 @@ export class ConcertCreatePageComponent {
 
   publish() {
     this.concertService.publish(this.concert.Id).subscribe(res => {
-      console.log(res);
+      this.router.navigate(['/admin/concerts'])
+      this.toastr.success(`Concert created.`, 'Success');    
     }, err => {
       console.log(err);
     })

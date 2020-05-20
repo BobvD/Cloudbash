@@ -13,7 +13,7 @@ namespace Cloudbash.Domain.Concerts.Events
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new ConcertDeletedEvent(aggregateId, aggregateVersion);
+            return new ConcertPublishedEvent(aggregateId, aggregateVersion);
         }
     }
 }
