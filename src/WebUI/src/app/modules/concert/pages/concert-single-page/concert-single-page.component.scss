@@ -1,0 +1,60 @@
+.header-image-wrapper {
+    position: relative;
+    height: 48vh;
+    display: flex;
+    align-items: flex-end;
+    background: rgb(241, 241, 241);
+    overflow: hidden;
+    margin-top: -40px!important;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
+}
+
+.header-image {
+    background-repeat: no-repeat!important;
+    background-size: cover!important; 
+    background-position: center!important;
+}
+
+.concert-info {
+    position: relative;
+    width: 100%;
+    background-color: rgba(135, 73, 156, 0.85);
+    margin: 0px auto;
+    overflow: visible;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+h2 {
+    color: white;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.svg-icon {
+    width: 0.9em;
+    height: 0.9em;
+    margin-top: -4px;
+  }
+  
+  .svg-icon path,
+  .svg-icon polygon,
+  .svg-icon rect {
+    fill: #fff;
+  }
+  
+  .svg-icon circle {
+    stroke: #fff;
+    stroke-width: 1;
+  }
+
+  p {
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
