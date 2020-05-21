@@ -5,7 +5,7 @@ import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 
 
 const routes: Routes = [
-    { path: 'sign-in', component: AuthPageComponent }
+    { path: 'sign-in', component: AuthPageComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

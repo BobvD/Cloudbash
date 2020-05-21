@@ -7,9 +7,9 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 
 
 const routes: Routes = [
-    { path: '', component: DashboardPageComponent },
-    { path: 'concerts', component: ConcertOverviewPageComponent },
-    { path: 'concerts/new', component: ConcertCreatePageComponent }
+    { path: '', component: DashboardPageComponent, pathMatch: 'full' },
+    { path: 'concerts', component: ConcertOverviewPageComponent, pathMatch: 'full' },
+    { path: 'concerts/new', component: ConcertCreatePageComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

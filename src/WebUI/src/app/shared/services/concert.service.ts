@@ -20,6 +20,12 @@ export class ConcertService {
         return this.http.get<any>(this._concertUrl);
     }
 
+    getById(id: string): Observable<any> {
+        const url = `${this._concertUrl}${id}`
+        return this.http.get<any>(url);
+    }
+
+
     create(concert: any): Observable<any> {
         return this.http.post<any>(this._concertUrl, concert);
     }

@@ -6,9 +6,10 @@ import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.co
 import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { Role } from './shared/models/user.model';
+import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 
 const routes: Routes = [
-    { path: '', component: HomePageComponent },
+    { path: '', component: HomePageComponent },    
     {
         path: '',
         component: AuthLayoutComponent,

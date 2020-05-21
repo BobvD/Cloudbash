@@ -1,4 +1,4 @@
-<div class="concert"
+<div class="concert" [routerLink]="['/concert/', concert?.Id]"
     [ngStyle]="{'background': 'linear-gradient(to bottom, rgba(125, 125, 125, 0.3), rgba(34, 34, 34, 0.7)), url(' + concert?.ImageUrl + ') no-repeat 0 0 / cover'}">
     <div>
         <h4>{{ concert?.Name }}</h4>
@@ -24,6 +24,6 @@
                     </path>
                 </svg>
             </svg>
-            {{ concert?.StartDate }}</p>
+            {{ concert?.StartDate | date:'short' }}</p>
     </div>
 </div>

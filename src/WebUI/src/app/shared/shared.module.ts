@@ -24,6 +24,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { DateTimeComponent } from './components/date-time/date-time.component';
         AdminLayoutComponent,
         FileUploadComponent,
         LoadingSpinnerComponent,
-        DateTimeComponent
+        DateTimeComponent,
+        MainLayoutComponent
     ],
     imports: [ 
         CommonModule,

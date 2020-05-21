@@ -1,0 +1,11 @@
+.jumbotron {
+    padding-top: 5px;
+    background: rgb(70,195,191);
+    background: linear-gradient(90deg, rgba(70,195,191,1) 0%, rgba(135,73,156,1) 52%, rgba(189,42,149,1) 100%);
+    border-bottom: 6px solid #f1f1f1;
+    border-radius: 0;
+}
+
+.jumbotron-scrolled {
+    padding: 0px!important;
+}
