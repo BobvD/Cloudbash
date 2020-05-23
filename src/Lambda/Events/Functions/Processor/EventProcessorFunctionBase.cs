@@ -7,7 +7,7 @@ using System;
 
 namespace Cloudbash.Lambda.Events.Functions.Processor
 {
-    public abstract class EventProcessorFunction : FunctionBase
+    public abstract class EventProcessorFunctionBase : FunctionBase
     {
         public void Consume(string eventEnveloppe)
         {

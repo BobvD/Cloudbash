@@ -13,7 +13,7 @@ namespace Cloudbash.Domain.Venues.Events
 
         public VenueCreatedEvent() { }
 
-        public VenueCreatedEvent(Guid aggregateId, string name, string description, 
+        internal VenueCreatedEvent(Guid aggregateId, string name, string description, 
             int capacity, string webUrl, string address) : base(aggregateId)
         {
             Name = name;
@@ -23,7 +23,7 @@ namespace Cloudbash.Domain.Venues.Events
             Address = address;
         }
 
-        public VenueCreatedEvent(Guid aggregateId, long aggregateVersion, string name, 
+        internal VenueCreatedEvent(Guid aggregateId, long aggregateVersion, string name, 
             string description, int capacity, string webUrl, string address) : base(aggregateId, aggregateVersion)
         {
             Name = name;

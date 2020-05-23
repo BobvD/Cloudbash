@@ -4,7 +4,7 @@ using Amazon.Lambda.DynamoDBEvents;
 
 namespace Cloudbash.Lambda.Events.Functions.Processor
 {
-    public class DynamoDBEventProcessorFunction : EventProcessorFunction
+    public class DynamoDBEventProcessorFunction : EventProcessorFunctionBase
     {
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public void Run(DynamoDBEvent dynamoEvent)

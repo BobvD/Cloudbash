@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cloudbash.Lambda.Events.Functions.Processor
 {
-    public class KinesisEventProcessorFunction : EventProcessorFunction
+    public class KinesisEventProcessorFunction : EventProcessorFunctionBase
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]

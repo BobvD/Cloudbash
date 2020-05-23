@@ -4,7 +4,7 @@ using static Amazon.Lambda.SQSEvents.SQSEvent;
 
 namespace Cloudbash.Lambda.Events.Functions.Processor
 {
-    public class SQSEventProcessorFunction : EventProcessorFunction
+    public class SQSEventProcessorFunction : EventProcessorFunctionBase
     {
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public void Run(SQSEvent sqsEvent)

@@ -5,30 +5,19 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Lambda.Functions.Users
 {
-    public class PostConfirmationFunction : FunctionBase
+    public class PostConfirmationFunction : CognitoTriggerFunctionBase
     {
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<JObject> Run(JObject input, ILambdaContext context)
-        {
-            
-            try
+        {                    
+            var userData = new CreateUserCommand
             {
-                var attributes = input["request"]["userAttributes"];
+                Id = new System.Guid(GetUserAttribute(input, "sub")),
+                FullName = GetUserAttribute(input, "name"),
+                Email = GetUserAttribute(input, "email")
+            };
 
-                var userData = new CreateUserCommand
-                {
-                    Id = new System.Guid((string)attributes["sub"]),
-                    FullName = (string)attributes["name"],
-                    Email = (string)attributes["email"]
-                };
-
-                var result = await Mediator.Send(userData);
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
+            await Mediator.Send(userData);           
 
             return input;
         }

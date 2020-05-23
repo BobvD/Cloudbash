@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Lambda.Functions.Users
 {
-    public class PreSignUpFunction : FunctionBase
+    public class PreSignUpFunction : CognitoTriggerFunctionBase
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
