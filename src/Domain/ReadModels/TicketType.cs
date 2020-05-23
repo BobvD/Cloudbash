@@ -1,7 +1,7 @@
 ﻿using Cloudbash.Domain.SeedWork;
 using Newtonsoft.Json;
 
-namespace Cloudbash.Domain.ViewModels
+namespace Cloudbash.Domain.ReadModels
 {
     public class TicketType : ReadModelBase
     {  

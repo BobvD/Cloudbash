@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Cloudbash.Domain.SeedWork;
 
 namespace Cloudbash.Domain.Carts
 {
-    class CartItem
+    public class CartItem : EntityBase
     {
     }
 }

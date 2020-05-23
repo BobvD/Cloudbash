@@ -9,6 +9,7 @@ using Cloudbash.Infrastructure.Configs;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Cloudbash.Domain.Carts;
 
 namespace Cloudbash.Application
 {
@@ -22,8 +23,9 @@ namespace Cloudbash.Application
 
             services.AddTransient<IRepository<Concert>, EventSourcedRepository<Concert>>();
             services.AddTransient<IRepository<Venue>, EventSourcedRepository<Venue>>();
-            services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();      
-                        
+            services.AddTransient<IRepository<User>, EventSourcedRepository<User>>();
+            services.AddTransient<IRepository<Cart>, EventSourcedRepository<Cart>>();
+
             return services;
         }
     }

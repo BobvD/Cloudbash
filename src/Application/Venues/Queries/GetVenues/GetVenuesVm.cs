@@ -1,4 +1,4 @@
-﻿using Cloudbash.Domain.ViewModels;
+﻿using Cloudbash.Domain.ReadModels;
 using System.Collections.Generic;
 
 namespace Cloudbash.Application.Venues.Queries.GetVenues

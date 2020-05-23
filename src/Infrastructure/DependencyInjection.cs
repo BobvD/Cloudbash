@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Cloudbash.Domain.ReadModels;
 
 namespace Cloudbash.Infrastructure
 {
@@ -77,21 +78,22 @@ namespace Cloudbash.Infrastructure
                         opt.UseNpgsql(GetPostgresConnectionString(configurationRoot),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, EFRepository<Domain.ViewModels.Concert>>();
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.TicketType>, EFRepository<Domain.ViewModels.TicketType>>();
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, EFRepository<Domain.ViewModels.Venue>>();
+            services.AddTransient<IViewModelRepository<Concert>, EFRepository<Concert>>();
+            services.AddTransient<IViewModelRepository<TicketType>, EFRepository<TicketType>>();
+            services.AddTransient<IViewModelRepository<Venue>, EFRepository<Venue>>();
+            services.AddTransient<IViewModelRepository<Cart>, EFRepository<Cart>>();
         }
 
         private static void AddRedisRepositories(IServiceCollection services)
         {
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, RedisRepository<Domain.ViewModels.Concert>>();
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, RedisRepository<Domain.ViewModels.Venue>>();
+            services.AddTransient<IViewModelRepository<Concert>, RedisRepository<Concert>>();
+            services.AddTransient<IViewModelRepository<Venue>, RedisRepository<Venue>>();
         }
 
         private static void AddDynamoDBRepositories(IServiceCollection services)
         {
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Concert>, DynamoDBRepository<Domain.ViewModels.Concert>>();
-            services.AddTransient<IViewModelRepository<Domain.ViewModels.Venue>, DynamoDBRepository<Domain.ViewModels.Venue>>();
+            services.AddTransient<IViewModelRepository<Concert>, DynamoDBRepository<Concert>>();
+            services.AddTransient<IViewModelRepository<Venue>, DynamoDBRepository<Venue>>();
         }
     }
 }

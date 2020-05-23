@@ -16,7 +16,7 @@ namespace Cloudbash.Application.Users.Commands.CreateUser
         public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
         {
 
-            IRepository<User> _repository;
+            private readonly IRepository<User> _repository;
 
             public CreateUserCommandHandler(IRepository<User> repository)
             {

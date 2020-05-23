@@ -1,6 +1,0 @@
-﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Users.PreSignUpFunction::Run
-events:
-- cognitoUserPool:
-    pool: Cloudbash
-    trigger: PreSignUp
-    existing: true

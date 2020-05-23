@@ -95,13 +95,16 @@ functions:
   removeConcertTicketType: ${file(./serverless/functions/concerts/remove_ticket_type.yml)}
   scheduleConcert: ${file(./serverless/functions/concerts/schedule.yml)}
   publishConcert: ${file(./serverless/functions/concerts/publish.yml)}
+  # Cart Endpoints
+  getCart: ${file(./serverless/functions/carts/get.yml)}
   # Venue Endpoints
   createVenue: ${file(./serverless/functions/venues/create.yml)}
   getVenues: ${file(./serverless/functions/venues/get.yml)}
   # Cognito Triggers
-  preSignUp: ${file(./serverless/functions/cognito/pre_signup.yml)} 
   postAuthentication: ${file(./serverless/functions/cognito/post_authentication.yml)} 
   postConfirmation: ${file(./serverless/functions/cognito/post_confirmation.yml)} 
+  # File Endpoints
+  getFileUploadUrl: ${file(./serverless/functions/files/get_s3_url.yml)}
 
   # lambda for catching events from the eventstream (kinesis)
   eventStreamHandler:

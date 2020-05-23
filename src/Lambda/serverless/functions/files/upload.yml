@@ -1,6 +1,0 @@
-﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Files.FileUploadFunction::Run
-events:
-- http:
-    path: files
-    method: post
-    cors: true

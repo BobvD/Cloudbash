@@ -89,7 +89,7 @@ namespace Cloudbash.Infrastructure.Persistence
             return GetAllAsync();
         }
 
-        public Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children)
+        public Task<List<T>> FilterAsync(Expression<Func<T, bool>> filter, string[] children)
         {
             throw new NotImplementedException();
         }

@@ -32,7 +32,7 @@ namespace Cloudbash.Infrastructure.Persistence
             Save();
         }
 
-        public async Task<List<T>> Filter(Expression<Func<T, bool>> filter, string[] children)
+        public async Task<List<T>> FilterAsync(Expression<Func<T, bool>> filter, string[] children)
         {
             IQueryable<T> query = _context.Set<T>(); 
             foreach (string entity in children)

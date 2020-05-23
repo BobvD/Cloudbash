@@ -3,7 +3,7 @@ using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 
-namespace Cloudbash.Domain.ViewModels
+namespace Cloudbash.Domain.ReadModels
 {
     public class Concert : ReadModelBase
     {

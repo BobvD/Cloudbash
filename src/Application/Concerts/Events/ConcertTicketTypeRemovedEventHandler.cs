@@ -1,7 +1,7 @@
 ﻿using Cloudbash.Application.Common.Events;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.Concerts.Events;
-using Cloudbash.Domain.ViewModels;
+using Cloudbash.Domain.ReadModels;
 using MediatR;
 using System.Linq;
 using System.Threading;

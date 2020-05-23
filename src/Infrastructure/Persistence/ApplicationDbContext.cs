@@ -1,5 +1,5 @@
 ﻿
-using Cloudbash.Domain.ViewModels;
+using Cloudbash.Domain.ReadModels;
 using Cloudbash.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,8 +17,8 @@ namespace Cloudbash.Infrastructure.Persistence
         }   
 
         public DbSet<Concert> Concerts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
-      
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

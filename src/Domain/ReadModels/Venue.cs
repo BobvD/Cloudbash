@@ -1,6 +1,6 @@
 ﻿using Cloudbash.Domain.SeedWork;
 
-namespace Cloudbash.Domain.ViewModels
+namespace Cloudbash.Domain.ReadModels
 {
     public class Venue : ReadModelBase
     {
