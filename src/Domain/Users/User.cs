@@ -6,19 +6,18 @@ namespace Cloudbash.Domain.Users
 {
     public class User : AggregateRootBase
     {
-        public User(string username, string email)
+        public User(Guid id, string fullName, string email)
         {
-            Id = Guid.NewGuid();
-            AddEvent(new UserCreatedEvent(Id, username, email));
+            AddEvent(new UserCreatedEvent(id, fullName, email));
         }
 
-        public string Username { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
 
         internal void Apply(UserCreatedEvent ev)
         {
             Id = ev.AggregateId;
-            Username = ev.Username;
+            FullName = ev.FullName;
             Email = ev.Email;
         }
     }

@@ -9,23 +9,23 @@ namespace Cloudbash.Domain.Users.Events
         {
         }
 
-        internal UserCreatedEvent(Guid aggregateId, string username, string email) : base(aggregateId)
+        internal UserCreatedEvent(Guid aggregateId, string fullName, string email) : base(aggregateId)
         {
-            Username = username;
+            FullName = fullName;
             Email = email;
         }
 
-        public string Username { get; private set; }
+        public string FullName { get; private set; }
         public string Email { get; private set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new UserCreatedEvent(aggregateId, Username, Email);
+            return new UserCreatedEvent(aggregateId, FullName, Email);
         }
 
         public override string ToString()
         {
-            return Username + base.ToString();
+            return FullName + base.ToString();
         }
     }
 }

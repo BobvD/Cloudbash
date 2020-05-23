@@ -9,7 +9,8 @@ namespace Cloudbash.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<Guid>
     {
-        public string Username { get; set; }
+        public Guid Id { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
 
         public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
@@ -24,7 +25,7 @@ namespace Cloudbash.Application.Users.Commands.CreateUser
 
             public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                var user = new User(request.Username, request.Email);
+                var user = new User(request.Id, request.FullName, request.Email);
                 await _repository.SaveAsync(user);
 
                 return user.Id;
