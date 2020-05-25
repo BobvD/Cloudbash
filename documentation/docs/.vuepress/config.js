@@ -15,25 +15,17 @@ module.exports = {
         title: 'Introduction',   // required
         path: '/introduction/',      // optional, which should be a absolute path.
         collapsable: false, // optional, defaults to true
-        sidebarDepth: 0,    // optional, defaults to 1
-        children: [
-          ['/introduction/DDD', 'Getting started'],
-          ['/introduction/ES', 'Technical stack']          
-        ]
       }, 
       {
         title: 'Event Sourcing & CQRS',
         children: [
           ['/event_sourcing/', 'Introduction'],
-          ['/event_sourcing/implementation.md', 'Implementation']          
+          ['/domain_driven_design/', 'Domain Driven Design'],
+          ['/event_sourcing/implementation.md', 'Implementation in .NET Core']          
         ],
         collapsable: false,
         sidebarDepth: 0,   
-      },   
-      {
-        title: 'Domain Driven Design',
-        path: '/domain_driven_design/',
-      },     
+      },      
       {
         title: 'Business Scenario and Analysis',
         path: '/business_scenario/',

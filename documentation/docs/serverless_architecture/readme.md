@@ -1,4 +1,12 @@
 # Serverless Architecture
-## #1: DynamoDB, Kinesis, RDS
-## #2: DynamoDB, SQS, ElastiCache
-## #3: DynamoDB all the way
+## Event sourced Serverless Architecture
+## Requirements
+
+## REST API
+### Functions
+### 
+## Event Log
+## Event Bus
+## Read Database
+## Cost Analysis
+## Conclusion
