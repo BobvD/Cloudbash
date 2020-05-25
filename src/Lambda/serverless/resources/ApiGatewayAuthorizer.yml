@@ -7,4 +7,4 @@ Properties:
         Ref: "ApiGatewayRestApi"
     Type: COGNITO_USER_POOLS
     ProviderARNs: 
-      - arn:aws:cognito-idp:us-east-1:628118338207:userpool/us-east-1_h2TI5xYRE
+      - arn:aws:cognito-idp:us-east-1:628118338207:userpool/us-east-1_onKop2G0j
