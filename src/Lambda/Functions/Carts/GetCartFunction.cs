@@ -3,6 +3,7 @@ using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Cloudbash.Application.Carts.Commands.CreateCart;
 using Cloudbash.Application.Carts.Queries.GetCart;
+using Cloudbash.Domain.ReadModels;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace Cloudbash.Lambda.Functions.Carts
 
             if(result == null)
             {
-                await Mediator.Send(new CreateCartCommand { CustomerId = id });
-                result = await GetCart(id);
+                var cartId = await Mediator.Send(new CreateCartCommand { CustomerId = id });
+                result = new Cart { CustomerId = id, Id = cartId.ToString() };
             }
 
             return new APIGatewayProxyResponse

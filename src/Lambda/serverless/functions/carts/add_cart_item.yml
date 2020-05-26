@@ -1,0 +1,6 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Carts.AddCartItemFunction::Run
+events:
+- http:
+    path: carts/{customerId}/item
+    method: post
+    cors: true

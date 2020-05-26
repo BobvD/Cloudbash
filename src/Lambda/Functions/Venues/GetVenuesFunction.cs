@@ -17,7 +17,7 @@ namespace Cloudbash.Lambda.Functions.Venues
             return new APIGatewayProxyResponse
             {
                 Headers = GetCorsHeaders(),
-                StatusCode = 201,
+                StatusCode = 200,
                 Body = JsonConvert.SerializeObject(result)
             };
         }

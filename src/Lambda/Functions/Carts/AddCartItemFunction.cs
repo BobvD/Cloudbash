@@ -1,29 +1,26 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using Cloudbash.Application.Concerts.Queries.GetConcert;
+using Cloudbash.Application.Carts.Commands.AddCartItem;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace Cloudbash.Lambda.Functions.Concerts
+namespace Cloudbash.Lambda.Functions.Carts
 {
-    public class GetConcertDetailFunction : FunctionBase
+    public class AddCartItemFunction : FunctionBase
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
-            Guid id = Guid.Parse(GetPathParameter(request, "id"));
-            var result = await Mediator.Send(new GetConcertDetailQuery { Id = id });;
-
+            var command = JsonConvert.DeserializeObject<AddCartItemCommand>(request.Body);
+            await Mediator.Send(command);
+           
             return new APIGatewayProxyResponse
             {
                 Headers = GetCorsHeaders(),
-                StatusCode = 200,
-                Body = JsonConvert.SerializeObject(result)
+                StatusCode = 201
             };
-            
         }
-
     }
 }

@@ -30,7 +30,7 @@ namespace Cloudbash.Application.Carts.Queries.GetCart
                                     c => c.CustomerId == request.CustomerId, 
                                     children);
                 
-                return result.First();
+                return result.FirstOrDefault();
             }
         }
     }
