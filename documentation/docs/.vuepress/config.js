@@ -27,17 +27,23 @@ module.exports = {
         sidebarDepth: 0,   
       },      
       {
+        title: 'ES Serverless Architecture',
+        children: [
+          ['/serverless_architecture/', 'Introduction'],
+          ['/event_sourcing/implementation.md', 'Implementation in .NET Core']          
+        ],
+        collapsable: false,
+        sidebarDepth: 0,   
+      },   
+      {
         title: 'Business Scenario and Analysis',
         path: '/business_scenario/',
         collapsable: false
-      },      
-      {
-        title: 'Serverless Architecture',
-        path: '/serverless_architecture/'
-      },
+      },  
       {
         title: 'Serverless Web development',
         children: [
+          ['/aws_serverless/serverless_functions.md', 'Restful API'],
           ['/aws_serverless/static_website_hosting.md', 'Static Website Hosting'],
           ['/aws_serverless/s3_file_uploads.md', 'S3 File Uploads'],
           ['/aws_serverless/cognito_auth.md', 'Access Control with Cognito'],
