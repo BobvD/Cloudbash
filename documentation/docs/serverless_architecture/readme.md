@@ -56,38 +56,105 @@ De service maakt het mogelijk om Lambda-functies aan te roepen op basis van HTTP
 
 
 
-## Event Log
-### DynamoDB
+## Event Log - DynamoDB
+Amazon DynamoDB is een NoSQL database die volledig beheerd wordt door Amazon Web Services. De database hoeft dus niet geïnstalleerd te worden, maar kan eenvoudig aangemaakt worden via de AWS Console of [Cloudformation](https://aws.amazon.com/cloudformation/).
 
-#### Waarom DynamoDB als event log?
+#### Waarom DynamoDB gebruiken voor het event log?
 * Doormiddel van IAM-permissies (Identity en Access Management) is het mogelijk te garanderen dat er alleen naar de database geschreven en gelezen kan worden. Omdat een event log append-only is willen we niet dat er records aangepast of verwijderd kunnen worden.
-* De rangschikking van records kan worden gegarandeerd door gebruik te maken van een combinatie van partition (id) en sort key (versie).
+* De rangschikking van records kan worden gegarandeerd door gebruik te maken van een combinatie van *partition* (identifier) en *sort key* (versie).
 * DynamoDB streams: een event stream waar met een Lambda-functie naar geluisterd kan worden. Na iedere gebeurtenis in de database wordt een event gegooid. Hier kan op worden ingespeeld, zo kunnen we bijvoorbeeld eenvoudig andere AWS-services aan de DynamoDB database koppelen.
 * Er zijn geen limieten op de grootte van een tabel. Dit komt goed uit, want event logs kunnen snel groeien.
 * De schrijf- en leesfunctionaliteit van de database kunnen los van elkaar en automatisch worden opgeschaald.
-* backups
+* Back-ups, DynamoDB heeft verschillende mogelijkheden voor het automatisch aanmaken van back ups. 
 
 #### Aandachtspunten
 
 * Items (records) die in de database worden opgeslagen kunnen maximaal 400KB groot zijn.
+* De kosten van DynamoDB databases kunnen snel stijgen wanneer deze in grootte toenemen. Het is mogelijk om oude data, bijvoorbeeld, weg te schrijven naar S3 en hiermee kosten te verlagen.
   
-### Event record 
+### Dataschema 
+<figure style="text-align:center;">
+  <img src='../../assets/images/event_log_schema.png'>
+</figure>
+
+| Attribuut        | Type          | Beschrijving                                                                                          |
+|------------------|---------------|-------------------------------------------------------------------------------------------------------|
+| AggregateId      | String (Guid) | *Partition key* <br /> ID van de Aggregate waar het event onder valt.                                   |
+| AggregateVersion | Number        | *Sort Key* <br /> De versie van de aggregate – combinatie van AggregateId en AggregateVersion is uniek. |
+| Created          | Date          | Datum en tijd van het aanmaken van het event.                                                         |
+| Data             | String (JSON) | Geserialiseerde JSON-string met de gegevens van het event.                                            |
+| EventType        | String        | De naam van het event.                                                                                |
+
+**voorbeeld data**
 ``` json
 {
-"AggregateId" : "aa139dd8-e87c-4105-bfd9-d7240f4c9a33",
-"AggregateVersion": 1,
-"Created": 1590492880,
-"EventType": "ConcertUpdated",
-"Data": "{}"
+"AggregateId" : "a8bab764-659b-4873-a8aa-618ed8b199bf",
+"AggregateVersion": 3,
+"Created": "2020-05-25T16:10:56.123Z",
+"Data": "{\"CustomerId\":\"566316c4-ba88-4c0a-8c3a-0389792a1fe0\",\"EventId\":\"648c72e1-38f1-431b-8e73-91463ec876db\",\"AggregateId\":\"a8ea2d86-f091-4abe-895c-4a90f267882a\",\"AggregateVersion\":0}",
+"EventType": "Cloudbash.Domain.Carts.Events.CartCreatedEvent",
 }
 ```
 
 ## Event Bus
+De Event bus verzorgt de communicatie tussen de verschillende componenten van de applicatie.
 
+Een event bus kent één of meerdere *Publishers*, deze schrijven de events naar de bus, en één of meerder *Subscribers* (ook wel consumers genoemd), deze luisteren naar de bus en ontvangen berichten. We kunnen events vanuit een Lambda-functie naar de bus sturen en hier met andere Lambda-functies naar luisteren.
+
+<figure style="text-align:center;">
+  <img src='../../assets/images/event_bus.png'>
+</figure>
+
+
+
+Amazon Web Services bied meerdere services die we kunnen gebruiken als Event Bus. Alle services zijn verschillend in prijs, performance en toepasbaarheid. Voor onze applicatie, Cloudbash, hebben we drie verschillende mogelijkheden onderzocht. 
 ### DynamoDB Streams
-### Simple Message Service
-### Kinesis 
+De eenvoudigste manier om een event bus te implementeren is door gebruik te maken van de stream mogelijkheden van het DynamoDB event log. Na ieder event record wat wordt weggeschreven naar dit log zal automatisch een notificatie worden verzonden via [DynamoDB streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html). Er kan een Lambda worden geschreven die naar deze notificaties luistert.
+#### Voordelen
+* Eenvoudige oplossing, er zijn geen extra AWS-services nodig. Ook is het simpel om een Lambda aan deze stream te koppelen en events uit te lezen.
+* De streams schalen, net zoals de DynamoDB database, vanzelf.
+* Het luisteren met een Lambda naar een stream is gratis. 
+#### Aandachtspunten
+*	Er is een maximumaantal van twee subscribers. Voor kleine applicaties hoeft dit geen bezwaar te zijn, maar voor grotere applicaties die event-driven werken is dit niet voldoende.
+*	De data in een stream is slechts voor 24 uur leesbaar.
+*	Streams zijn gelimiteerd tot events die zijn uitgevoerd op de database tabel (CREATE, UPDATE, DELETE).
+* Geen .NET Core library beschikbaar met een implementatie van de Objecten. Een definitie van de JSON-objecten moet zelf worden geïmplementeerd.
 
+
+### Simple Message Service
+[Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/pricing/) is een Message Queueing service die volledig beheerd wordt door Amazon Web Services. SQS biedt twee verschillende vormen van queues. De standaard queue biedt een maximale throughput (doorvoer) en zorgt ervoor dat elk bericht (minimaal) eenmaal wordt afgehandeld. FIFO-Queues (First-in-First-out) zijn specifiek ontworpen voor het eenmaal, op volgorde, afleveringen van berichten.
+
+#### Voordelen
+*	Implementatie van SQS zal herkenbaar zijn voor ontwikkelaars die eerder hebben gewerkt met een message broker zoals RabbitMQ of ActiveMQ.
+*	Implementatie en integratie van SQS message queue’s is simpel. Er bestaan libraries in verscheidene talen (waaronder .NET Core) die het gebruik van de queue’s faciliteren, maar het is ook eenvoudig om zonder het gebruik van een library berichten naar een queue te sturen.
+*	AWS Free tier biedt 1 miljoen SQS gratis per maand, iedere miljoen requests hierna kost rond de $0.40. Voor kleine applicaties kan SQS dus een goedkope optie zijn.
+*	SQS schaalt automatisch, er is dus altijd voldoende capaciteit om je berichten te verwerken- en je betaalt nooit meer dan je verbruikt.
+* FIFO-Queues kunnen de volgorde van bezorging garanderen. Zo zullen events als eerst verstuurt ook als eerste verwerkt worden, dit is erg belangrijk voor een juiste implementatie van event sourcing. 
+
+#### Aandachtspunten
+*	Wanneer een subscriber een bericht ontvangt uit de queue zal deze worden verwijderd. Het is dus niet mogelijk om hetzelfde bericht door meerdere subscribers te laten lezen. Als deze functionaliteit noodzakelijk is zal je het bericht naar verschillende queues moeten verzenden, ieder met zijn eigen subscriber.
+*	Er is geen replay functionaliteit.
+
+### Kinesis Data streams
+[Kinesis Data Streams](https://aws.amazon.com/kinesis/data-streams/) is een Amazon Web Service ontwikkelt voor het schaalbaar en real-time streamen van grote hoeveelheden data. 
+
+Een Kinesis data stream bestaat uit een set van *shards*, iedere *shard* heeft zijn eigen geordende lijst met *data records*. Records in deze lijst krijgen een volgnummer toegewezen door Kinesis. Hierdoor kunnen we records altijd op de juiste volgorde uitlezen, maar is het hiervoor wel noodzakelijk dat records met hetzelfde *AggregateId* naar dezelfde shard worden weggeschreven. Nadat records zijn toegevoegd aan een shard kunnen zij standaard voor 24 uur worden uitgelezen, maar het is mogelijk om dit (tegen extra kosten) te verlangen tot maximaal 7 dagen.
+
+#### Voordelen
+*	Kinesis is specifiek ontwikkelt voor het real-time verzenden en verwerken van data.
+*	Het op volgorde afspelen van berichten uit dezelfde shard werkt foutloos.
+*	Kinesis is een *stream*, geen *queue* (wachtrij) zoals SQS. Wanneer berichten zijn ontvangen door een consumer worden zij niet gelijk verwijderd. Hierdoor kunnen berichten ook opnieuw worden afgespeeld (*replay*) en afgehandeld door consumers.  
+*	Iedere stream kan tot 20 consumers hebben, 
+*	Berichten hebben een maximale grootte van 1MB.
+*	Hoewel SQS goedkoop is voor applicaties met een kleiner volume, kunnen kosten snel stijgen wanneer dit volume toeneemt. Kinesis is juist het meest prijs effectief bij grootte hoeveelheden berichten. 
+*	[Kinesis Data Analytics](https://aws.amazon.com/kinesis/data-analytics/) biedt een eenvoudig oplossing voor het query-en op streaminggegevens met standaard SQL.
+*	De *Kinesis Client Library* maakt het gemakkelijk om applicaties te bouwen die werken met Kinesis Data Streams.
+
+#### Aandachtspunten
+*	Kinesis is schaalbaar doormiddel van shards. Er kunnen maximaal 1000 berichten per shard, per seconde worden weggeschreven. Het is mogelijk om honderden shard te reserveren, zodat er altijd voldoende capaciteit is. Maar hiervoor moet wel betaald worden, er moet dus een juiste afweging voor worden gemaakt. 
+
+### Welke AWS-Service is het meest geschikt als Event Bus?
+Ieder van de drie beschreven AWS-services zou een geschikte oplossing kunnen zijn als Event Bus. Dit ligt voornamelijk aan het type applicatie- en de bijbehorende eisen die deze heeft opgesteld voor de event bus. Cloudbash, de reference applicatie behorende bij dit artikel, is een applicatie die functionaliteiten omvat voor het verkopen van grootte getallen concert tickets. Het systeem werkt op basis van een event-driven architectuur waarbij grootte hoeveelheden berichten aan meerdere consumers moeten worden afgeleverd. Er is daarom gekozen gebruik te maken van **Kinesis Data streams**. Deze service heeft als enige ondersteuning voor meerdere consumers. Ook maakt de persistence en replay functie van Kinesis het eenvoudig om berichten opnieuw af te spelen. 
 
 ## Read Database
 
