@@ -39,7 +39,7 @@
                                     </path>
                                 </svg>
                             </svg>
-                            {{ authService?.user?.username }}
+                            {{ authService?.user?.attributes?.name }}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
                             <button ngbDropdownItem (click)="signOut()">Uitloggen</button>

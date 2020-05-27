@@ -9,7 +9,14 @@ import { Role } from './shared/models/user.model';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 
 const routes: Routes = [
-    { path: '', component: HomePageComponent },    
+    { path: '', component: HomePageComponent },   
+    {
+        path: '',
+        component: MainLayoutComponent,
+        children: [
+            { path: 'cart', loadChildren: () => import('./modules/cart/cart.module').then(m => m.CartModule) },
+        ]
+    },
     {
         path: '',
         component: AuthLayoutComponent,

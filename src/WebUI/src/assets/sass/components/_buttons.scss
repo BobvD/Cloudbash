@@ -25,6 +25,12 @@ button.nav-link {
     line-height: 18px;
 }
 
+button.nav-link:hover {
+   border-bottom: 2px solid #fff;
+   margin-bottom: -2px;
+}
+
+
 .dropdown-item:hover {
     border: none;
     background: none;

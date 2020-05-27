@@ -12,7 +12,9 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
     constructor(public authService: AuthenticationService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        console.log(this.authService.user);
+    }
 
     signOut() {
         this.authService.signOut();
