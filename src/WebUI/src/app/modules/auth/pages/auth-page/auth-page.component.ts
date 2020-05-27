@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { I18n } from 'aws-amplify';
+
 
 @Component({
     selector: 'app-auth-page',
@@ -39,5 +41,13 @@ export class AuthPageComponent implements OnInit {
 
     constructor(private authService: AuthenticationService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        I18n.setLanguage('en');
+        const dict = {
+            'en': {
+                'Username': 'Email'
+            }
+        }
+        I18n.putVocabularies(dict);
+    }
 }
