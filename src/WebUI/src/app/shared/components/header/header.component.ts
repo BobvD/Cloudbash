@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
+import { CartService } from 'src/app/modules/cart/services/cart.service';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
     searchTerm: string = "";
     scrolled = false;
 
-    constructor(public authService: AuthenticationService) { }
+    constructor(public authService: AuthenticationService,
+                public cartService: CartService) { }
 
     ngOnInit(): void { }
 

@@ -17,12 +17,15 @@ export class AuthenticationService {
     public currentUserRole: Role;
     signedIn: boolean;
 
-    constructor(private amplifyService: AmplifyService,
+    constructor(private amplifyService: AmplifyService,    
         private router: Router) {
         this.loggedIn = new BehaviorSubject<boolean>(false);
         this.amplifyService.authStateChange$
             .subscribe(authState => {
-                this.signedIn = authState.state === 'signedIn';
+                if(authState.state === 'signedIn'){
+                    this.loggedIn.next(true);
+                    this.signedIn = true;
+                }              
                 if (!authState.user) {
                     this.user = null;
                 } else {
