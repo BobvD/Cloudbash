@@ -33,6 +33,20 @@
 
 <main role="main p-3">
     <div class="container">
-        
+        <div class="row py-3">
+            <div class="col-12">
+                <h4 class="my-3">Tickets</h4>
+                <div class="ticketType w-100 p-3 mt-3 d-flex align-items-center" *ngFor="let type of concert?.TicketTypes">
+                        <h5 class="mt-1">{{ type.Name }}</h5>
+                        <h5 class="ml-auto mr-2 mt-1 text-faded">{{ type.Price | currency:'EUR' }}</h5>
+                        <form class="form-inline">
+                            <input type="number" class="form-control mr-2 h-100" value="1" style="width: 65px;">
+                            <button type="submit" class="btn btn-primary h-100">Add to cart</button>
+                        </form>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg mt-5 mx-auto">Next - Shopping Cart</button>
+        </div>
     </div>
 </main>

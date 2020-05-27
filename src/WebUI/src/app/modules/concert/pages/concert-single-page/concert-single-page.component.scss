@@ -1,6 +1,6 @@
 .header-image-wrapper {
     position: relative;
-    height: 48vh;
+    height: 28vh;
     display: flex;
     align-items: flex-end;
     background: rgb(241, 241, 241);
@@ -8,7 +8,7 @@
     margin-top: -40px!important;
     background-repeat: no-repeat;
     background-size: cover; 
-    box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
+    box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.01);
 }
 
 .header-image {
@@ -20,7 +20,7 @@
 .concert-info {
     position: relative;
     width: 100%;
-    background-color: rgba(135, 73, 156, 0.85);
+    background-color: rgba(0, 0, 0, 0.4);
     margin: 0px auto;
     overflow: visible;
     border-top-left-radius: 20px;
@@ -57,4 +57,14 @@ h2 {
     font-weight: 600;
     font-size: 1.2rem;
     margin-bottom: 0;
+  }
+
+  .ticketType {
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+  }
+
+  .form-control {
+    text-align: center!important;
+    font-weight: 700!important;
   }
