@@ -6,26 +6,23 @@ namespace Cloudbash.Domain.Carts.Events
     {
         public CartItemAddedEvent() { }
 
-        internal CartItemAddedEvent(Guid aggregateId, Guid ticketTypeId, int quantity)
+        internal CartItemAddedEvent(Guid aggregateId, CartItem item)
             : base(aggregateId)
         {
-            TicketTypeId = ticketTypeId;
-            Quantity = quantity;
+            Item = item;
         }
 
-        internal CartItemAddedEvent(Guid aggregateId, long aggregateVersion, Guid ticketTypeId, int quantity)
+        internal CartItemAddedEvent(Guid aggregateId, long aggregateVersion, CartItem item)
             : base(aggregateId, aggregateVersion)
         {
-            TicketTypeId = ticketTypeId;
-            Quantity = quantity;
+            Item = item;
         }
 
-        public Guid TicketTypeId { get; set; }
-        public int Quantity { get; set; }
+        public CartItem Item { get; set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
-            return new CartItemAddedEvent(aggregateId, aggregateVersion, TicketTypeId, Quantity);
+            return new CartItemAddedEvent(aggregateId, aggregateVersion, Item);
         }
     }
 }

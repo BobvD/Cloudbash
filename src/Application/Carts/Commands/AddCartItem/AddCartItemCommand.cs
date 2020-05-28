@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Carts.Commands.AddCartItem
 {
-    public class AddCartItemCommand : IRequest
+    public class AddCartItemCommand : IRequest<Guid>
     {
         public Guid CartId { get; set; }
         public Guid TicketTypeId { get; set; }
         public int Quantity { get; set; }
 
-        public class AddCartItemCommandHandler : IRequestHandler<AddCartItemCommand>
+        public class AddCartItemCommandHandler : IRequestHandler<AddCartItemCommand, Guid>
         {
 
             private readonly IRepository<Cart> _repository;
@@ -24,7 +24,7 @@ namespace Cloudbash.Application.Carts.Commands.AddCartItem
                 _repository = repository;
             }
 
-            public async Task<Unit> Handle(AddCartItemCommand request, CancellationToken cancellationToken)
+            public async Task<Guid> Handle(AddCartItemCommand request, CancellationToken cancellationToken)
             {
                 Console.WriteLine("cart id: " + request.CartId);
                 var cart = await _repository.GetByIdAsync(request.CartId);
@@ -34,11 +34,17 @@ namespace Cloudbash.Application.Carts.Commands.AddCartItem
                     throw new NotFoundException(nameof(Cart), request.CartId);
                 }
 
-                cart.AddItem(request.TicketTypeId, request.Quantity);
+                var cartItem = new CartItem
+                {
+                    TicketTypeId = request.TicketTypeId,
+                    Quantity = request.Quantity
+                };
+                
+                cart.AddItem(cartItem);
 
                 await _repository.SaveAsync(cart);
 
-                return Unit.Value;
+                return cartItem.Id;
             }
         }
 

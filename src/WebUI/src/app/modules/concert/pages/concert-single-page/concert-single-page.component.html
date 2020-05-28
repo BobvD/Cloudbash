@@ -40,8 +40,8 @@
                         <h5 class="mt-1">{{ type.Name }}</h5>
                         <h5 class="ml-auto mr-2 mt-1 text-faded">{{ type.Price | currency:'EUR' }}</h5>
                         <form class="form-inline">
-                            <input type="number" class="form-control mr-2 h-100" value="1" style="width: 65px;">
-                            <button type="submit" class="btn btn-primary h-100">Add to cart</button>
+                            <input type="number" #number class="form-control mr-2 h-100" value="1" style="width: 65px;">
+                            <button type="button" class="btn btn-primary h-100" (click)="addToCart(type.Id, number.value)">Add to cart</button>
                         </form>
                 </div>
             </div>

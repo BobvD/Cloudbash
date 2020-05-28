@@ -37,7 +37,7 @@ export class CartService {
             console.log(res);
             this.cart = res;
             res.Items.forEach(element => {
-                this.addToCart(element);
+                // this.addToCart(element);
             });
         });
     }
@@ -46,8 +46,16 @@ export class CartService {
         return this.http.get<any>(this._cartURL + this.userId);
     }
     
-    public addToCart(item: CartItem) {
-        this.itemsInCartSubject.next([...this.itemsInCart, item]);
+    public addToCart(ticketTypeId: string, quantity: number) {
+        const url = `${this._cartURL}${this.userId}/item`;
+        const command = { CartId : this.cart.Id, TicketTypeId: ticketTypeId, Quantity: quantity };
+        return this.http.post<any>(url, command).subscribe(res => {
+            let item = new CartItem();
+            item.Id = res;
+            item.Quantity = quantity;
+            item.TicketTypeId = ticketTypeId;
+            this.itemsInCartSubject.next([...this.itemsInCart, item]);
+        });        
     }
 
     public getItems(): Observable<CartItem[]> {

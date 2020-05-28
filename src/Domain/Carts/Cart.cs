@@ -26,21 +26,16 @@ namespace Cloudbash.Domain.Carts
             AddEvent(new CartCreatedEvent(Id, customerId));
         }
 
-        public void AddItem(Guid ticketTypeId, int quantity)
+        public void AddItem(CartItem item)
         {
-            if (ticketTypeId == null)
+            if (item.TicketTypeId == null)
             {
-                throw new ArgumentNullException(nameof(ticketTypeId));
+                throw new ArgumentNullException(nameof(item.TicketTypeId));
             }
 
-            if (ContainsTicketType(ticketTypeId))
-            {
-                // throw new CartException($"Product {productId} already added");
-            }
+            CheckQuantity(item.Quantity);
 
-            CheckQuantity(quantity);
-
-            AddEvent(new CartItemAddedEvent(Id, ticketTypeId, quantity));
+            AddEvent(new CartItemAddedEvent(Id, item));
 
         }
 
@@ -76,11 +71,7 @@ namespace Cloudbash.Domain.Carts
 
         internal void Apply(CartItemAddedEvent @event)
         {
-            Items.Add(
-                new CartItem { 
-                    TicketTypeId = @event.TicketTypeId, 
-                    Quantity = @event.Quantity 
-                });
+            Items.Add(@event.Item);
         }
     }
 }
