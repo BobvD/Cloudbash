@@ -157,7 +157,56 @@ Een Kinesis data stream bestaat uit een set van *shards*, iedere *shard* heeft z
 Ieder van de drie beschreven AWS-services zou een geschikte oplossing kunnen zijn als Event Bus. Dit ligt voornamelijk aan het type applicatie- en de bijbehorende eisen die deze heeft opgesteld voor de event bus. Cloudbash, de reference applicatie behorende bij dit artikel, is een applicatie die functionaliteiten omvat voor het verkopen van grootte getallen concert tickets. Het systeem werkt op basis van een event-driven architectuur waarbij grootte hoeveelheden berichten aan meerdere consumers moeten worden afgeleverd. Er is daarom gekozen gebruik te maken van **Kinesis Data streams**. Deze service heeft als enige ondersteuning voor meerdere consumers. Ook maakt de persistence en replay functie van Kinesis het eenvoudig om berichten opnieuw af te spelen. 
 
 ## Read Database
+Een van de voordelen van een systeem dat gebruik maakt van CQRS, is dat data op een manier kan worden opgeslagen in een vorm die precies is aangepast op de eisen van de lezer. Dit artikel zal niet diep ingaan op de voordelen van een NoSQL- of SQL-database, of wanneer je een van beide zou moeten toepassen. Het biedt slechts een overzicht van de verschillende managed database services die AWS aanbiedt.
 
 ### DynamoDB
+Zoals eerder beschreven is [DynamoDB](https://aws.amazon.com/dynamodb/) een (key-value document) NoSQL database, ontwikkeld door Amazon, die aangeboden wordt in de vorm van een managed service.
+
+#### Voordelen
+*	Flexibiliteit, zoals de meeste NoSQL databases is DynamoDB schema loos. Data kan in allerlei vormen worden opgeslagen- en hoeven niet aan een eerder vastgelegd schema voldoen. Dit kan een goede combinatie zijn voor event sourced systemen waarbij functionaliteiten snel kunnen veranderen.
+*	Werken met de DynamoDB SDK (onder meer beschikbaar voor .NET Core) is eenvoudig. Het verbinden met een database, wegschrijven en lezen van data kan geïmplementeerd worden met slechts enkele regels code.
+*	DynamoDB is een van de belangrijkste AWS-services en heeft een goede integratie met andere services zoals AWS- [CloudSearch](https://aws.amazon.com/cloudsearch/), [EMR](https://aws.amazon.com/emr/) of [Data Pipeline](https://aws.amazon.com/datapipeline/).
+*	De grootte van een tabel heeft geen limiet.
+*	Goede performance, *lees-requests* kunnen worden afgehandeld in enkele milliseconde. Capaciteit tot wel 20 miljoen requests per seconde.
+*	[DynamoDB Accelerator (DAX)](https://aws.amazon.com/dynamodb/dax/) is een in-memory cache service voor DynamoDB die de performance tot wel 10x kan versnellen- de tijd die nodig is om lees-requests af te handelen kan verlaagd worden tot microsecondes.
+
+#### Aandachtspunten
+* NoSQL-databases zijn niet de juiste database voor het uitvoeren van complexe query’s op relationele data. 
+*	Omdat records opgeslagen in DynamoDB maximaal 400kb groot kunnen zijn, is de database niet geschikt voor het opslaan van binaire objecten, zoals afbeeldingen of documenten.
+
+### Relational Database Service 
+[Amazon Relational Database Service (RDS)](https://aws.amazon.com/rds/) maakt het gemakkelijk om verschillende type SQL-databases op te zetten, gebruiken en beheren.
+
+RDS ondersteund, op het moment van schrijven, 6 verschillende database engines; Amazon Aurora, PostgresSQL, MySQL, MariaDB, Oracle, en Microsoft SQL Service.
+
+#### Voordelen
+
+*	Werkt in samenwerking met ORM-frameworks zoals Entity Framework Core (.NET Core) of Hibernate (Java).
+*	Schaalbaar. Door bijvoorbeeld gebruik te maken van *Read Replicas *kan lees-verkeer naar de primaire database worden verspreid over verschillende instanties. Amazon Aurora zal automatisch in grootte groeien wanneer nodig. De grootte van de overige database kunnen handmatig worden geschaald zonder downtime.
+*	Geautomatiseerde back-ups. Hoewel dit niet belangrijk is voor een event-sourced systeem, waarbij we de database altijd opnieuw kunnen genereren op basis van het event log.
+*	RDS biedt ondersteuning voor alle grote database engines. Deze brengen wel hun eigen specificatie en limieten met zich mee.
+*	Mogelijk om de database te isoleren in een *Virtual (Private) Network* en verbinding te maken met een *VPS*.
+
+#### Aandachtspunten
+* Je betaalt een vast bedrag voor iedere database instantie die is aangemaakt. Het is mogelijk om een instantie voor 1-3 jaar te reserveren en hiermee kosten te besparen.
+
 ### ElastiCache
-### Relation Database Service (RDS)
+De laatste jaren zijn de hardware kosten van geheugen gigantisch gedaald. Het wordt hierdoor economisch interessanter om databases in het geheugen te bewaren. Event-sourced applicaties werken erg goed in combinatie met *in-memoy databases*. Bij een herstart van het systeem zal de database, in het geheugen, verloren gaan, maar doormiddel van event-sourcing kunnen we deze altijd herbouwen door de events opnieuw af te spelen.
+
+### Welke AWS-Service is het meest geschikt als *Read Database*?
+Het type read database moet worden geselecteerd op basis van de eisen van de betreffende functionaliteit. Voor de Cloudbash applicatie wordt gebruik gemaakt van vershillende type database engines, die het best passen bij de eisen van de functionaliteit. De applicatie biedt bijvoorbeeld gebruikers de mogelijkheid om programma met concerten te filteren op naam, locatie en datum. Deze informatie zal opgeslagen worden in een RDS (PostgresSQL) database, vanwege de geschiktheid voor het uitvoeren van query’s op relationele data. Functionaliteiten zoals winkelwagentjes, waarbij we data, zonder relaties, willen opslaan 
+
+## Conclusie
+
+In dit artikel hebben we verschillende AWS-services, die we zouden kunnen toepassen voor de vier belangrijke componenten van een Event-sourced applicatie, beschreven en vergeleken. 
+
+Definitieve keuze:
+* *Restful API* – API Gateway en Lambda
+* *Event Log* – DynamoDB
+* *Event Bus* – Kinesis
+* *Read Databases* – DynamoDB en RDS (PostgreSQL)
+
+<figure>
+  <img src='../../assets/images/aws_cqrs_architecture_diagram.png'>
+  <figcaption>CQRS & Events sourcing op Amazon Web Services</figcaption>
+</figure>
