@@ -15,9 +15,9 @@ Event sourcing is een procedure die beschrijft hoe data op een specifieke manier
   <figcaption>Acties uitgevoerd in het systeem worden opgevangen in de vorm van events.</figcaption>
 </figure>
 
-We vangen deze gebeurtenissen op in de vorm van *events*, dit zijn simpele, [immutable﹖](#termonilogie) objecten die een uitgevoerde actie beschrijven.  
+We vangen deze gebeurtenissen op in de vorm van *events*, dit zijn simpele, immutable objecten die een uitgevoerde actie beschrijven.  
 
-Events worden opgeslagen in het *Event Log*, dit is een [append-only﹖](#termonilogie) lijst met alle events die plaats hebben gevonden in het systeem. Het Event Log wordt beschouwd als de primaire databron van het systeem. De huidige staat van de applicatie is hier slechts een afgeleide van, we kunnen deze eenvoudig herbouwen door events uit het log, in chronologische volgorde, opnieuw af te spelen. 
+Events worden opgeslagen in het *Event Log*, dit is een append-only lijst met alle events die plaats hebben gevonden in het systeem. Het Event Log wordt beschouwd als de primaire databron van het systeem. De huidige staat van de applicatie is hier slechts een afgeleide van, we kunnen deze eenvoudig herbouwen door events uit het log, in chronologische volgorde, opnieuw af te spelen. 
 
 <figure>
   <img src='../../assets/images/event_log.png'>
@@ -39,9 +39,9 @@ Om het groepje events dat voor iedere projection moet worden afgespeeld nog klei
 
 ## Waarom?
 #### Limitaties van CRUD-systemen
--	Systemen gebasseerd op [CRUD-functies﹖](#termonilogie)  voeren operaties rechtsreeks op de databron uit, dit kan de performance van de applicatie verlagen.
+-	Systemen gebasseerd op CRUD-functies voeren operaties rechtsreeks op de databron uit, dit kan de performance van de applicatie verlagen.
 -	Limiteert de schaalbaarheid. Lees- en schrijfacties kunnen niet eenvoudig en onafhankelijk van elkaar worden geschaald.
--	Tenzij er een aanvullende [auditing﹖](#termonilogie) functionaliteit wordt geïmplementeerd, die een aantekening van elke uitgevoerde operatie in een log bijhoudt. Gaat de historie van de applicatie verloren.
+-	Tenzij er een aanvullende auditing functionaliteit wordt geïmplementeerd, die een aantekening van elke uitgevoerde operatie in een log bijhoudt. Gaat de historie van de applicatie verloren.
 -	Hoe meer gebruikers, hoe groter de kans op data (concurrency) conflicten.
 
 #### Voordelen van Event Sourcing
@@ -81,13 +81,3 @@ Vaak worden er meer lees- dan schrijfacties uitgevoerd binnen een applicatie. He
 #### Eventual Consistency
 Een systeem dat gebruik maakt van CQRS is altijd eventual consistent. Voordat de data aan de leeskant van het systeem up-to-date is, moeten ontvangen events eerst worden verwerkt. Het kan hierdoor voorkomen dat data op verschillende plaatsen binnen het systeem niet consistent is. Dit hoeft geen probleem te zijn, mits hier rekening mee wordt gehouden.
 
-
-
-## Termonilogie
-
-| Term            |  Beschrijving   |
-| ---------------- | --- |
-| **Immutable object** |   Aan het einde toegevoegd. Er kan geen data gewijzigd of verwijderd worden.  |
-| **Append-only**       |  Onveranderbaar. Het object kan niet gewijzigd worden.       |
-| **CRUD**| Create, Read, Update, Delete. De 4 basis functionaliteiten van een database. |
-| **Auditing** | Het bijhouden van de activiteiten in een systeem. |
