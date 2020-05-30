@@ -70,9 +70,7 @@ export class ConcertCreatePageComponent {
     this.busy = true;   
     this.dateTime.submit().subscribe(res => {
       this.publish();
-      console.log(res);
     }, err => {
-      console.log(err);
     })
   }
 
@@ -81,7 +79,6 @@ export class ConcertCreatePageComponent {
       this.router.navigate(['/admin/concerts'])
       this.toastr.success(`Concert created.`, 'Success');    
     }, err => {
-      console.log(err);
     })
   }
 

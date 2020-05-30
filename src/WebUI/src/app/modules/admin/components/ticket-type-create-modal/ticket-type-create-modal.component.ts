@@ -68,7 +68,6 @@ export class TicketTypeCreateModalComponent implements OnInit {
                 this.error = true;
                 this.submitted = false;
                 this.busy = false;
-                console.log(err);
             });
         }   
         

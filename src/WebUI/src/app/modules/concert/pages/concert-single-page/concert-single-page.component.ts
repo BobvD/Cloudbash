@@ -16,7 +16,6 @@ export class ConcertSinglePageComponent implements OnInit {
 
         this.route.data.subscribe(
             (data: { concert: Concert }) => {
-            console.log(data);
               this.concert = data.concert;
             }
           );

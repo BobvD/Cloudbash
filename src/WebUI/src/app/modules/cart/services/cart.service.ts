@@ -34,7 +34,6 @@ export class CartService {
 
     loadCartItems(userid: string) {
         this.get().subscribe(res => {
-            console.log(res);
             this.cart = res;
             res.Items.forEach(element => {
                 // this.addToCart(element);

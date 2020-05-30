@@ -57,7 +57,6 @@ export class AuthenticationService {
                     this.loggedIn.next(false);
                     this.router.navigate(['/log-in']);
                 },
-                error => console.log(error)
             );
     }
 

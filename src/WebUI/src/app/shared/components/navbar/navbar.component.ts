@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
                 public cartService: CartService) { }
 
     ngOnInit(): void { 
-        console.log(this.authService.user);
     }
 
     signOut() {

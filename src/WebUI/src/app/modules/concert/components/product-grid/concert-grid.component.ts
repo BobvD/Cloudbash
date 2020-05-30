@@ -12,6 +12,5 @@ export class ConcertGridComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void { 
-        console.log('concert grid')
     }
 }

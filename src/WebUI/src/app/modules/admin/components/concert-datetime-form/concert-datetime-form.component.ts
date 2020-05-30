@@ -19,16 +19,12 @@ export class ConcertDatetimeFormComponent implements OnInit {
     ngOnInit(): void { }
 
     dateChange($event) {
-        console.log($event);
         this.minDate = null;
-
-        this.minDate = $event;
+                this.minDate = $event;
     }
 
     submit(): Observable<any> {
         this.submitted = !this.submitted;       
-        console.log("start" + this.concert.StartDate);
-        console.log("end" + this.concert.EndDate);
         return this.concertService.schedule(this.concert.Id, this.concert.StartDate, this.concert.EndDate);
     }
     

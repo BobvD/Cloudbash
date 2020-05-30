@@ -47,7 +47,6 @@ export class ConcertDetailsFormComponent implements OnInit {
 
 
         this.concertForm.valueChanges.subscribe(res => {
-            console.log(this.concertForm.status);
             this.status.next(this.concertForm.status);
         });
     }
@@ -92,8 +91,7 @@ export class ConcertDetailsFormComponent implements OnInit {
 
     openVenueCreateModal() {
         const modalRef = this.modalService.open(VenueCreateModalComponent, { centered: true });
-        modalRef.componentInstance.modalClose.subscribe(($e) => {
-            console.log($e);
+        modalRef.componentInstance.modalClose.subscribe(($e) => {           
             this.loadVenues();
             this.concert.VenueId = $e.id;
         })

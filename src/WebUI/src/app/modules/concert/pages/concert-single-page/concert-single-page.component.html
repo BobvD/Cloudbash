@@ -14,7 +14,7 @@
                             </path>
                         </svg>
                     </svg>
-                    {{ concert?.Venue?.Name }}, {{ concert?.Venue?.Address }}                 
+                    {{ concert?.Venue?.Name }}, {{ concert?.Venue?.Address }}
                     <svg class="svg-icon ml-3" viewBox="0 0 20 20">
                         <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="calendar-alt"
                             class="svg-inline--fa fa-calendar-alt fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,8 @@
                             </path>
                         </svg>
                     </svg>
-                     <span class="opacity-3 ml-2">from</span> {{ concert?.StartDate | date:'short' }} <span class="opacity-3">until</span> {{ concert?.EndDate | date:'short' }}
+                    <span class="opacity-3 ml-2">from</span> {{ concert?.StartDate | date:'short' }} <span
+                        class="opacity-3">until</span> {{ concert?.EndDate | date:'short' }}
                 </p>
             </div>
         </div>
@@ -36,13 +37,19 @@
         <div class="row py-3">
             <div class="col-12">
                 <h4 class="my-3">Tickets</h4>
-                <div class="ticketType w-100 p-3 mt-3 d-flex align-items-center" *ngFor="let type of concert?.TicketTypes">
-                        <h5 class="mt-1">{{ type.Name }}</h5>
-                        <h5 class="ml-auto mr-2 mt-1 text-faded">{{ type.Price | currency:'EUR' }}</h5>
-                        <form class="form-inline">
-                            <input type="number" min="1" max="99" #number class="form-control mr-2 h-100" value="1" style="width: 75px;">
-                            <button type="button" class="btn btn-primary h-100" (click)="addToCart(type.Id, number.value)">Add to cart</button>
-                        </form>
+                <div class="card mt-3" *ngFor="let type of concert?.TicketTypes">
+                    <div class="p-4 card-body text-left">
+                        <div class="w-100 d-flex align-items-center">
+                            <h5 class="mt-1">{{ type.Name }}</h5>
+                            <h5 class="ml-auto mr-2 mt-1 text-faded">{{ type.Price | currency:'EUR' }}</h5>
+                            <form class="form-inline">
+                                <input type="number" min="1" max="99" #number class="form-control mr-2 h-100" value="1"
+                                    style="width: 75px;">
+                                <button type="button" class="btn btn-primary h-100"
+                                    (click)="addToCart(type.Id, number.value)">Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 

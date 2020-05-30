@@ -64,6 +64,7 @@ export class ConfigService {
     } 
 
     connectToEventStore() {
+        /*
         this.myWebSocket = webSocket(this.getWebSocketUrl());
         this.myWebSocket.subscribe(    
             msg => console.log('message received: ' + msg), 
@@ -78,6 +79,7 @@ export class ConfigService {
             console.log("connected")
             console.log(dataFromServer);
         });
+        */
     }
 
     getS3BucketUrl() {

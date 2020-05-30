@@ -25,7 +25,7 @@ namespace Cloudbash.Application.Carts.Queries.GetCart
             public async Task<Cart> Handle(GetCartQuery request, CancellationToken cancellationToken)
             {
                 
-                var children = new string[] { "Items" };
+                var children = new string[] { "Items", "Items.TicketType" };
                 var result = await _repository.FilterAsync(
                                     c => c.CustomerId == request.CustomerId, 
                                     children);

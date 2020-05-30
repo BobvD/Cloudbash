@@ -41,7 +41,6 @@ export class ConcertTicketsFormComponent implements OnInit {
         }, err => {
             this.busy = false;
             this.selected = null;
-            console.log(err);
         })        
     }
 }
