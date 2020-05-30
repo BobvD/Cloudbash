@@ -1,4 +1,5 @@
 ﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Venues.GetVenuesFunction::Run
+warmup: true
 events:
 - http:
     path: venues

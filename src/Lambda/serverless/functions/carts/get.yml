@@ -1,4 +1,5 @@
 ﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Carts.GetCartFunction::Run
+warmup: true
 events:
 - http:
     path: carts/{customerId}

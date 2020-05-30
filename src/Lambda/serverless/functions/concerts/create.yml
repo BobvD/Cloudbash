@@ -1,4 +1,5 @@
 ﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateConcertFunction::Run
+warmup: true
 events:
 - http:
     path: concerts

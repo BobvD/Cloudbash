@@ -1,4 +1,5 @@
 ﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.CreateTicketTypeFunction::Run
+warmup: true
 events:
 - http:
     path: concerts/{id}/ticket_type/

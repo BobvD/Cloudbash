@@ -6,6 +6,7 @@ provider:
   runtime: dotnetcore3.1
   stage: dev
   region: us-east-1
+  memorySize: 512
   environment:   
     POSTGRESQL_HOST: ${self:custom.POSTGRESQL.HOST}
     POSTGRESQL_PORT: ${self:custom.POSTGRESQL.PORT}
@@ -210,3 +211,4 @@ resources:
 
 plugins:
   - serverless-plugin-scripts
+  - serverless-plugin-warmup

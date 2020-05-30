@@ -3,6 +3,7 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {
-    "serverless-plugin-scripts": "^1.0.2"
+    "serverless-plugin-scripts": "^1.0.2",
+    "serverless-plugin-warmup": "^4.9.0"
   }
 }

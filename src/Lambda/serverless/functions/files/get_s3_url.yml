@@ -1,4 +1,5 @@
 ﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Files.GetS3PreSignedURLFunction::Run
+warmup: true
 events:
 - http:
     path: files/get_upload_url
