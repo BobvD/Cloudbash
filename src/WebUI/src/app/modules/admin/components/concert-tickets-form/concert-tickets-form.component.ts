@@ -16,6 +16,7 @@ export class ConcertTicketsFormComponent implements OnInit {
     @Input() concert: Concert;
     
     busy = false;
+    selected: TicketType = null;
 
     constructor(private modalService: NgbModal,
                 private concertService: ConcertService) { }
@@ -32,10 +33,14 @@ export class ConcertTicketsFormComponent implements OnInit {
 
     removeTicketType(type: TicketType) {
         this.busy = true;
-        this.concertService.removeTicketType(type.Id, this.concert.Id).subscribe(res => {           
+        this.selected = type;
+        this.concertService.removeTicketType(type.Id, this.concert.Id).subscribe(res => {  
             this.deleteTicketType.emit(type);
+            this.busy = false;
+            this.selected = null;
         }, err => {
             this.busy = false;
+            this.selected = null;
             console.log(err);
         })        
     }

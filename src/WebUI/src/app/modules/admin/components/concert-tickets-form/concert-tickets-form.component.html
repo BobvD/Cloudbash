@@ -19,8 +19,8 @@
             <div class="ticketType mt-3" *ngFor="let type of concert.TicketTypes">
                 <div class="d-flex justify-content-end">
                     <h3 class="mr-auto">{{ type.Name }}</h3>
-                    <button class="btn btn-sm btn-danger" (click)="removeTicketType(type)" [disabled]="busy">
-                        <svg class="svg-icon" viewBox="0 0 20 20"  *ngIf="!busy">
+                    <button class="btn btn-sm btn-danger" (click)="removeTicketType(type)" [disabled]="busy && (selected === type)">
+                        <svg class="svg-icon" viewBox="0 0 20 20"  *ngIf="!busy || !(selected === type)">
                             <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="trash-alt"
                                 class="svg-inline--fa fa-trash-alt fa-w-14" role="img"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -29,7 +29,7 @@
                                 </path>
                             </svg>
                         </svg>                
-                        <app-loading-spinner *ngIf="busy"></app-loading-spinner>     
+                        <app-loading-spinner *ngIf="busy && (selected === type)"></app-loading-spinner>     
                     </button>
                 </div>
                 <p class="mb-0">Price: <strong>{{ type.Price | currency:'EUR' }}</strong> Quantity: <strong>{{ type.Quantity }}</strong></p>

@@ -14,7 +14,7 @@ export class Concert {
 }
 
 export enum ConcertStatus {    
-    DRAFT,
-    PUBLISHED,
-    DELETED
+    DRAFT = 0,
+    PUBLISHED = 1,
+    DELETED = 2
 }

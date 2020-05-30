@@ -22,15 +22,16 @@ export class AuthenticationService {
         this.loggedIn = new BehaviorSubject<boolean>(false);
         this.amplifyService.authStateChange$
             .subscribe(authState => {
-                if(authState.state === 'signedIn'){
-                    this.loggedIn.next(true);
-                    this.signedIn = true;
-                }              
+                             
                 if (!authState.user) {
                     this.user = null;
                 } else {
                     this.user = authState.user;
                     this.currentUserRole = this.getRole(authState.user);
+                }
+                if(authState.state === 'signedIn'){
+                    this.loggedIn.next(true);
+                    this.signedIn = true;
                 }
             });
     }

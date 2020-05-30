@@ -40,7 +40,7 @@ namespace Cloudbash.Infrastructure.Persistence
                 query = query.Include(entity);
 
             }
-            return await query.Where(filter).ToListAsync();
+            return await query.Where(filter).AsNoTracking().ToListAsync();
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -56,7 +56,7 @@ namespace Cloudbash.Infrastructure.Persistence
                 query = query.Include(entity);
             }
             
-            return await query.ToListAsync();    
+            return await query.AsNoTracking().ToListAsync();    
         }
 
         public async Task<T> GetAsync(Guid id)

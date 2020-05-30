@@ -22,7 +22,7 @@ namespace Cloudbash.Application.Carts.Commands.CreateCart
             }
 
             public async Task<Guid> Handle(CreateCartCommand request, CancellationToken cancellationToken)
-            {
+            {               
                 var cart = new Cart(request.CustomerId);
 
                 await _repository.SaveAsync(cart);

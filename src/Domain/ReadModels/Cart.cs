@@ -1,5 +1,4 @@
-﻿using Cloudbash.Domain.Carts;
-using Cloudbash.Domain.SeedWork;
+﻿using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 
@@ -15,3 +14,5 @@ namespace Cloudbash.Domain.ReadModels
         }
     }
 }
+
+
