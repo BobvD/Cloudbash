@@ -9,6 +9,8 @@ Event Sourced Serverless Architecture on Amazon Web Services
 
 ---
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b64488515bd44c76a2093606bce31c38)](https://app.codacy.com/manual/BobvD/Cloudbash?utm_source=github.com&utm_medium=referral&utm_content=BobvD/Cloudbash&utm_campaign=Badge_Grade_Dashboard)
+
 <i>Note: This application is very much work in progress.</i>
 
 
