@@ -1,7 +1,6 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Cloudbash.Application.Concerts.Commands.RemoveTicketType;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -24,20 +23,12 @@ namespace Cloudbash.Lambda.Functions.Concerts
                         TicketTypeId = ticketTypeId
                     });
 
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 204
-                };
+                return GenerateResponse(204);
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 400,
-                    Body = JsonConvert.SerializeObject(ex.Message)
-                };
+                LambdaLogger.Log(ex.Message);
+                return GenerateResponse(400, ex.Message);
             }
         }
     }

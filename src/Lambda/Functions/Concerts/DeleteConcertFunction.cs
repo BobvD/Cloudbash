@@ -18,21 +18,12 @@ namespace Cloudbash.Lambda.Functions.Concerts
             {
                 Guid id = Guid.Parse(GetPathParameter(request, "id"));
                 var result = await Mediator.Send(new DeleteConcertCommand { Id = id } );
-
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 204
-                };
+                return GenerateResponse(204, result);
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 400,
-                    Body = JsonConvert.SerializeObject(ex.Message)
-                };
+                LambdaLogger.Log(ex.Message);
+                return GenerateResponse(400, ex.Message);
             }
         }        
     }

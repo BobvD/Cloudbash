@@ -15,28 +15,18 @@ namespace Cloudbash.Lambda.Functions.Concerts
         {
             try
             {
-                Console.WriteLine(request.Body);
-                Guid concertId = Guid.Parse(GetPathParameter(request, "id"));
+                Guid concertId = Guid.Parse(GetPathParameter(request, "id"));                
                 var requestModel = JsonConvert.DeserializeObject<ScheduleConcertCommand>(request.Body);
                 requestModel.ConcertId = concertId;
 
                 var result = await Mediator.Send(requestModel);
 
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 201,
-                    Body = JsonConvert.SerializeObject(result)
-                };
+                return GenerateResponse(201, result);
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 400,
-                    Body = JsonConvert.SerializeObject(ex.Message)
-                };
+                LambdaLogger.Log(ex.Message);
+                return GenerateResponse(400, ex.Message);
             }
 
 

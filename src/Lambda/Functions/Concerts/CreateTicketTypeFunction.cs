@@ -20,22 +20,12 @@ namespace Cloudbash.Lambda.Functions.Concerts
                 requestModel.ConcertId = concertId;
 
                 var result = await Mediator.Send(requestModel);
-
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 201,
-                    Body = JsonConvert.SerializeObject(result)
-                };
+                return GenerateResponse(201, result);
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse
-                {
-                    Headers = GetCorsHeaders(),
-                    StatusCode = 400,
-                    Body = JsonConvert.SerializeObject(ex.Message)
-                };
+                LambdaLogger.Log(ex.Message);
+                return GenerateResponse(400, ex.Message);
             }
         }
     }

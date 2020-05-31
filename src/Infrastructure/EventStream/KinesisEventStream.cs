@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.EventStream
 {
-    public class KinesisEventStream : EventStream
+    public class KinesisEventStream : EventStreamBase
     {
 
         private readonly AmazonKinesisClient _amazonKinesisClient;

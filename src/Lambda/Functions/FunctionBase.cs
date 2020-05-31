@@ -3,6 +3,7 @@ using Amazon.Runtime.Internal.Transform;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -35,6 +36,25 @@ namespace Cloudbash.Lambda.Functions
                 new KeyValuePair<string, string>("Access-Control-Allow-Origin", "*"),
                 new KeyValuePair<string, string>("Access-Control-Allow-Credentials", "true"),
                 new KeyValuePair<string, string>("Access-Control-Allow-Methods", "*")
+            };
+        }
+
+        protected static APIGatewayProxyResponse GenerateResponse(int statusCode)
+        {
+            return new APIGatewayProxyResponse
+            {
+                Headers = GetCorsHeaders(),
+                StatusCode = statusCode
+            };
+        }
+        
+        protected static APIGatewayProxyResponse GenerateResponse(int statusCode, object body)
+        {
+            return new APIGatewayProxyResponse
+            {
+                Headers = GetCorsHeaders(),
+                StatusCode = statusCode,
+                Body = JsonConvert.SerializeObject(body)
             };
         }
 

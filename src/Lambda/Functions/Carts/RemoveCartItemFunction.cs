@@ -16,11 +16,7 @@ namespace Cloudbash.Lambda.Functions.Carts
             var command = JsonConvert.DeserializeObject<RemoveCartItemCommand>(request.Body);            
             await Mediator.Send(command);
 
-            return new APIGatewayProxyResponse
-            {
-                Headers = GetCorsHeaders(),
-                StatusCode = 201
-            };
+            return GenerateResponse(204);
         }
     }
 }

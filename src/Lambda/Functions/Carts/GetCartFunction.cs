@@ -27,12 +27,7 @@ namespace Cloudbash.Lambda.Functions.Carts
                 result = new Cart { CustomerId = id, Id = cartId.ToString() };
             }
 
-            return new APIGatewayProxyResponse
-            {
-                Headers = GetCorsHeaders(),
-                StatusCode = 201,
-                Body = JsonConvert.SerializeObject(result)
-            };
+            return GenerateResponse(200, result);
         }
 
         private async Task<object> GetCart(Guid id)

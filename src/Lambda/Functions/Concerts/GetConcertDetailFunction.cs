@@ -1,7 +1,6 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Cloudbash.Application.Concerts.Queries.GetConcert;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -14,15 +13,9 @@ namespace Cloudbash.Lambda.Functions.Concerts
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
             Guid id = Guid.Parse(GetPathParameter(request, "id"));
-            var result = await Mediator.Send(new GetConcertDetailQuery { Id = id });;
+            var result = await Mediator.Send(new GetConcertDetailQuery { Id = id }); ;
 
-            return new APIGatewayProxyResponse
-            {
-                Headers = GetCorsHeaders(),
-                StatusCode = 200,
-                Body = JsonConvert.SerializeObject(result)
-            };
-            
+            return GenerateResponse(200, result);
         }
 
     }

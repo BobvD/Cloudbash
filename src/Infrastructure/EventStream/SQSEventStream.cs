@@ -1,15 +1,12 @@
 ﻿using Amazon.SQS;
 using Amazon.SQS.Model;
-using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Configs;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.EventStream
 {
-    public class SQSEventStream : EventStream
+    public class SQSEventStream : EventStreamBase
     {
 
         

@@ -12,14 +12,8 @@ namespace Cloudbash.Lambda.Functions.Concerts
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run()
         {                   
-            var result = await Mediator.Send(new GetConcertsQuery());
-
-            return new APIGatewayProxyResponse
-            {
-                Headers = GetCorsHeaders(),
-                StatusCode = 200,
-                Body = JsonConvert.SerializeObject(result)
-            };
+            var result = await Mediator.Send(new GetConcertsQuery());            
+            return GenerateResponse(200, result);
         }
         
     }

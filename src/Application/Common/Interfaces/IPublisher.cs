@@ -1,10 +1,9 @@
 ﻿using Cloudbash.Domain.SeedWork;
-using System;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Common.Interfaces
 {
-    public interface IPublisher : IDisposable
+    public interface IPublisher
     {
         Task PublishAsync(IDomainEvent domainEvent);    
     }

@@ -2,7 +2,6 @@
 using Amazon.Lambda.Core;
 using Cloudbash.Application.Carts.Commands.AddCartItem;
 using Newtonsoft.Json;
-using System;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Lambda.Functions.Carts
@@ -15,12 +14,8 @@ namespace Cloudbash.Lambda.Functions.Carts
         {
             var command = JsonConvert.DeserializeObject<AddCartItemCommand>(request.Body);
             await Mediator.Send(command);
-           
-            return new APIGatewayProxyResponse
-            {
-                Headers = GetCorsHeaders(),
-                StatusCode = 201
-            };
+
+            return GenerateResponse(201);            
         }
     }
 }

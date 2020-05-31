@@ -2,22 +2,17 @@
 using Cloudbash.Domain.SeedWork;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.EventStream
 {
-    public abstract class EventStream : IPublisher
+    public abstract class EventStreamBase : IPublisher
     {
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
 
-         protected string CreateEnveloppe(IDomainEvent @event)
+        protected string CreateEnveloppe(IDomainEvent @event)
         {
-            var enveloppe = new  {
+            var enveloppe = new
+            {
                 Event = Serialize(@event),
                 Type = @event.GetType()
             };
@@ -25,10 +20,10 @@ namespace Cloudbash.Infrastructure.EventStream
             return Serialize(enveloppe);
         }
 
-        private string Serialize(Object o)
+        private static string Serialize(Object o)
         {
             return JsonConvert.SerializeObject(o);
-        } 
+        }
 
         public abstract Task PublishAsync(IDomainEvent domainEvent);
     }
