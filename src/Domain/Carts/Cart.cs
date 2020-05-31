@@ -16,19 +16,14 @@ namespace Cloudbash.Domain.Carts
         public List<CartItem> Items { get; set; }       
 
         public Cart(Guid customerId)
-        {           
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-
+        {  
             Id = Guid.NewGuid();
             AddEvent(new CartCreatedEvent(Id, customerId));
         }
 
         public void AddItem(CartItem item)
         {
-            if (item.TicketTypeId == null)
+            if (item.TicketTypeId == default(Guid))
             {
                 throw new ArgumentNullException(nameof(item.TicketTypeId));
             }
@@ -39,20 +34,9 @@ namespace Cloudbash.Domain.Carts
 
         }
 
-        public void RemoveItem(CartItem item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(CartItem));
-            }
-
-            if (Items.Any(new ItemInCartSpec(item).IsSatisfiedBy))
-                AddEvent(new CartItemRemovedEvent(Id, item.Id));
-        }
-
         public void RemoveItem(Guid cartItemId)
         {
-            if (cartItemId == null)
+            if (cartItemId == default(Guid))
             {
                 throw new ArgumentNullException(nameof(CartItem));
             }
