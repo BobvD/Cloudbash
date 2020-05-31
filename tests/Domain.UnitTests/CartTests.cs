@@ -12,7 +12,7 @@ namespace Cloudbash.Domain.UnitTests
         private readonly Guid ticketTypeId = Guid.NewGuid();
 
         [Fact]
-        public void Given_No_Cart_Exists_Create_New_Cart()
+        public void When_Create_New_Cart_CartCreatedEvent()
         {
             var cart = new Cart(customerId);
 
@@ -24,7 +24,7 @@ namespace Cloudbash.Domain.UnitTests
         }
         
         [Fact]
-        public void Given_Cart_When_Add_Item_Then_Item_Added_Event()
+        public void Given_Cart_When_Add_Item_Then_CartItemAddedEvent()
         {
             var cart = new Cart(customerId);
             ClearUncommittedEvents(cart);
@@ -76,7 +76,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Given_Cart_When_Remove_Item_Then_Item_Removed_Event()
+        public void Given_Cart_When_Remove_Item_Then_CartItemRemovedEvent()
         {
             var cart = new Cart(customerId);           
 

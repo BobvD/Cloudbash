@@ -52,6 +52,11 @@ namespace Cloudbash.Domain.Concerts
 
         public void Schedule(DateTime start, DateTime end)
         {
+            if(end <= start)
+            {
+                throw new ArgumentException("End time should be after start time.");
+            }
+
             AddEvent(new ConcertScheduledEvent(Id, start, end));
         }
 
