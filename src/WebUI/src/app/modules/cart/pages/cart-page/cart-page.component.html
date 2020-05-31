@@ -7,14 +7,22 @@
                 <div class="card">
                     <div class="px-4 pt-1 card-body text-left">
                         <div class="row item-header">      
-                            <div class="col-7"><strong>Ticket</strong></div>
+                            <div class="col-6"><strong>Ticket</strong></div>
                             <div class="col-3 text-right"><strong>Price</strong></div>
                             <div class="col-2 text-right"><strong>Total</strong></div>
+                            <div class="col-1 text-right"></div>
                         </div>
                         <div class="row item " *ngFor="let item of cart.Items">      
-                            <div class="col-7">{{ item?.TicketType?.Name }}</div>
-                            <div class="col-3 text-muted text-right">{{ item?.TicketType?.Price | currency:'EUR' }} x {{ item?.Quantity }}</div>
-                            <div class="col-2 text-right">{{ item?.TicketType?.Price * item?.Quantity | currency:'EUR' }}</div>
+                            <div class="col-6 pt-1" style="font-weight: 600">{{ item?.TicketType?.Name }}</div>
+                            <div class="col-3 pt-1 text-muted text-right">{{ item?.TicketType?.Price | currency:'EUR' }} x {{ item?.Quantity }}</div>
+                            <div class="col-2 pt-1 text-right">{{ item?.TicketType?.Price * item?.Quantity | currency:'EUR' }}</div>
+                            <div class="col-1 text-right">
+                                <button class="btn btn-sm btn-secondary" (click)="removeFromCart(item)">
+                                    <svg class="svg-icon" viewBox="0 0 20 20"  *ngIf="!busy || !(selected === type)">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"></path></svg>
+                                    </svg>    
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -22,7 +30,6 @@
             <div class="col-4">
                 <div class="card">
                     <div class="p-4 card-body text-left">    
-                        <p>{{ date | date: 'short' }}</p>
                         <button class="btn btn-primary btn-lg btn-block">           
                             Check out                  
                         </button>                   

@@ -85,10 +85,9 @@ namespace Cloudbash.Domain.Concerts
         {
             var ticketType = TicketTypes
                 .SingleOrDefault(t => t.Id == @event.TicketTypeId);
+
             if(ticketType != null)
-            {
                 TicketTypes.Remove(ticketType);
-            }
         }
 
         internal void Apply(ConcertScheduledEvent @event)

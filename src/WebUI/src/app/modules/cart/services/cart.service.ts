@@ -57,6 +57,16 @@ export class CartService {
         });        
     }
 
+    public removeFromCart(item: CartItem) {
+        console.log(item);
+        const url = `${this._cartURL}${this.userId}/item/remove`;
+        const command = { CartId : this.cart.Id, CartItemId: item.Id };
+        return this.http.post<any>(url, command).subscribe(res => {  
+            this.itemsInCart = this.itemsInCart.filter(i =>  i.Id !== item.Id )          
+            this.itemsInCartSubject.next(this.itemsInCart);
+        });        
+    }
+
     public getItems(): Observable<CartItem[]> {
         return this.itemsInCartSubject;
     }

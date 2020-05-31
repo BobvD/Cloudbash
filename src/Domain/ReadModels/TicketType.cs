@@ -10,6 +10,8 @@ namespace Cloudbash.Domain.ReadModels
         public int Quantity { get; set; }
         [JsonIgnore]
         public Concert Concert { get; set; }
+
         public TicketType() { }
+
     }
 }

@@ -16,6 +16,7 @@ namespace Cloudbash.Lambda.Functions.Carts
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
+            
             Guid id = Guid.Parse(GetPathParameter(request, "customerId"));
 
             var result = await GetCart(id);

@@ -11,3 +11,32 @@ h4 {
 .item-header {
     background: #fff;
 }
+
+.remove {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.remove:hover {
+    background: green;
+}
+
+.svg-icon path, .svg-icon polygon, .svg-icon rect {
+    fill: #222!important;
+}
+
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.btn-secondary {
+    background: #d8e5e5;
+    border-color: #d8e5e5;
+}
+
+.btn-secondary:hover {
+    background: #c0cccc;
+    border-color: #c0cccc;
+}

@@ -1,0 +1,7 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Carts.RemoveCartItemFunction::Run
+warmup: true
+events:
+- http:
+    path: carts/{customerId}/item/remove
+    method: post
+    cors: true

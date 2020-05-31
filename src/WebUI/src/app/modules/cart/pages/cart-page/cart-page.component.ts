@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart } from 'src/app/shared/models/cart.model';
+import { Cart, CartItem } from 'src/app/shared/models/cart.model';
 import { CartService } from '../../services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -25,4 +25,8 @@ export class CartPageComponent implements OnInit {
 
 
     ngOnInit(): void { }
+
+    removeFromCart(item: CartItem) {
+        this.cartService.removeFromCart(item);
+    }
 }

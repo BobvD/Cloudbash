@@ -13,7 +13,7 @@ namespace Cloudbash.Domain.Carts
         }
 
         public Guid CustomerId { get; set; }
-        public List<CartItem> Items { get; set; }
+        public List<CartItem> Items { get; set; }       
 
         public Cart(Guid customerId)
         {           
@@ -39,29 +39,34 @@ namespace Cloudbash.Domain.Carts
 
         }
 
-        public void RemoveItem()
+        public void RemoveItem(CartItem item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(CartItem));
+            }
 
+            if (Items.Any(new ItemInCartSpec(item).IsSatisfiedBy))
+                AddEvent(new CartItemRemovedEvent(Id, item.Id));
         }
+
+        public void RemoveItem(Guid cartItemId)
+        {
+            if (cartItemId == null)
+            {
+                throw new ArgumentNullException(nameof(CartItem));
+            }
+
+            if (Items.Any(t => t.Id.Equals(cartItemId)))
+                AddEvent(new CartItemRemovedEvent(Id, cartItemId));
+        }
+
 
         public void CheckOut()
         {
 
         }
-
-        private bool ContainsTicketType(Guid ticketTypeId)
-        {
-            return Items.Any(x => x.TicketTypeId == ticketTypeId);
-        }
-
-        private static void CheckQuantity(int quantity)
-        {
-            if (quantity <= 0)
-            {
-                throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
-            }
-        }
-
+              
         internal void Apply(CartCreatedEvent @event)
         {
             Id = @event.AggregateId;
@@ -73,5 +78,23 @@ namespace Cloudbash.Domain.Carts
         {
             Items.Add(@event.Item);
         }
+
+        internal void Apply(CartItemRemovedEvent @event)
+        {
+            var item = Items
+                .SingleOrDefault(t => t.Id == @event.ItemId);
+
+            if (item != null)
+                Items.Remove(item);
+        }
+        
+        private static void CheckQuantity(int quantity)
+        {
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+            }
+        }
+
     }
 }
