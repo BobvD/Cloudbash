@@ -45,10 +45,5 @@ namespace Cloudbash.Domain.Venues
             IsDeleted = true;
         }
 
-        public override string ToString()
-        {
-            return base.Id + " - " + Name;
-        }
-
     }
 }

@@ -15,16 +15,23 @@ jobs:
       with:
         dotnet-version: 3.1.101
 
-    - name: Build Application project
-      working-directory: ./src/Application
+    - name: Build  project
+      working-directory: ./
       run: dotnet build 
-    - name: Build Domain project
-      working-directory: ./src/Domain
-      run: dotnet build 
-    - name: Build Infrastructure project
-      working-directory: ./src/Infrastructure
-      run: dotnet build 
-    - name: Build Lambda project
-      working-directory: ./src/Lambda
-      run: dotnet build 
-   
+
+    - name: Test project
+      working-directory: ./
+      run: |            
+          dotnet test Cloudbash.sln /p:CollectCoverage=true /p:CoverletOutput="../coverage.info" /p:MergeWith="../coverage.info" /maxcpucount:1 /p:CoverletOutputFormat=lcov
+
+    - name: show
+      run: |  
+          ls 
+          cd ./tests
+          ls
+              
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./tests/coverage.info 

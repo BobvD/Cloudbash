@@ -232,3 +232,6 @@ _Pvt_Extensions
 
 
 MyProject_coverage.xml
+
+
+tests/coverage.info

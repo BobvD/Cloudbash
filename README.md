@@ -5,7 +5,8 @@
 
 <p align="center">
 Event Sourced Serverless Architecture on Amazon Web Services<br /><br />
-<a  target="_blank" rel="noopener noreferrer" href="https://www.codacy.com/manual/BobvD/Cloudbash?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BobvD/Cloudbash&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/94538214587a483aa003df7c916e6ba5" alt=".NET Core" style="max-width:100%;"></a>
+<a  target="_blank" rel="noopener noreferrer" href="https://www.codacy.com/manual/BobvD/Cloudbash?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BobvD/Cloudbash&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/94538214587a483aa003df7c916e6ba5" alt=".NET Core" style="max-width:100%;"></a><a href='https://coveralls.io/github/BobvD/Cloudbash?branch=dev'><img src='https://coveralls.io/repos/github/BobvD/Cloudbash/badge.svg?branch=dev' alt='Coverage Status' /></a>
+
 </p>
 
 ---

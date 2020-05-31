@@ -37,9 +37,5 @@ namespace Cloudbash.Domain.Concerts.Events
             return new ConcertCreatedEvent(aggregateId, aggregateVersion, Name, VenueId, ImageUrl, Created);
         }
 
-        public override string ToString()
-        {
-            return Name + base.ToString();
-        }
     }
 }
