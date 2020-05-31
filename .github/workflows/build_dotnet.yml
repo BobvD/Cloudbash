@@ -1,0 +1,30 @@
+name: dotnet
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+
+    - name: Build Application project
+      working-directory: ./src/Application
+      run: dotnet build 
+    - name: Build Domain project
+      working-directory: ./src/Domain
+      run: dotnet build 
+    - name: Build Infrastructure project
+      working-directory: ./src/Infrastructure
+      run: dotnet build 
+    - name: Build Lambda project
+      working-directory: ./src/Lambda
+      run: dotnet build 
+   
