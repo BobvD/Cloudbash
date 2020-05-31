@@ -27,8 +27,6 @@ namespace Cloudbash.Domain.Users
                 case UserActivityType.AUTHENTICATION:
                     AddEvent(new UserAuthenticatedEvent(Id));
                     break;
-                default:
-                    break;
             }
         }
 

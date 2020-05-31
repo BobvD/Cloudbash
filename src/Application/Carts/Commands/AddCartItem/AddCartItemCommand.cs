@@ -26,7 +26,6 @@ namespace Cloudbash.Application.Carts.Commands.AddCartItem
 
             public async Task<Guid> Handle(AddCartItemCommand request, CancellationToken cancellationToken)
             {
-                Console.WriteLine("cart id: " + request.CartId);
                 var cart = await _repository.GetByIdAsync(request.CartId);
 
                 if (cart == null)

@@ -29,9 +29,6 @@ namespace Cloudbash.Lambda.Functions.Util
             var endpoint = $"https://{domainName}/{stage}";
 
             var routeKey = request.RequestContext.RouteKey;
-            Console.WriteLine("Route key:" + routeKey);
-
-            
 
             var apiClient = _apiGatewayMangementApiClientFactory(endpoint);
 
@@ -62,8 +59,7 @@ namespace Cloudbash.Lambda.Functions.Util
                         StatusCode = 200,
                         Body = "Connected."
                     };
-                case "$default":
-                    Console.WriteLine("ECHO MESSAGE");
+                case "$default":                    
                     return new APIGatewayProxyResponse
                     {
                         StatusCode = 200,

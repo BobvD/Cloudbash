@@ -15,7 +15,7 @@ namespace Cloudbash.Application.Concerts.Commands.RemoveTicketType
 
         public class RemoveTicketTypeCommandHandler : IRequestHandler<RemoveTicketTypeCommand>
         {
-            IRepository<Concert> _repository;
+            private readonly IRepository<Concert> _repository;
 
             public RemoveTicketTypeCommandHandler(IRepository<Concert> repository)
             {
@@ -25,6 +25,7 @@ namespace Cloudbash.Application.Concerts.Commands.RemoveTicketType
             public async Task<Unit> Handle(RemoveTicketTypeCommand request, CancellationToken cancellationToken)
             {
                 var concert = await _repository.GetByIdAsync(request.ConcertId);
+
                 if (concert == null)
                 {
                     throw new NotFoundException(nameof(Concert), request.ConcertId);

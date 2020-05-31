@@ -3,6 +3,7 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,13 @@ namespace Cloudbash.Infrastructure.Persistence
     {
         private readonly AmazonDynamoDBClient _amazonDynamoDBClient;
         private readonly DynamoDBOperationConfig _configuration;
+        private readonly ILogger<DynamoDBRepository<T>> _logger;
 
-        public DynamoDBRepository(IAwsClientFactory<AmazonDynamoDBClient> clientFactory)
+        public DynamoDBRepository(
+            IAwsClientFactory<AmazonDynamoDBClient> clientFactory, 
+            ILogger<DynamoDBRepository<T>> logger)
         {
+            _logger = logger;
             _amazonDynamoDBClient = clientFactory.GetAwsClient();
             _configuration = new DynamoDBOperationConfig
             {
@@ -26,7 +31,7 @@ namespace Cloudbash.Infrastructure.Persistence
             };            
         }        
 
-        public async Task<List<T>> GetAllAsync()
+        public Task<List<T>> GetAllAsync()
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
@@ -36,42 +41,33 @@ namespace Cloudbash.Infrastructure.Persistence
                  new ScanCondition("Id", ScanOperator.BeginsWith, typeof(T).Name)
                 };
                 
-                var x =  context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync()
+                var result =  context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync()
                     .Result.Select(t => { t.Id = t.Id.Remove(0, prefixLength); return t; }).ToList();
-                return x;
+                return Task.FromResult(result);
             }
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public Task<T> GetAsync(Guid id)
         {
             using (var context = new DynamoDBContext(_amazonDynamoDBClient))
             {
-                Console.WriteLine("DynamoDB - Retrieving entity: " + id);
                 try
-                {
-                    /*
-                    await context.LoadAsync<T>(GenerateEntityID(id.ToString()), _configuration);
-                    return context.QueryAsync<T>(GenerateEntityID(id.ToString()), _configuration)
-                            .GetRemainingAsync().Result.First<T>();
-                    */
-
+                {   
                     var conditions = new List<ScanCondition> {
                      new ScanCondition("Id", ScanOperator.Equal, GenerateEntityID(id.ToString()))
                     };
 
-                    return context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync().Result.First<T>();
-                 
+                    var result = context.ScanAsync<T>(conditions, _configuration).GetRemainingAsync().Result.First<T>();
+                    return Task.FromResult(result);
                 }
                 catch (Exception e)
                 {
-
-                    Console.WriteLine("Failed to retrieve entity from DynamoDB");
-                    Console.WriteLine(e.Message);
+                    _logger.LogError(e.Message);
                 }              
                
             }
 
-            return default(T);
+            return Task.FromResult(default(T));
         }
 
         public async Task<T> AddAsync(T entity)
@@ -80,23 +76,19 @@ namespace Cloudbash.Infrastructure.Persistence
             {
                 try
                 {
-                    entity.Id = GenerateEntityID(entity.Id);
-
-                    Console.WriteLine("DynamoDB - Saving entity: " + entity.Id);   
-                    
+                    entity.Id = GenerateEntityID(entity.Id);                    
                     await context.SaveAsync<T>(entity, _configuration);
                     return entity;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Failed to save entity to DynamoDB");
-                    Console.WriteLine(e.Message);
+                    _logger.LogError(e.Message);
                 }
             }
             return default(T);
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public Task<T> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
@@ -111,8 +103,7 @@ namespace Cloudbash.Infrastructure.Persistence
                 }
                 catch (Exception e)
                 {
-
-                    Console.WriteLine(e.Message);
+                    _logger.LogError(e.Message);
                 }
             }
         }

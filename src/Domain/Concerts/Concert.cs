@@ -8,10 +8,11 @@ namespace Cloudbash.Domain.Concerts
 {
     public class Concert : AggregateRootBase
     {
-        private Concert() {
+        private Concert()
+        {
             TicketTypes = new List<TicketType>();
         }
-        
+
         public string Name { get; set; }
         public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
@@ -30,13 +31,18 @@ namespace Cloudbash.Domain.Concerts
         public void Publish()
         {
             if (Status.Equals(ConcertStatus.DRAFT))
+            {
                 AddEvent(new ConcertPublishedEvent(Id));
+            }
+
         }
 
         public void MarkAsDeleted()
         {
-            if(!Status.Equals(ConcertStatus.DELETED))
+            if (!Status.Equals(ConcertStatus.DELETED))
+            {
                 AddEvent(new ConcertDeletedEvent(Id));
+            }
         }
 
         public void AddTicketType(TicketType type)
@@ -46,13 +52,15 @@ namespace Cloudbash.Domain.Concerts
 
         public void RemoveTicketType(Guid ticketTypeId)
         {
-            if(TicketTypes.Any(t => t.Id.Equals(ticketTypeId)))
-                AddEvent(new ConcertTicketTypeRemovedEvent(Id, ticketTypeId));    
+            if (TicketTypes.Any(t => t.Id.Equals(ticketTypeId)))
+            {
+                AddEvent(new ConcertTicketTypeRemovedEvent(Id, ticketTypeId));
+            }
         }
 
         public void Schedule(DateTime start, DateTime end)
         {
-            if(end <= start)
+            if (end <= start)
             {
                 throw new ArgumentException("End time should be after start time.");
             }
@@ -67,7 +75,7 @@ namespace Cloudbash.Domain.Concerts
             VenueId = @event.VenueId;
             ImageUrl = @event.ImageUrl;
             Created = @event.Created;
-            Status = ConcertStatus.DRAFT;           
+            Status = ConcertStatus.DRAFT;
         }
 
         internal void Apply(ConcertDeletedEvent @event)
@@ -91,8 +99,11 @@ namespace Cloudbash.Domain.Concerts
             var ticketType = TicketTypes
                 .SingleOrDefault(t => t.Id == @event.TicketTypeId);
 
-            if(ticketType != null)
+            if (ticketType != null)
+            {
                 TicketTypes.Remove(ticketType);
+            }
+
         }
 
         internal void Apply(ConcertScheduledEvent @event)

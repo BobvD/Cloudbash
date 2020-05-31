@@ -22,7 +22,7 @@ namespace Cloudbash.Domain.UnitTests
                 Assert.NotEqual(default(Guid), @event.AggregateId);
             });
         }
-        
+
         [Fact]
         public void Given_Cart_When_Add_Item_Then_CartItemAddedEvent()
         {

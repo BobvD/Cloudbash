@@ -18,7 +18,7 @@ namespace Cloudbash.Application.Concerts.Commands.ScheduleConcert
         public class ScheduleConcertCommandHandler : IRequestHandler<ScheduleConcertCommand>
         {
 
-            IRepository<Concert> _repository;
+            private readonly IRepository<Concert> _repository;
 
             public ScheduleConcertCommandHandler(IRepository<Concert> repository)
             {
@@ -28,6 +28,7 @@ namespace Cloudbash.Application.Concerts.Commands.ScheduleConcert
             public async Task<Unit> Handle(ScheduleConcertCommand request, CancellationToken cancellationToken)
             {
                 var concert = await _repository.GetByIdAsync(request.ConcertId);
+
                 if (concert == null)
                 {
                     throw new NotFoundException(nameof(Concert), request.ConcertId);

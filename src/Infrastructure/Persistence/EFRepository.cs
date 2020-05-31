@@ -1,6 +1,7 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace Cloudbash.Infrastructure.Persistence
     public class EFRepository<T> : IViewModelRepository<T> where T : class, IReadModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<EFRepository<T>> _logger;
 
-        public EFRepository(ApplicationDbContext context)
-        {
+        public EFRepository(ApplicationDbContext context,
+                            ILogger<EFRepository<T>> logger)
+        {            
             _context = context;
+            _logger = logger;
         }
 
         public async Task<T> AddAsync(T entity)
@@ -59,12 +63,12 @@ namespace Cloudbash.Infrastructure.Persistence
             return await query.AsNoTracking().ToListAsync();    
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public Task<T> GetAsync(Guid id)
         {
-            return _context.Set<T>().Find(id.ToString()); 
+            return Task.FromResult(_context.Set<T>().Find(id.ToString())); 
         }
 
-        public async Task<T> GetAsync(Guid id, string[] children)
+        public Task<T> GetAsync(Guid id, string[] children)
         {
             IQueryable<T> query = _context.Set<T>();
             foreach (string entity in children)
@@ -72,15 +76,15 @@ namespace Cloudbash.Infrastructure.Persistence
                 query = query.Include(entity);
             }
             
-            return query.FirstOrDefault(e => e.Id == id.ToString());
+            return Task.FromResult(query.FirstOrDefault(e => e.Id == id.ToString()));
 
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public Task<T> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);
             Save();
-            return entity;
+            return Task.FromResult(entity);
         }
 
         private bool Save()
@@ -91,7 +95,7 @@ namespace Cloudbash.Infrastructure.Persistence
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(e.Message);
                 return false;
             }
         }

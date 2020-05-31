@@ -10,21 +10,21 @@ namespace Cloudbash.Lambda.Functions.Util
     {        
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public void Run()
-        {            
-            // Make sure database exists
+        {
             try
             {
                 using (var context = _serviceProvider.GetService<ApplicationDbContext>())
                 {
-                    Console.WriteLine("Try to init database...");
+                    LambdaLogger.Log("Try to initialize database.");
                     context.Database.EnsureCreated();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to init database");
-                Console.WriteLine("Error message: " + e.Message);
+                LambdaLogger.Log("Failed to initialize database,");
+                LambdaLogger.Log(e.Message);
             }
+           
         }
     }
 }

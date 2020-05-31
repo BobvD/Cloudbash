@@ -14,7 +14,7 @@ namespace Cloudbash.Application.Concerts.Commands.PublishConcert
 
         public class PublishConcertCommandHandler : IRequestHandler<PublishConcertCommand>
         {
-            IRepository<Concert> _repository;
+            private readonly IRepository<Concert> _repository;
 
             public PublishConcertCommandHandler(IRepository<Concert> repository)
             {

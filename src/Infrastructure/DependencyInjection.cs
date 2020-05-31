@@ -11,7 +11,6 @@ using Cloudbash.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using Cloudbash.Domain.ReadModels;
 
 namespace Cloudbash.Infrastructure

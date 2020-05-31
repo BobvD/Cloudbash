@@ -19,7 +19,7 @@ namespace Cloudbash.Application.Concerts.Commands.CreateTicketType
         public class CreateTicketTypeCommandHandler : IRequestHandler<CreateTicketTypeCommand, Guid>
         {
 
-            IRepository<Concert> _repository;
+            private readonly IRepository<Concert> _repository;
 
             public CreateTicketTypeCommandHandler(IRepository<Concert> repository)
             {

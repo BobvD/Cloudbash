@@ -6,7 +6,7 @@ namespace Cloudbash.Domain.SeedWork
     {
         public Guid Id { get; protected set; }
 
-        public EntityBase()
+        protected EntityBase()
         {
             Id = Guid.NewGuid();
         }

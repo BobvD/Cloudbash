@@ -1,8 +1,8 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Runtime.Internal.Transform;
-using Cloudbash.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -10,24 +10,27 @@ namespace Cloudbash.Lambda.Functions
 {
     public abstract class FunctionBase
     {
-        public IServiceProvider _serviceProvider;
+        protected IServiceProvider _serviceProvider;
         protected IMediator Mediator;
 
-        public FunctionBase() : this(Startup
+        protected FunctionBase() : this(Startup
           .BuildContainer()
+          .AddLogging( a=> {
+              a.AddConsole();
+          })
           .BuildServiceProvider())
         {
         }
 
-        public FunctionBase(IServiceProvider serviceProvider)
+        protected FunctionBase(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Mediator = _serviceProvider.GetService<IMediator>();          
+            Mediator = _serviceProvider.GetService<IMediator>();
         }
 
-        protected IDictionary<string, string> GetCorsHeaders()
+        protected static IDictionary<string, string> GetCorsHeaders()
         {
-            return new Dictionary<string, string>()
+            return new Dictionary<string, string>
             {
                 new KeyValuePair<string, string>("Access-Control-Allow-Origin", "*"),
                 new KeyValuePair<string, string>("Access-Control-Allow-Credentials", "true"),
@@ -35,14 +38,23 @@ namespace Cloudbash.Lambda.Functions
             };
         }
 
-        protected string GetPathParameter(APIGatewayProxyRequest request, string key)
+        protected static string GetPathParameter(APIGatewayProxyRequest request, string key)
         {
             if (request.PathParameters == null || !request.PathParameters.ContainsKey(key))
-                throw new Exception();
+            {
+                throw new ArgumentNullException();
+            }
+
             string value;
+
             if (!request.PathParameters.TryGetValue(key, out value))
-                throw new Exception();
+            {
+                throw new ArgumentNullException();
+            }
+
             return value;
         }
     }
+
 }
+

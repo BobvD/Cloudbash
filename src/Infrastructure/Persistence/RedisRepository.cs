@@ -1,6 +1,7 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Configs;
+using Microsoft.Extensions.Logging;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,16 @@ namespace Cloudbash.Infrastructure.Persistence
 {
     public class RedisRepository<T> : IViewModelRepository<T>, IDisposable where T : class, IReadModel
     {
-        private IServerlessConfiguration _config;
+        private readonly IServerlessConfiguration _config;
         private IRedisClientsManager _manager;
         private Lazy<IRedisClient> _clientFactory;
+        private readonly ILogger<RedisRepository<T>> _logger;
 
-        public RedisRepository(IServerlessConfiguration config)
+        public RedisRepository(IServerlessConfiguration config,
+                               ILogger<RedisRepository<T>> logger)
         {
             _config = config;
+            _logger = logger;
             InitializeConnection();
         }
 

@@ -14,7 +14,7 @@ namespace Cloudbash.Application.Concerts.Commands.DeleteConcert
 
         public class DeleteConcertCommandHandler : IRequestHandler<DeleteConcertCommand>
         {
-            IRepository<Concert> _repository;
+            private readonly IRepository<Concert> _repository;
 
             public DeleteConcertCommandHandler(IRepository<Concert> repository)
             {
@@ -24,6 +24,7 @@ namespace Cloudbash.Application.Concerts.Commands.DeleteConcert
             public async Task<Unit> Handle(DeleteConcertCommand request, CancellationToken cancellationToken)
             {
                 var concert = await _repository.GetByIdAsync(request.Id);
+
                 if (concert == null)
                 {
                     throw new NotFoundException(nameof(Concert), request.Id);

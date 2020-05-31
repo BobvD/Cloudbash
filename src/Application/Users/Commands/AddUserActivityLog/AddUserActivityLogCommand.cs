@@ -16,7 +16,7 @@ namespace Cloudbash.Application.Users.Commands.AddUserActivityLog
         public class AddUserActivityLogCommandHandler : IRequestHandler<AddUserActivityLogCommand>
         {
 
-            IRepository<User> _repository;
+            private readonly IRepository<User> _repository;
 
             public AddUserActivityLogCommandHandler(IRepository<User> repository)
             {
@@ -26,6 +26,7 @@ namespace Cloudbash.Application.Users.Commands.AddUserActivityLog
             public async Task<Unit> Handle(AddUserActivityLogCommand request, CancellationToken cancellationToken)
             {               
                 var user = await _repository.GetByIdAsync(request.UserId);
+
                 if (user == null)
                 {
                     throw new NotFoundException(nameof(User), request.UserId);

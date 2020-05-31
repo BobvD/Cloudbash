@@ -15,13 +15,10 @@ namespace Cloudbash.Application.Venues.Commands.CreateVenue
         public string WebUrl { get; set; }
         public string Address { get; set; }
 
-        /// <summary>
-        /// The Command Handler, receives the command from Mediatr and processes it.
-        /// </summary>
         public class CreateVenueCommandHandler : IRequestHandler<CreateVenueCommand, Guid>
         {
 
-            IRepository<Venue> _repository;
+            private readonly IRepository<Venue> _repository;
 
             public CreateVenueCommandHandler(IRepository<Venue> repository)
             {
@@ -30,11 +27,11 @@ namespace Cloudbash.Application.Venues.Commands.CreateVenue
 
             public async Task<Guid> Handle(CreateVenueCommand request, CancellationToken cancellationToken)
             {
-                // Create 
+                
                 var venue = new Venue(request.Name, request.Description, request.Capacity, request.WebUrl, request.Address);
-                // Save
+               
                 await _repository.SaveAsync(venue);
-                // Return Id
+               
                 return venue.Id;
             }
         }

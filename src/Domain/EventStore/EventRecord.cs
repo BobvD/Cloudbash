@@ -37,7 +37,6 @@ namespace Cloudbash.Domain.SeedWork
 			Data = data;
 			AggregateVersion = aggregateVersion;
 			Created = DateTime.Now;
-			Console.WriteLine("AGGREGATE VERSION: " + aggregateVersion);
 		}
 	}
 }

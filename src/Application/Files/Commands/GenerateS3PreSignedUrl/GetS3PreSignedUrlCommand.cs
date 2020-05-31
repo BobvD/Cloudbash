@@ -13,16 +13,16 @@ namespace Cloudbash.Application.Files.Commands.GenerateS3PreSignedUrl
         public class GetS3PreSignedUrlCommandHandler : IRequestHandler<GetS3PreSignedUrlCommand, string>
         {
 
-            private IFileService _fileService;
+            private readonly IFileService _fileService;
 
             public GetS3PreSignedUrlCommandHandler(IFileService fileService)
             {
                 _fileService = fileService;
             }
 
-            public async Task<string> Handle(GetS3PreSignedUrlCommand request, CancellationToken cancellationToken)
+            public Task<string> Handle(GetS3PreSignedUrlCommand request, CancellationToken cancellationToken)
             {
-                return _fileService.GetUploadUrl(request.Filename, request.Type);
+                return Task.FromResult(_fileService.GetUploadUrl(request.Filename, request.Type));
             }
         }
     }

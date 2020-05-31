@@ -26,6 +26,7 @@ namespace Cloudbash.Application.Users.Commands.CreateUser
             public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
                 var user = new User(request.Id, request.FullName, request.Email);
+
                 await _repository.SaveAsync(user);
 
                 return user.Id;
