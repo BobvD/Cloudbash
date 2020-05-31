@@ -26,7 +26,7 @@ namespace Cloudbash.Domain.UnitTests
 
 
         [Fact]
-        public void Give_Concert_When_Publish_Concert_ConcertPublishedEvent()
+        public void Given_Concert_When_Publish_Concert_ConcertPublishedEvent()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");
             ClearUncommittedEvents(concert);
@@ -40,7 +40,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Give_Concert_When_Delete_Concert_ConcertDeletedEvent()
+        public void Given_Concert_When_Delete_Concert_ConcertDeletedEvent()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");
             ClearUncommittedEvents(concert);
@@ -55,7 +55,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Give_Concert_When_Add_TicketType_ConcertTicketTypeAddedEvent()
+        public void Given_Concert_When_Add_TicketType_ConcertTicketTypeAddedEvent()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");
             ClearUncommittedEvents(concert);
@@ -80,7 +80,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Give_Concert_When_Remove_TicketType_ConcertTicketTypeRemovedEvent()
+        public void Given_Concert_When_Remove_TicketType_ConcertTicketTypeRemovedEvent()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");           
 
@@ -106,7 +106,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Give_Concert_When_Schedule_ConcertScheduledEvent()
+        public void Given_Concert_When_Schedule_ConcertScheduledEvent()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");
             
@@ -127,7 +127,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Give_Concert_When_Schedule_End_Before_Start_Throw_Exception()
+        public void Given_Concert_When_Schedule_End_Before_Start_Throw_Exception()
         {
             var concert = new Concert("Mumford & Sons Live", venueId, "http://image_url");
 
