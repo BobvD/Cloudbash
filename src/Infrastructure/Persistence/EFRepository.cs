@@ -31,7 +31,7 @@ namespace Cloudbash.Infrastructure.Persistence
 
         public async Task DeleteAsync(Guid id)
         {
-            var entity = await GetAsync(id);
+            var entity = await GetAsync(id).ConfigureAwait(false);
             _context.Set<T>().Remove(entity);
             Save();
         }
@@ -87,16 +87,15 @@ namespace Cloudbash.Infrastructure.Persistence
             return Task.FromResult(entity);
         }
 
-        private bool Save()
+        private void Save()
         {
             try
             {
-                return Convert.ToBoolean(_context.SaveChanges());
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return false;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Cloudbash.Application.Common.Events;
+﻿using Amazon.Lambda.Core;
+using Cloudbash.Application.Common.Events;
 using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.EventStore;
 using Cloudbash.Lambda.Functions;
@@ -9,54 +10,56 @@ namespace Cloudbash.Lambda.Events.Functions.Processor
 {
     public abstract class EventProcessorFunctionBase : FunctionBase
     {
-        public void Consume(string eventEnveloppe)
+        protected void Consume(string eventEnveloppe)
         {
             try
             {
                 var @event = DomainFromEnveloppe(eventEnveloppe);
                 Publish(@event);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Failed to publish Event: " + eventEnveloppe);
+                LambdaLogger.Log("Failed to consume event: " + eventEnveloppe);
+                LambdaLogger.Log(ex.Message);
             }
           
         }
 
-        public void Consume(string ev, string type)
+        protected void Consume(string ev, string type)
         {
             try
             {
                 var @event = DomainFromEnveloppe(new EventEnveloppe { Event = ev, Type = type + ", Cloudbash.Domain" });
                 Publish(@event);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Failed to publish Event: " + ev);
+                LambdaLogger.Log("Failed to consume event: " + ev);
+                LambdaLogger.Log(ex.Message);
             }
             
         }
 
-        public void Publish(IDomainEvent @event)
+        protected void Publish(IDomainEvent @event)
         {            
             var domainEventNotification = CreateDomainEventNotification((dynamic)@event);
             Mediator.Publish(domainEventNotification);
-            Console.WriteLine("Event published: " + @event.GetType().Name);
+            LambdaLogger.Log("Event published: " + @event.GetType().Name);
         }
 
-        public IDomainEvent DomainFromEnveloppe(string eventData)
+        protected static IDomainEvent DomainFromEnveloppe(string eventData)
         {
             var enveloppe = JsonConvert.DeserializeObject<EventEnveloppe>(eventData);
             return DomainFromEnveloppe(enveloppe);
         }
 
-        public IDomainEvent DomainFromEnveloppe(EventEnveloppe enveloppe)
+        protected static IDomainEvent DomainFromEnveloppe(EventEnveloppe enveloppe)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings { ContractResolver = new PrivateSetterContractResolver() };
             return JsonConvert.DeserializeObject(enveloppe.Event, TypeFromString(enveloppe.Type), settings) as IDomainEvent;
         }
 
-        public Type TypeFromString(string type)
+        protected static Type TypeFromString(string type)
         {
             return Type.GetType(type, true);
         }
@@ -68,7 +71,7 @@ namespace Cloudbash.Lambda.Events.Functions.Processor
             return new DomainEventNotification<TDomainEvent>(domainEvent);
         }
 
-        public class EventEnveloppe
+        protected class EventEnveloppe
         {
             public string Type { get; set; }
             public string Event { get; set; }

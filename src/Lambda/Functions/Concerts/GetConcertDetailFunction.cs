@@ -13,7 +13,7 @@ namespace Cloudbash.Lambda.Functions.Concerts
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
             Guid id = Guid.Parse(GetPathParameter(request, "id"));
-            var result = await Mediator.Send(new GetConcertDetailQuery { Id = id }); ;
+            var result = await Mediator.Send(new GetConcertDetailQuery { Id = id });
 
             return GenerateResponse(200, result);
         }

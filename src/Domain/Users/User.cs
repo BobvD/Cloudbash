@@ -22,11 +22,9 @@ namespace Cloudbash.Domain.Users
 
         public void AddActivityLog(UserActivityType activity)
         {
-            switch (activity)
+            if(activity == UserActivityType.AUTHENTICATION)
             {
-                case UserActivityType.AUTHENTICATION:
-                    AddEvent(new UserAuthenticatedEvent(Id));
-                    break;
+                AddEvent(new UserAuthenticatedEvent(Id));
             }
         }
 

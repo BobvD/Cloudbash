@@ -10,15 +10,17 @@ namespace Cloudbash.Lambda.Functions.Concerts
     {
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-        public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request) { 
-        
+        public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
+        {
+
             try
             {
                 Guid concertId = Guid.Parse(GetPathParameter(request, "id"));
                 Guid ticketTypeId = Guid.Parse(GetPathParameter(request, "ticketTypeId"));
 
-                var result = await Mediator.Send(
-                    new RemoveTicketTypeCommand { 
+                await Mediator.Send(
+                    new RemoveTicketTypeCommand
+                    {
                         ConcertId = concertId,
                         TicketTypeId = ticketTypeId
                     });

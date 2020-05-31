@@ -33,10 +33,9 @@ namespace Cloudbash.Infrastructure.Persistence
                 _clientFactory = new Lazy<IRedisClient>(GetRedisClient);
                 _manager = new PooledRedisClientManager(_config.RedisConnectionString);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex.Message);
             }
         }
 
@@ -53,10 +52,10 @@ namespace Cloudbash.Infrastructure.Persistence
             }
         }
 
-        public async Task<T> AddAsync(T entity)
+        public Task<T> AddAsync(T entity)
         {
             Run(_ => _.Store(entity));
-            return entity;
+            return Task.FromResult(entity);
         }
 
         public Task DeleteAsync(Guid id)
@@ -64,14 +63,14 @@ namespace Cloudbash.Infrastructure.Persistence
             throw new NotImplementedException();
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public Task<List<T>> GetAllAsync()
         {
-            return Run(_ => _.As<T>().GetAll().ToList());
+            return Task.FromResult(Run(_ => _.As<T>().GetAll().ToList()));
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public Task<T> GetAsync(Guid id)
         {
-            return Run(_ => _.As<T>().GetById(id));
+            return Task.FromResult(Run(_ => _.As<T>().GetById(id)));
         }
 
         public Task<T> UpdateAsync(T entity)

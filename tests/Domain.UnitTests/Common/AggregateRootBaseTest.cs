@@ -25,12 +25,12 @@ namespace Cloudbash.Domain.UnitTests.Common
             assertions((TEvent)((IAggregateRoot)aggregate).GetUncommittedEvents().Single());
         }
 
-        protected void ClearUncommittedEvents(TAggregate aggregate)
+        protected static void ClearUncommittedEvents(TAggregate aggregate)
         {
             ((IAggregateRoot)aggregate).ClearUncommittedEvents();
         }
 
-        protected IEnumerable<IDomainEvent> GetUncommittedEventsOf(TAggregate aggregate)
+        protected static IEnumerable<IDomainEvent> GetUncommittedEventsOf(TAggregate aggregate)
         {
             return ((IAggregateRoot)aggregate).GetUncommittedEvents();
         }

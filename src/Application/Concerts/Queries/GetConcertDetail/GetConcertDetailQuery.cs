@@ -22,7 +22,7 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcert
 
             public async Task<Concert> Handle(GetConcertDetailQuery request, CancellationToken cancellationToken)
             {
-                var children = new string[] { "Venue", "TicketTypes" };
+                var children = new [] { "Venue", "TicketTypes" };
                 var concert = await _repository.GetAsync(request.Id, children);               
 
                 return concert;

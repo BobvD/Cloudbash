@@ -1,5 +1,6 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Infrastructure.Configs;
+using Microsoft.Extensions.Logging;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,16 @@ namespace Cloudbash.Infrastructure.Cache
 {
     public class RedisCache : ICache, IDisposable
     {
-        private IServerlessConfiguration _config;
+        private readonly IServerlessConfiguration _config;
         private IRedisClientsManager _manager;
         private Lazy<IRedisClient> _clientFactory;
+        private readonly ILogger<RedisCache> _logger;
 
-        public RedisCache(IServerlessConfiguration config) 
+        public RedisCache(IServerlessConfiguration config,
+                          ILogger<RedisCache> logger) 
         {
             _config = config;
+            _logger = logger;
             InitializeConnection();
         }
 
@@ -25,10 +29,9 @@ namespace Cloudbash.Infrastructure.Cache
                 _clientFactory = new Lazy<IRedisClient>(GetRedisClient);
                 _manager = new PooledRedisClientManager(_config.RedisConnectionString);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex.Message);
             }            
         }
 

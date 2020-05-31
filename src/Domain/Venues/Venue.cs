@@ -18,14 +18,15 @@ namespace Cloudbash.Domain.Venues
         public Venue(string name, string description, int capacity, string webUrl, string address)
         {
             Id = Guid.NewGuid();
-            // Create and add a new ConcertCreatedEvent
             AddEvent(new VenueCreatedEvent(Id, name, description, capacity, webUrl, address));
         }
 
         public void MarkAsDeleted()
         {
             if (!IsDeleted)
+            {
                 AddEvent(new VenueDeletedEvent(Id));
+            }
         }
 
 

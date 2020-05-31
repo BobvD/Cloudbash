@@ -1,9 +1,9 @@
 ﻿using Amazon.KinesisFirehose;
 using Amazon.KinesisFirehose.Model;
 using Cloudbash.Infrastructure.Configs;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Infrastructure.Firehose
@@ -12,11 +12,14 @@ namespace Cloudbash.Infrastructure.Firehose
     {
         private readonly AmazonKinesisFirehoseClient _amazonKinesisFirehoseClient;
         private readonly IServerlessConfiguration _config;
+        private readonly ILogger<FirehoseClient> _logger;
         public FirehoseClient(IAwsClientFactory<AmazonKinesisFirehoseClient> clientFactory,
-                              IServerlessConfiguration config)
+                              IServerlessConfiguration config,
+                              ILogger<FirehoseClient> logger)
         {
             _amazonKinesisFirehoseClient = clientFactory.GetAwsClient();
             _config = config;
+            _logger = logger;
         }
 
         public async Task WriteAsync(byte[] data)
@@ -32,24 +35,12 @@ namespace Cloudbash.Infrastructure.Firehose
 
             try
             {
-                var res = await _amazonKinesisFirehoseClient.PutRecordAsync(req);
-                Console.WriteLine(res.ToString());
+                await _amazonKinesisFirehoseClient.PutRecordAsync(req);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
-        }
-
-        private MemoryStream Compress(byte[] data)
-        {
-            var buffer = new MemoryStream();
-            using (var gzip = new GZipStream(buffer, CompressionMode.Compress, true))
-            {
-                gzip.Write(data, 0, data.Length);
-            }
-            buffer.Position = 0;
-            return buffer;
         }
     }
 }

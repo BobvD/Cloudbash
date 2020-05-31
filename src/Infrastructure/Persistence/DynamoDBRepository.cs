@@ -108,7 +108,7 @@ namespace Cloudbash.Infrastructure.Persistence
             }
         }
 
-        private string GenerateEntityID(string id)
+        private static string GenerateEntityID(string id)
         {
             return typeof(T).Name + id;
         }

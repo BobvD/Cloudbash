@@ -21,7 +21,7 @@ namespace Cloudbash.Application.Concerts.Events
         public async Task Handle(DomainEventNotification<ConcertTicketTypeRemovedEvent> notification, CancellationToken cancellationToken)
         {
             var @event = notification.DomainEvent;
-            var children = new string[] { "TicketTypes" };
+            var children = new [] { "TicketTypes" };
             var concert = await _concertRepository.GetAsync(@event.AggregateId, children);
 
             var ticketType = concert.TicketTypes

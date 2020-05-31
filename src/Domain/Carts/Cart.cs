@@ -8,15 +8,16 @@ namespace Cloudbash.Domain.Carts
 {
     public class Cart : AggregateRootBase
     {
-        public Cart() { 
-            Items = new List<CartItem>(); 
+        public Cart()
+        {
+            Items = new List<CartItem>();
         }
 
         public Guid CustomerId { get; set; }
-        public List<CartItem> Items { get; set; }       
+        public List<CartItem> Items { get; set; }
 
         public Cart(Guid customerId)
-        {  
+        {
             Id = Guid.NewGuid();
             AddEvent(new CartCreatedEvent(Id, customerId));
         }
@@ -31,7 +32,6 @@ namespace Cloudbash.Domain.Carts
             CheckQuantity(item.Quantity);
 
             AddEvent(new CartItemAddedEvent(Id, item));
-
         }
 
         public void RemoveItem(Guid cartItemId)
@@ -42,15 +42,17 @@ namespace Cloudbash.Domain.Carts
             }
 
             if (Items.Any(t => t.Id.Equals(cartItemId)))
+            {
                 AddEvent(new CartItemRemovedEvent(Id, cartItemId));
+            }
         }
 
 
         public void CheckOut()
         {
-
+            throw new NotImplementedException();
         }
-              
+
         internal void Apply(CartCreatedEvent @event)
         {
             Id = @event.AggregateId;
@@ -69,9 +71,11 @@ namespace Cloudbash.Domain.Carts
                 .SingleOrDefault(t => t.Id == @event.ItemId);
 
             if (item != null)
+            {
                 Items.Remove(item);
+            }
         }
-        
+
         private static void CheckQuantity(int quantity)
         {
             if (quantity <= 0)

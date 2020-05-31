@@ -2,18 +2,14 @@
 using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Cloudbash.Infrastructure;
 using Cloudbash.Infrastructure.Configs;
-using Cloudbash.Infrastructure.Persistence;
-using Cloudbash.Lambda.Common;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.IO;
 
 namespace Cloudbash.Lambda
 {
-    public class Startup
+    public static class Startup
     {
         public static IServiceCollection BuildContainer()
         {

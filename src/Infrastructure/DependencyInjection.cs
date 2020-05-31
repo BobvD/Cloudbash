@@ -17,22 +17,21 @@ namespace Cloudbash.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot configurationRoot, IServerlessConfiguration config)
-        {
-
-            // Inject Event Store
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services, 
+            IConfigurationRoot configurationRoot, 
+            IServerlessConfiguration config)
+        {                        
             services.AddTransient<IEventStore, DynamoDBEventStore>();
-
-            // Inject Services
+                        
             services.AddTransient<IFileService, S3FileService>(); 
             services.AddTransient<IFirehoseClient, FirehoseClient>();
-
-            // Inject AWS Configuration
+                        
             services
                 .AddTransient(typeof(IAwsClientFactory<>), typeof(AwsClientFactory<>))
                 .BindAndConfigure(configurationRoot.GetSection("AwsBasicConfiguration"), new AwsBasicConfiguration());
 
-            // Inject Event stream
+            
             switch (config.EventBus)
             {
                 case EventBusType.SQS:
@@ -41,11 +40,8 @@ namespace Cloudbash.Infrastructure
                 case EventBusType.KINESIS:
                     services.AddTransient<IPublisher, KinesisEventStream>();
                     break;
-                default:
-                    break;
             }
 
-            // Inject (read) Database
             switch (config.Database)
             {
                 case DatabaseType.POSTGRES:
@@ -56,8 +52,6 @@ namespace Cloudbash.Infrastructure
                     break;
                 case DatabaseType.DYNAMO:
                     AddDynamoDBRepositories(services);
-                    break;
-                default:
                     break;
             }            
 

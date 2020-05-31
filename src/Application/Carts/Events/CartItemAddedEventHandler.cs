@@ -23,7 +23,7 @@ namespace Cloudbash.Application.Carts.Events
             var @event = notification.DomainEvent;
             var item = @event.Item;
 
-            var children = new string[] { "Items" };
+            var children = new [] { "Items" };
             var cart =  await _cartRepository.GetAsync(@event.AggregateId, children);
 
             cart.Items.Add(

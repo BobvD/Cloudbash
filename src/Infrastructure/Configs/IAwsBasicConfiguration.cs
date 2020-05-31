@@ -23,7 +23,10 @@ namespace Cloudbash.Infrastructure.Configs
 
         public BasicAWSCredentials GetAwsCredentials()
         {
-            if (string.IsNullOrEmpty(AccessKey) || string.IsNullOrEmpty(SecretKey)) return null;
+            if (string.IsNullOrEmpty(AccessKey) || string.IsNullOrEmpty(SecretKey))
+            {
+                return null;
+            }
 
             return new BasicAWSCredentials(AccessKey, SecretKey);
         }
