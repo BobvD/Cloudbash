@@ -38,13 +38,13 @@ namespace Cloudbash.Domain.Carts
         {
             if (cartItemId == default(Guid))
             {
-                throw new ArgumentNullException(nameof(CartItem));
+                throw new ArgumentException(nameof(CartItem));
             }
 
             if (Items.Any(t => t.Id.Equals(cartItemId)))
             {
                 AddEvent(new CartItemRemovedEvent(Id, cartItemId));
-            }
+            } 
         }
 
 

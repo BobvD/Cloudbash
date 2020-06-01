@@ -43,7 +43,7 @@ namespace Cloudbash.Domain.UnitTests
                 Assert.Equal(item.Quantity, @event.Item.Quantity);
                 Assert.Equal(1, @event.AggregateVersion);
             });
-        }
+        }      
 
 
         [Fact]
@@ -98,6 +98,16 @@ namespace Cloudbash.Domain.UnitTests
                 Assert.Equal(2, @event.AggregateVersion);
             });
 
+        }
+
+        [Fact]
+        public void Given_Cart_When_Remove_Item_With_Invalid_Id_Then_Throws_Exception()
+        {
+            var cart = new Cart(customerId);
+            
+            ClearUncommittedEvents(cart);
+
+            Assert.Throws<ArgumentException>(() => { cart.RemoveItem(new Guid()); });
         }
 
     }
