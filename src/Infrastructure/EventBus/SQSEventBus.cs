@@ -4,16 +4,16 @@ using Cloudbash.Domain.SeedWork;
 using Cloudbash.Infrastructure.Configs;
 using System.Threading.Tasks;
 
-namespace Cloudbash.Infrastructure.EventStream
+namespace Cloudbash.Infrastructure.EventBus
 {
-    public class SQSEventStream : EventStreamBase
+    public class SQSEventBus : EventBusBase
     {
 
         
         private readonly AmazonSQSClient _amazonSQSClient;
         private readonly IServerlessConfiguration _config;
 
-        public SQSEventStream(IAwsClientFactory<AmazonSQSClient> clientFactory, IServerlessConfiguration config)
+        public SQSEventBus(IAwsClientFactory<AmazonSQSClient> clientFactory, IServerlessConfiguration config)
         {
             _amazonSQSClient = clientFactory.GetAwsClient();
             _config = config;

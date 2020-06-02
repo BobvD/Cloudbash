@@ -6,14 +6,14 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cloudbash.Infrastructure.EventStream
+namespace Cloudbash.Infrastructure.EventBus
 {
-    public class KinesisEventStream : EventStreamBase
+    public class KinesisEventBus : EventBusBase
     {
 
         private readonly AmazonKinesisClient _amazonKinesisClient;
         private readonly IServerlessConfiguration _config;
-        public KinesisEventStream(IAwsClientFactory<AmazonKinesisClient> clientFactory, IServerlessConfiguration config)
+        public KinesisEventBus(IAwsClientFactory<AmazonKinesisClient> clientFactory, IServerlessConfiguration config)
         {
             _amazonKinesisClient = clientFactory.GetAwsClient();
             _config = config;

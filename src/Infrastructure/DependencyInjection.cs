@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Cloudbash.Application.Common.Interfaces;
-using Cloudbash.Infrastructure.Cache;
 using Cloudbash.Infrastructure.Configs;
-using Cloudbash.Infrastructure.EventStream;
+using Cloudbash.Infrastructure.EventBus;
 using Cloudbash.Infrastructure.Extensions;
 using Cloudbash.Infrastructure.Firehose;
 using Cloudbash.Infrastructure.Persistence;
@@ -35,10 +34,10 @@ namespace Cloudbash.Infrastructure
             switch (config.EventBus)
             {
                 case EventBusType.SQS:
-                    services.AddTransient<IPublisher, SQSEventStream>();
+                    services.AddTransient<IPublisher, SQSEventBus>();
                     break;
                 case EventBusType.KINESIS:
-                    services.AddTransient<IPublisher, KinesisEventStream>();
+                    services.AddTransient<IPublisher, KinesisEventBus>();
                     break;
             }
 

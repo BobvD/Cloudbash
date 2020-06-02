@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace Cloudbash.Infrastructure.EventStream
+namespace Cloudbash.Infrastructure.EventBus
 {
-    public abstract class EventStreamBase : IPublisher
+    public abstract class EventBusBase : IPublisher
     {
 
         protected string CreateEnveloppe(IDomainEvent @event)
