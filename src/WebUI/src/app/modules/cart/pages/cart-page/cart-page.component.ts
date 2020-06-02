@@ -14,13 +14,13 @@ export class CartPageComponent implements OnInit {
     
     
     constructor(private route: ActivatedRoute,
-        private cartService: CartService) {
+                private cartService: CartService) {
 
-        this.route.data.subscribe(
-            (data: { cart: Cart }) => {
-            this.cart = data.cart;
-            }
-        );
+        
+                    this.cartService.getCart().subscribe(cart => {
+                        this.cart = cart;
+                    })
+        
     }
 
 

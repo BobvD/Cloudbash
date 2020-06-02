@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Concert } from 'src/app/shared/models/concert.model';
 import { CartService } from 'src/app/modules/cart/services/cart.service';
+import { TicketType } from 'src/app/shared/models/ticket-type.model';
 
 @Component({
     selector: 'app-concert-single-page',
@@ -24,7 +25,7 @@ export class ConcertSinglePageComponent implements OnInit {
     ngOnInit(): void { }
 
 
-    addToCart(id: string, quantity: number){
-      this.cartService.addToCart(id, quantity);
+    addToCart(ticketType: TicketType, quantity: number){
+      this.cartService.addToCart(ticketType, quantity);
     }
 }

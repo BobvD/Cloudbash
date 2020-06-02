@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { CartRoutingModule } from './cart-routing.module';
-import { CartResolver } from './services/cart-resolver.service';
 
 @NgModule({
     declarations: [
@@ -13,8 +12,7 @@ import { CartResolver } from './services/cart-resolver.service';
         CartRoutingModule 
     ],
     exports: [],
-    providers: [
-        CartResolver        
+    providers: [   
     ],
 })
 export class CartModule {}
