@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AmplifyService, AmplifyModules } from 'aws-amplify-angular';
 import Auth from '@aws-amplify/auth'; 
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -34,7 +34,7 @@ import { InfoBoxComponent } from './shared/components/info-box/info-box.componen
       preventDuplicates: true,
       tapToDismiss: false
     }),
-    NgxSpinnerModule
+    LoadingBarRouterModule
   ],
   providers: [
     {

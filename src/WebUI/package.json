@@ -23,6 +23,8 @@
     "@aws-amplify/ui-angular": "^0.2.6",
     "@ng-bootstrap/ng-bootstrap": "^5.2.2",
     "@ng-select/ng-select": "^3.7.3",
+    "@ngx-loading-bar/core": "^4.2.0",
+    "@ngx-loading-bar/router": "^4.2.0",
     "@swimlane/ngx-datatable": "^16.1.0",
     "angular-archwizard": "^5.0.1",
     "aws-amplify": "^3.0.12",
