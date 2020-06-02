@@ -21,8 +21,7 @@ export class AuthenticationService {
         private router: Router) {
         this.loggedIn = new BehaviorSubject<boolean>(false);
         this.amplifyService.authStateChange$
-            .subscribe(authState => {
-                             
+            .subscribe(authState => {                     
                 if (!authState.user) {
                     this.user = null;
                 } else {
@@ -32,6 +31,10 @@ export class AuthenticationService {
                 if(authState.state === 'signedIn'){
                     this.loggedIn.next(true);
                     this.signedIn = true;
+                }
+                if(authState.state === 'signedOut'){
+                    this.loggedIn.next(false);
+                    this.signedIn = false;
                 }
             });
     }
@@ -51,11 +54,12 @@ export class AuthenticationService {
     }
 
     public signOut() {
+        this.loggedIn.next(false);
+        this.signedIn = false;
         fromPromise(Auth.signOut())
             .subscribe(
-                result => {
-                    this.loggedIn.next(false);
-                    this.router.navigate(['/log-in']);
+                result => {                   
+                    this.router.navigate(['/sign-in']);
                 },
             );
     }

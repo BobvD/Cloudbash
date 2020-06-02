@@ -4,7 +4,7 @@
 <section class="jumbotron text-center" [ngClass]="{'jumbotron-scrolled': scrolled}">
     <div class="container">
         <app-navbar [scrolled]="scrolled"></app-navbar>
-        <img src="https://cloudbash-frontend.s3.amazonaws.com/cloudbash_white.svg" class="img-fluid my-5"
+        <img [routerLink]="[ '/' ]" src="https://cloudbash-frontend.s3.amazonaws.com/cloudbash_white.svg" class="img-fluid my-5"
             alt="Responsive image" width="300px">
 
         <div class="searchbox mx-auto d-flex flex-row">

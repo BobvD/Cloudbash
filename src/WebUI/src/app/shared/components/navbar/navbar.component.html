@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark px-0">
-    <a class="navbar-brand" href="/" *ngIf="!isCollapsed || !scrolled">
+    <a class="navbar-brand" [routerLink]="[ '/' ]" *ngIf="!isCollapsed || !scrolled">
         <img src="https://cloudbash-frontend.s3.amazonaws.com/concert.png" width="30" height="30" alt="">
     </a>
     <a class="navbar-brand" [routerLink]="['/']" *ngIf="isCollapsed && scrolled">

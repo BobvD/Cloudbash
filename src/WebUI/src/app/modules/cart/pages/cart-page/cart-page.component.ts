@@ -11,7 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class CartPageComponent implements OnInit {
 
     cart: Cart;
-    
+    busy = false;
+    selected: CartItem = null;
     
     constructor(private route: ActivatedRoute,
                 private cartService: CartService) {

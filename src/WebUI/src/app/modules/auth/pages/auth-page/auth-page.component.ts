@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { I18n } from 'aws-amplify';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -39,9 +40,10 @@ export class AuthPageComponent implements OnInit {
     }
 
 
-    constructor(private authService: AuthenticationService) { }
+    constructor(private authService: AuthenticationService,
+        private router: Router) { }
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
         I18n.setLanguage('en');
         const dict = {
             'en': {
@@ -49,5 +51,11 @@ export class AuthPageComponent implements OnInit {
             }
         }
         I18n.putVocabularies(dict);
+
+        this.authService.loggedIn.subscribe(res => {
+            if (res === true) {
+                this.router.navigate(['/']);
+            }
+        })
     }
 }
