@@ -11,6 +11,9 @@ import { TicketType } from 'src/app/shared/models/ticket-type.model';
 })
 export class ConcertSinglePageComponent implements OnInit {
     concert: Concert;
+    busy = false;
+    selected: TicketType = null;
+    showCartButton = false;
 
     constructor(private route: ActivatedRoute,
                 private cartService: CartService) {
@@ -26,6 +29,20 @@ export class ConcertSinglePageComponent implements OnInit {
 
 
     addToCart(ticketType: TicketType, quantity: number){
-      this.cartService.addToCart(ticketType, quantity);
+      this.busy = true;
+      this.selected = ticketType;
+      this.cartService.addToCart(ticketType, quantity).subscribe(res => {
+        this.busy = false;
+        this.selected = null;
+        this.showCartButton = true;
+      })
+    }
+
+    checkIfCartContainsTicketType(type: TicketType){
+      if(this.cartService.checkIfCartContainsItem(type)){
+        this.showCartButton = true;
+        return true;
+      }
+      return false;
     }
 }

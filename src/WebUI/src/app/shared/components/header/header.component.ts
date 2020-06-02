@@ -8,14 +8,19 @@ import { CartService } from 'src/app/modules/cart/services/cart.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    
+
+   cartItemCount = 0;
     searchTerm: string = "";
     scrolled = false;
 
     constructor(public authService: AuthenticationService,
                 public cartService: CartService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.cartService.getCartItemCount().subscribe(count => {
+            this.cartItemCount = count;
+        });
+    }
 
     signOut() {
         this.authService.signOut();
@@ -33,7 +38,4 @@ export class HeaderComponent implements OnInit {
   
     }
 
-  
-
-    
 }

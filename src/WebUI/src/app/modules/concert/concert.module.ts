@@ -5,6 +5,7 @@ import { ConcertGridItemComponent } from './components/concert-grid-item/concert
 import { ConcertSinglePageComponent } from './pages/concert-single-page/concert-single-page.component';
 import { ConcertRoutingModule } from './concert-routing.module';
 import { ConcertResolver } from './services/concert-resolver.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import { ConcertResolver } from './services/concert-resolver.service';
     ],
     imports: [ 
         CommonModule,
-        ConcertRoutingModule
+        ConcertRoutingModule,
+        SharedModule
      ],
     exports: [
         ConcertGridComponent

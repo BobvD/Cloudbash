@@ -5,6 +5,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Cart, CartItem } from 'src/app/shared/models/cart.model';
 import { TicketType } from 'src/app/shared/models/ticket-type.model';
+import { map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -22,7 +24,8 @@ export class CartService {
 
     constructor(private http: HttpClient,
                 private configService: ConfigService,
-                private authService: AuthenticationService) {
+                private authService: AuthenticationService,
+                private router: Router) {
         this._cartURL = this.configService.getApiBaseUrl() + '/carts/';
                      console.log("load data")
         this.cartSubject.subscribe(_ => this.cart = _);
@@ -34,6 +37,10 @@ export class CartService {
         });
     }
 
+    public checkIfCartContainsItem(ticketType: TicketType)
+    {
+        return this.cart.Items.some(e => e.TicketType.Id === ticketType.Id);
+    }
 
     private loadCart(userid: string) {
         this.get().subscribe(res => {
@@ -48,18 +55,24 @@ export class CartService {
         return this.http.get<any>(this._cartURL + this.userId);
     }
     
-    public addToCart(ticketType: TicketType, quantity: number) {
+    public addToCart(ticketType: TicketType, quantity: number): Observable<any> {
+        if(!this.authService.signedIn) {
+            this.router.navigate(['sign-in']);
+            return null;
+        }
         const url = `${this._cartURL}${this.userId}/item`;
         const command = { CartId : this.cart.Id, TicketTypeId: ticketType.Id, Quantity: quantity };
-        return this.http.post<any>(url, command).subscribe(res => {
-            let item = new CartItem();
-            item.Id = res;
-            item.Quantity = quantity;
-            item.TicketType = ticketType;
-            this.cart.Items = [...this.cart.Items, item];
-            this.cartSubject.next(this.cart);
-            this.cartItemCountSubject.next(this.cart.Items.length);
-        });        
+        return this.http.post<any>(url, command)
+            .pipe(map(id => {
+                let item = new CartItem();
+                item.Id = id;
+                item.Quantity = quantity;
+                item.TicketType = ticketType;
+                this.cart.Items = [...this.cart.Items, item];
+                this.cartSubject.next(this.cart);
+                this.cartItemCountSubject.next(this.cart.Items.length);
+                tap()
+          }));
     }
 
     public removeFromCart(item: CartItem) {
