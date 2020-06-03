@@ -1,5 +1,6 @@
 ﻿using Cloudbash.Domain.Carts.Events;
 using Cloudbash.Domain.Carts.Exceptions;
+using Cloudbash.Domain.Orders;
 using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace Cloudbash.Domain.Carts
         internal void Apply(CartCheckedOutEvent @event)
         {
             this.IsCheckedOut = true;
+            Order.Create(this);
         }
 
         internal void Apply(CartItemRemovedEvent @event)
@@ -93,10 +95,7 @@ namespace Cloudbash.Domain.Carts
             {
                 throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
             }
-        }
-
-
-
+        }              
 
     }
 }
