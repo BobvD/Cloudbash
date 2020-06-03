@@ -13,9 +13,9 @@ namespace Cloudbash.Lambda.Functions.Carts
         public async Task<APIGatewayProxyResponse> Run(APIGatewayProxyRequest request)
         {
             var command = JsonConvert.DeserializeObject<AddCartItemCommand>(request.Body);
-            await Mediator.Send(command);
+            var result = await Mediator.Send(command);
 
-            return GenerateResponse(201);            
+            return GenerateResponse(201, result);            
         }
     }
 }

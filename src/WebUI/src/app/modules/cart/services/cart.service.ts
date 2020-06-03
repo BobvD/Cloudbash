@@ -62,10 +62,12 @@ export class CartService {
         const command = { CartId: this.cart.Id, TicketTypeId: ticketType.Id, Quantity: quantity };
         return this.http.post<any>(url, command)
             .pipe(map(id => {
+                console.log(id);
                 let item = new CartItem();
                 item.Id = id;
                 item.Quantity = quantity;
                 item.TicketType = ticketType;
+                console.log(item);
                 this.cart.Items = [...this.cart.Items, item];
                 this.cartSubject.next(this.cart);
                 this.cartItemCount = this.cart.Items.length;
