@@ -10,42 +10,40 @@ import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
-  })
+})
 export class CartService {
     private cartItemCountSubject: Subject<number> = new BehaviorSubject(0);
     private cartItemCount = 0;
 
     private cartSubject: Subject<Cart> = new BehaviorSubject(new Cart());
-    private cart = new Cart();
+    private cart = null;
 
     private _cartURL: string;
     private userId: string;
 
 
     constructor(private http: HttpClient,
-                private configService: ConfigService,
-                private authService: AuthenticationService,
-                private router: Router) {
+        private configService: ConfigService,
+        private authService: AuthenticationService,
+        private router: Router) {
         this._cartURL = this.configService.getApiBaseUrl() + '/carts/';
-                     console.log("load data")
         this.cartSubject.subscribe(_ => this.cart = _);
-        this.authService.loggedIn.subscribe(state => {            
-            if(state) {
+        this.authService.loggedIn.subscribe(state => {
+            if (state && this.cartItemCount == 0) {
+                console.log('load new cart')
                 this.userId = this.authService.user['attributes']['sub'];
-                this.loadCart(this.userId);
+                this.loadCart();
             }
         });
     }
 
-    public checkIfCartContainsItem(ticketType: TicketType)
-    {
+    public checkIfCartContainsItem(ticketType: TicketType) {
         return this.cart.Items.some(e => e.TicketType.Id === ticketType.Id);
     }
 
-    private loadCart(userid: string) {
+    public loadCart() {
         this.get().subscribe(res => {
-            console.log(res);
-            this.cart = res;       
+            this.cart = res;
             this.cartSubject.next(res);
             this.cartItemCountSubject.next(this.cart.Items.length);
         });
@@ -54,14 +52,14 @@ export class CartService {
     private get(): Observable<Cart> {
         return this.http.get<any>(this._cartURL + this.userId);
     }
-    
+
     public addToCart(ticketType: TicketType, quantity: number): Observable<any> {
-        if(!this.authService.signedIn) {
+        if (!this.authService.signedIn) {
             this.router.navigate(['sign-in']);
             return null;
         }
         const url = `${this._cartURL}${this.userId}/item`;
-        const command = { CartId : this.cart.Id, TicketTypeId: ticketType.Id, Quantity: quantity };
+        const command = { CartId: this.cart.Id, TicketTypeId: ticketType.Id, Quantity: quantity };
         return this.http.post<any>(url, command)
             .pipe(map(id => {
                 let item = new CartItem();
@@ -70,23 +68,27 @@ export class CartService {
                 item.TicketType = ticketType;
                 this.cart.Items = [...this.cart.Items, item];
                 this.cartSubject.next(this.cart);
-                this.cartItemCountSubject.next(this.cart.Items.length);
+                this.cartItemCount = this.cart.Items.length;
+                this.cartItemCountSubject.next(this.cartItemCount);
                 tap()
-          }));
+            }));
     }
 
     public removeFromCart(item: CartItem) {
         const url = `${this._cartURL}${this.userId}/item/remove`;
-        const command = { CartId : this.cart.Id, CartItemId: item.Id };
-        return this.http.post<any>(url, command).subscribe(res => {  
-            this.cart.Items = this.cart.Items.filter(i =>  i.Id !== item.Id )          
-            this.cartSubject.next(this.cart);
-            this.cartItemCountSubject.next(this.cart.Items.length);
-        });        
+        const command = { CartId: this.cart.Id, CartItemId: item.Id };
+        return this.http.post<any>(url, command)
+            .pipe(map(res => {
+                this.cart.Items = this.cart.Items.filter(i => i.Id !== item.Id)
+                this.cartSubject.next(this.cart);
+                this.cartItemCount = this.cart.Items.length;
+                this.cartItemCountSubject.next(this.cartItemCount);
+                tap()
+            }));
     }
 
     public getCart(): Observable<Cart> {
-        return this.cartSubject.asObservable();
+        return this.cartSubject;
     }
 
     public getCartItemCount(): Observable<number> {

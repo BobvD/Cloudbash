@@ -13,21 +13,27 @@ export class CartPageComponent implements OnInit {
     cart: Cart;
     busy = false;
     selected: CartItem = null;
-    
-    constructor(private route: ActivatedRoute,
-                private cartService: CartService) {
 
-        
-                    this.cartService.getCart().subscribe(cart => {
-                        this.cart = cart;
-                    })
-        
-    }
+    constructor(private cartService: CartService) {}
 
-
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        if(!this.cart){
+            this.cartService.getCart().subscribe(cart => {
+                this.cart = cart;
+            });
+        }
+       
+     }
 
     removeFromCart(item: CartItem) {
-        this.cartService.removeFromCart(item);
+        this.busy = true;
+        this.selected = item;
+        this.cartService.removeFromCart(item).subscribe(res => {
+            this.busy = false;
+            this.selected = null;
+        }, err => {
+            this.busy = false;
+            this.selected = null;
+        });
     }
 }

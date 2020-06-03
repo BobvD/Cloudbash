@@ -5,7 +5,7 @@ h4 {
 .item, .item-header {
     padding: 1em;
     margin-bottom: 3px;
-    background: #F0FFFF;
+    background: rgb(129, 45, 160, 0.05);
 }
 
 .item-header {
@@ -13,30 +13,17 @@ h4 {
 }
 
 .remove {
-    padding: 0;
-    background: transparent;
-    border: none;
-}
-
-.remove:hover {
-    background: green;
+    overflow: hidden;
+    min-height: 50px;
+    min-width: 50px;
+    margin-top: 5px;
 }
 
 .svg-icon path, .svg-icon polygon, .svg-icon rect {
-    fill: #222!important;
+    fill: #fff!important;
 }
 
 svg {
     overflow: hidden;
     vertical-align: middle;
-}
-
-.btn-secondary {
-    background: #d8e5e5;
-    border-color: #d8e5e5;
-}
-
-.btn-secondary:hover {
-    background: #c0cccc;
-    border-color: #c0cccc;
 }
