@@ -58,6 +58,7 @@ export class CartService {
         const command = { CartId: this.cart.Id };
         return this.http.post<any>(url, command).
         pipe(map(data => {
+            this.loadCart();
             tap()
         }));
     }

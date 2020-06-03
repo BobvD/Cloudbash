@@ -5,9 +5,7 @@ namespace Cloudbash.Domain.Users.Events
 {
     public class UserCreatedEvent : DomainEventBase
     {
-        public UserCreatedEvent()
-        {
-        }
+        public UserCreatedEvent() {}
 
         internal UserCreatedEvent(Guid aggregateId, string fullName, string email) 
             : base(aggregateId)
@@ -16,9 +14,6 @@ namespace Cloudbash.Domain.Users.Events
             Email = email;
         }
 
-        public string FullName { get; private set; }
-        public string Email { get; private set; }
-
         internal UserCreatedEvent(Guid aggregateId, long aggregateVersion, string fullName, string email) 
             : base(aggregateId, aggregateVersion)
         {
@@ -26,14 +21,13 @@ namespace Cloudbash.Domain.Users.Events
             Email = email;
         }
 
+        public string FullName { get; private set; }
+        public string Email { get; private set; }
+
+
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
             return new UserCreatedEvent(aggregateId, aggregateVersion, FullName, Email);
-        }
-
-        public override string ToString()
-        {
-            return FullName + base.ToString();
         }
     }
 }

@@ -5,9 +5,7 @@ namespace Cloudbash.Domain.Concerts.Events
 {
     public class ConcertScheduledEvent : DomainEventBase
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
+     
         public ConcertScheduledEvent() { }
 
         internal ConcertScheduledEvent(Guid aggregateId, DateTime startDate, DateTime endDate)
@@ -23,6 +21,10 @@ namespace Cloudbash.Domain.Concerts.Events
             StartDate = startDate;
             EndDate = endDate;
         }
+
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {

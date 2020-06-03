@@ -17,7 +17,7 @@ namespace Cloudbash.Domain.Carts.Events
             CustomerId = customerId;
         }
 
-        public Guid CustomerId { get; set; }
+        public Guid CustomerId { get; private set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {

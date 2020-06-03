@@ -6,9 +6,7 @@ namespace Cloudbash.Domain.Users.Events
 {
     public class UserAuthenticatedEvent : DomainEventBase
     {
-        public UserAuthenticatedEvent()
-        {
-        }
+        public UserAuthenticatedEvent(){ }
 
         internal UserAuthenticatedEvent(Guid aggregateId) 
             : base(aggregateId) { }

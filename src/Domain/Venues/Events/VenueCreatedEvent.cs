@@ -5,11 +5,7 @@ namespace Cloudbash.Domain.Venues.Events
 {
     public class VenueCreatedEvent : DomainEventBase
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Capacity { get; set; }
-        public string WebUrl { get; set; }
-        public string Address { get; set; }
+       
 
         public VenueCreatedEvent() { }
 
@@ -33,7 +29,12 @@ namespace Cloudbash.Domain.Venues.Events
             Address = address;
         }
 
-
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public int Capacity { get; private set; }
+        public string WebUrl { get; private set; }
+        public string Address { get; private set; }
+        
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
             return new VenueCreatedEvent(aggregateId, aggregateVersion, Name, Description, Capacity, WebUrl, Address);

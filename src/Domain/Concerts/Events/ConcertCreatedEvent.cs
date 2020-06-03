@@ -5,9 +5,7 @@ namespace Cloudbash.Domain.Concerts.Events
 {
     public class ConcertCreatedEvent : DomainEventBase
     {
-        public ConcertCreatedEvent()
-        {
-        }
+        public ConcertCreatedEvent() {}
 
         internal ConcertCreatedEvent(Guid aggregateId, string name, Guid venueId, string imageUrl, DateTime created) 
             : base(aggregateId)
@@ -28,9 +26,9 @@ namespace Cloudbash.Domain.Concerts.Events
         }
                
         public string Name { get; private set; }
-        public Guid VenueId { get; set; }
-        public string ImageUrl { get; set; }
-        public DateTime Created { get; set; }
+        public Guid VenueId { get; private set; }
+        public string ImageUrl { get; private set; }
+        public DateTime Created { get; private set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {

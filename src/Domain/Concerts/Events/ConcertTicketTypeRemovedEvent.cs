@@ -4,9 +4,7 @@ using System;
 namespace Cloudbash.Domain.Concerts.Events
 {
     public class ConcertTicketTypeRemovedEvent : DomainEventBase
-    {
-        public Guid TicketTypeId { get; set; }
-
+    {       
         public ConcertTicketTypeRemovedEvent() { }
 
         internal ConcertTicketTypeRemovedEvent(Guid aggregateId, Guid ticketTypeId)
@@ -20,6 +18,8 @@ namespace Cloudbash.Domain.Concerts.Events
         {
             TicketTypeId = ticketTypeId;
         }
+
+        public Guid TicketTypeId { get; private set; }
 
         public override IDomainEvent WithAggregate(Guid aggregateId, long aggregateVersion)
         {
