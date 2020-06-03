@@ -36,4 +36,10 @@ export class CartPageComponent implements OnInit {
             this.selected = null;
         });
     }
+
+    checkOut() {
+        this.cartService.checkOut().subscribe(res => {
+            console.log(res);
+        })
+    }
 }

@@ -104,6 +104,7 @@ functions:
   getCart: ${file(./serverless/functions/carts/get.yml)}
   addCartItem: ${file(./serverless/functions/carts/add_cart_item.yml)}
   removeCartItem: ${file(./serverless/functions/carts/remove_cart_item.yml)}
+  checkOutCart: ${file(./serverless/functions/carts/check_out.yml)}
   # Venue Endpoints
   createVenue: ${file(./serverless/functions/venues/create.yml)}
   getVenues: ${file(./serverless/functions/venues/get.yml)}

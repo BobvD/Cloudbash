@@ -1,0 +1,7 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Carts.CheckOutCartFunction::Run
+warmup: true
+events:
+- http:
+    path: carts/{customerId}/checkout
+    method: post
+    cors: true

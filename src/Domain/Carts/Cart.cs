@@ -1,4 +1,5 @@
 ﻿using Cloudbash.Domain.Carts.Events;
+using Cloudbash.Domain.Carts.Exceptions;
 using Cloudbash.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Cloudbash.Domain.Carts
 
         public Guid CustomerId { get; set; }
         public List<CartItem> Items { get; set; }
+        public bool IsCheckedOut { get; set; }
 
         public Cart(Guid customerId)
         {
@@ -50,7 +52,11 @@ namespace Cloudbash.Domain.Carts
 
         public void CheckOut()
         {
-            throw new NotImplementedException();
+            if (this.Items.Count == 0)
+            {
+                throw new EmptyCartCheckOutException();
+            }
+            AddEvent(new CartCheckedOutEvent(Id));            
         }
 
         internal void Apply(CartCreatedEvent @event)
@@ -63,6 +69,11 @@ namespace Cloudbash.Domain.Carts
         internal void Apply(CartItemAddedEvent @event)
         {
             Items.Add(@event.Item);
+        }
+
+        internal void Apply(CartCheckedOutEvent @event)
+        {
+            this.IsCheckedOut = true;
         }
 
         internal void Apply(CartItemRemovedEvent @event)
@@ -83,6 +94,9 @@ namespace Cloudbash.Domain.Carts
                 throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
             }
         }
+
+
+
 
     }
 }

@@ -2,6 +2,7 @@
 using Amazon.Lambda.Core;
 using Cloudbash.Application.Users.Commands.AddUserActivityLog;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Lambda.Functions.Users
@@ -11,6 +12,7 @@ namespace Cloudbash.Lambda.Functions.Users
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<JObject> Run(JObject input, ILambdaContext context)
         {
+           Console.WriteLine(input);
             var userData = new AddUserActivityLogCommand
             {
                 UserId = new System.Guid(GetUserAttribute(input, "sub")),

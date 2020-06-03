@@ -1,5 +1,6 @@
 ﻿using Cloudbash.Domain.Carts;
 using Cloudbash.Domain.Carts.Events;
+using Cloudbash.Domain.Carts.Exceptions;
 using Cloudbash.Domain.UnitTests.Common;
 using System;
 using Xunit;
@@ -59,7 +60,7 @@ namespace Cloudbash.Domain.UnitTests
 
             Assert.Throws<ArgumentNullException>(() => { cart.AddItem(item); });
         }
-
+        
         [Fact]
         public void Given_Cart_When_Add_Item_Quantity_Invalid_Then_Throws_Exception()
         {
@@ -101,13 +102,49 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Given_Cart_When_Remove_Item_With_Invalid_Id_Then_Throws_Exception()
+        public void Given_Cart_When_Remove_Item_With_Invalid_Id_Then_Throw_Exception()
         {
             var cart = new Cart(customerId);
             
             ClearUncommittedEvents(cart);
 
             Assert.Throws<ArgumentException>(() => { cart.RemoveItem(new Guid()); });
+        }
+
+        [Fact]
+        public void Given_Cart_When_Check_Out_Then_CartCheckdOutEvent()
+        {
+            var cart = new Cart(customerId);
+           
+
+            var item = new CartItem
+            {
+                TicketTypeId = ticketTypeId,
+                Quantity = 2
+            };
+
+            cart.AddItem(item);
+
+            ClearUncommittedEvents(cart);
+
+            cart.CheckOut();
+
+            AssertSingleUncommittedEvent<CartCheckedOutEvent>(cart, @event =>
+            {
+                Assert.Equal(cart.Id, @event.AggregateId);
+                Assert.Equal(2, @event.AggregateVersion);
+            });
+        }
+
+
+        [Fact]
+        public void Given_Cart_When_Checkout_Empty_Cart_Then_Throw_Exception()
+        {
+            var cart = new Cart(customerId);
+
+            ClearUncommittedEvents(cart);
+
+            Assert.Throws<EmptyCartCheckOutException>(() => { cart.CheckOut(); });
         }
 
     }

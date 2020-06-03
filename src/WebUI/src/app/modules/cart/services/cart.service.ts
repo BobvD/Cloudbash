@@ -53,6 +53,15 @@ export class CartService {
         return this.http.get<any>(this._cartURL + this.userId);
     }
 
+    public checkOut(): Observable<any> {
+        const url = `${this._cartURL}${this.userId}/checkout`;
+        const command = { CartId: this.cart.Id };
+        return this.http.post<any>(url, command).
+        pipe(map(data => {
+            tap()
+        }));
+    }
+
     public addToCart(ticketType: TicketType, quantity: number): Observable<any> {
         if (!this.authService.signedIn) {
             this.router.navigate(['sign-in']);
