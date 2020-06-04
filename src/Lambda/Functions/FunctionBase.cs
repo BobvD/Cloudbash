@@ -1,4 +1,5 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Lambda.Core;
 using Amazon.Runtime.Internal.Transform;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -74,6 +75,23 @@ namespace Cloudbash.Lambda.Functions
 
             return value;
         }
+
+        protected static string GetQueryParameter(APIGatewayProxyRequest request, string key)
+        {
+            string value = "";
+
+            try
+            {
+                request.QueryStringParameters.TryGetValue(key, out value);
+            }
+            catch (Exception ex)
+            {
+                LambdaLogger.Log(ex.Message);
+            }
+
+            return value;
+        }
+
     }
 
 }

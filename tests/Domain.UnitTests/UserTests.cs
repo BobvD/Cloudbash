@@ -28,7 +28,7 @@ namespace Cloudbash.Domain.UnitTests
         }
 
         [Fact]
-        public void Given_User_When_Activity_Of_Type_AUTHENTICATION_New_UserAuthenticetedEvent()
+        public void Given_User_When_Activity_Of_Type_AUTHENTICATION_New_UserAuthenticatedEvent()
         {
             var user = new User(userId, "John Doe", "john@mail.com");
 

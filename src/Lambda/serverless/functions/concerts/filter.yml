@@ -1,0 +1,12 @@
+﻿handler: Cloudbash.Lambda::Cloudbash.Lambda.Functions.Concerts.FilterConcertsFunction::Run
+warmup: true
+events:
+- http:
+    path: concerts/filter
+    method: get
+    request:
+        parameters:
+            querystrings:
+                searchTerm: false
+                venueName: false
+    cors: true

@@ -100,6 +100,7 @@ functions:
   removeConcertTicketType: ${file(./serverless/functions/concerts/remove_ticket_type.yml)}
   scheduleConcert: ${file(./serverless/functions/concerts/schedule.yml)}
   publishConcert: ${file(./serverless/functions/concerts/publish.yml)}
+  filterConcerts: ${file(./serverless/functions/concerts/filter.yml)}
   # Cart Endpoints
   getCart: ${file(./serverless/functions/carts/get.yml)}
   addCartItem: ${file(./serverless/functions/carts/add_cart_item.yml)}

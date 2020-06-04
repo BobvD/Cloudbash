@@ -7,7 +7,7 @@ namespace Cloudbash.Domain.Users
 {
     public class User : AggregateRootBase
     {
-        private User()
+        public User()
         {
             Activities = new List<UserActivity>();
         }
@@ -34,6 +34,7 @@ namespace Cloudbash.Domain.Users
             Id = ev.AggregateId;
             FullName = ev.FullName;
             Email = ev.Email;
+            Activities = new List<UserActivity>();
         }
 
         internal void Apply(UserAuthenticatedEvent ev)
