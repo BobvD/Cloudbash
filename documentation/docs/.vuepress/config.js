@@ -20,21 +20,19 @@ module.exports = {
         title: 'Event Sourcing & CQRS',
         children: [
           ['/event_sourcing/', 'Introduction'],
-          ['/domain_driven_design/', 'Domain Driven Design'],
-          ['/event_sourcing/implementation.md', 'Implementation in .NET Core']          
+          ['/serverless_architecture/', 'ES Serverless Architecture'],
         ],
         collapsable: false,
         sidebarDepth: 0,   
-      },      
+      },  
       {
-        title: 'ES Serverless Architecture',
+        title: 'Code Examples',
         children: [
-          ['/serverless_architecture/', 'Introduction'],
-          ['/event_sourcing/implementation.md', 'Implementation in .NET Core']          
+          ['/code_examples/mediatr.md', 'Mediator Pattern'],        
         ],
         collapsable: false,
         sidebarDepth: 0,   
-      },   
+      }, 
       {
         title: 'Business Scenario and Analysis',
         path: '/business_scenario/',
