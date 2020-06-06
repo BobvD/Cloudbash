@@ -19,13 +19,41 @@ jobs:
       working-directory: ./
       run: dotnet build 
 
-    - name: Test project
-      working-directory: ./
+    - name: Test Application project
+      working-directory: ./tests/Application.UnitTests
       run: |            
-          dotnet test Cloudbash.sln /p:CollectCoverage=true /p:Exclude="[xunit*]*" /p:CoverletOutput="../coverage.xml" /p:MergeWith="../coverage.xml" /maxcpucount:1
+          dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
               
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./tests/coverage.xml 
+        path-to-lcov: ./tests/Application.UnitTests/TestResults/coverage.info   
+        flag-name: run-1          
+        parallel: true
+
+
+    - name: Test Application project
+      working-directory: ./tests/Domain.UnitTests
+      run: |            
+          dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+              
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./tests/Domain.UnitTests/TestResults/coverage.info 
+        flag-name: run-2
+        parallel: true
+
+
+
+  finish:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true
