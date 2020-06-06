@@ -23,7 +23,6 @@ namespace Cloudbash.Lambda.Functions.Concerts
             }
             catch (Exception ex)
             {
-                LambdaLogger.Log(ex.Message);
                 return GenerateResponse(400, ex.Message);
             }             
             

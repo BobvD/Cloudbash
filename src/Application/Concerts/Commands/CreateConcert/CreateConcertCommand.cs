@@ -25,7 +25,8 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
                 _repository = repository;
             }
 
-            public async Task<Guid> Handle(CreateConcertCommand request, CancellationToken cancellationToken)
+            public async Task<Guid> Handle(CreateConcertCommand request, 
+                CancellationToken cancellationToken)
             {   
                 
                 var concert = new Concert(request.Name, request.VenueId, request.ImageUrl);
@@ -35,6 +36,5 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
                 return concert.Id; 
             }
         }
-
     }
 }
