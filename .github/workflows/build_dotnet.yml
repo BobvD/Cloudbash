@@ -22,16 +22,10 @@ jobs:
     - name: Test project
       working-directory: ./
       run: |            
-          dotnet test Cloudbash.sln /p:CollectCoverage=true /p:CoverletOutput="../coverage.info" /p:MergeWith="../coverage.info" /maxcpucount:1 /p:CoverletOutputFormat=lcov
-
-    - name: show
-      run: |  
-          ls 
-          cd ./tests
-          ls
+          dotnet test Cloudbash.sln /p:CollectCoverage=true /p:Exclude="[xunit*]*" /p:CoverletOutput="../coverage.xml" /p:MergeWith="../coverage.xml" /maxcpucount:1
               
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./tests/coverage.info 
+        path-to-lcov: ./tests/coverage.xml 

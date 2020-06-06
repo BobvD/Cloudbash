@@ -48,7 +48,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.GetConcertDetail
             result.Venue.Address.ShouldBe("Amsterdam");
 
             result.TicketTypes.Count.ShouldBe(2);
-            
+                       
         }
     }
 }
