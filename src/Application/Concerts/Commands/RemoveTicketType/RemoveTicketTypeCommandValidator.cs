@@ -2,7 +2,7 @@
 
 namespace Cloudbash.Application.Concerts.Commands.RemoveTicketType
 {
-    class RemoveTicketTypeCommandValidator : AbstractValidator<RemoveTicketTypeCommand>
+    public class RemoveTicketTypeCommandValidator : AbstractValidator<RemoveTicketTypeCommand>
     {
         public RemoveTicketTypeCommandValidator()
         {
