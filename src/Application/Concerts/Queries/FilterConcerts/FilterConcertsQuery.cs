@@ -1,7 +1,6 @@
 ﻿using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.ReadModels;
 using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

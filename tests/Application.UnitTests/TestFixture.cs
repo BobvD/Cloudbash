@@ -10,9 +10,9 @@ using Xunit;
 
 namespace Cloudbash.Application.UnitTests
 {
-    public sealed class QueryTestFixture : IDisposable
+    public sealed class TestFixture : IDisposable
     {
-        public QueryTestFixture()
+        public TestFixture()
         {
             Context = ApplicationDbContextFactory.Create();
 
@@ -28,13 +28,16 @@ namespace Cloudbash.Application.UnitTests
 
             var concertRepositoryLoggerMock = new Mock<ILogger<EFRepository<Concert>>>();
             ConcertRepository = new EFRepository<Concert>(Context, concertRepositoryLoggerMock.Object);
-      
+
+            var venueRepositoryLoggerMock = new Mock<ILogger<EFRepository<Venue>>>();
+            VenueRepository = new EFRepository<Venue>(Context, venueRepositoryLoggerMock.Object);
         }
 
 
         private readonly ApplicationDbContext Context;
         public IViewModelRepository<Cart> CartRepository { get; }
         public IViewModelRepository<Concert> ConcertRepository { get; }
+        public IViewModelRepository<Venue> VenueRepository { get; }
 
         public IMapper Mapper { get; }
 
@@ -45,6 +48,10 @@ namespace Cloudbash.Application.UnitTests
     }
 
     [CollectionDefinition("QueryTests")]
-    public class QueryCollection : ICollectionFixture<QueryTestFixture> { }
+    public class QueryCollection : ICollectionFixture<TestFixture> { }
+
+
+    [CollectionDefinition("EventHandlerTests")]
+    public class EventHandlerCollection : ICollectionFixture<TestFixture> { }
 }
 

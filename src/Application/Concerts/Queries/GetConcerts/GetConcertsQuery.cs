@@ -8,11 +8,11 @@ namespace Cloudbash.Application.Concerts.Queries.GetConcerts
 {
     public class GetConcertsQuery : IRequest<GetConcertsVm>
     {
-        public class GetProductsQueryHandler : IRequestHandler<GetConcertsQuery, GetConcertsVm>
+        public class GetConcertsQueryHandler : IRequestHandler<GetConcertsQuery, GetConcertsVm>
         {
             private readonly IViewModelRepository<Concert> _repository;
 
-            public GetProductsQueryHandler(IViewModelRepository<Concert> repository)
+            public GetConcertsQueryHandler(IViewModelRepository<Concert> repository)
             {
                 _repository = repository;
             }

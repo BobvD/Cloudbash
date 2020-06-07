@@ -16,7 +16,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.GetConcertDetail
         private readonly IViewModelRepository<Concert> _repo;
         private readonly IMapper _mapper;
 
-        public GetConcertDetailQueryTests(QueryTestFixture fixture)
+        public GetConcertDetailQueryTests(TestFixture fixture)
         {
             _repo = fixture.ConcertRepository;
             _mapper = fixture.Mapper;
