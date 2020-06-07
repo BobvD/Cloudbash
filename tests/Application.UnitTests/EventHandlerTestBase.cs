@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.UnitTests
 {
-    public abstract class EventHandlerTestBase 
+    public abstract class EventHandlerTestBase
     {
 
         protected readonly IViewModelRepository<Concert> _concertRepo;
         protected readonly IViewModelRepository<Venue> _venueRepo;
+        protected readonly IViewModelRepository<Cart> _cartRepo;
+
+        protected readonly TestFixture _fixture;
 
         public EventHandlerTestBase(TestFixture fixture)
         {
+            _fixture = fixture;
             _concertRepo = fixture.ConcertRepository;
             _venueRepo = fixture.VenueRepository;
+            _cartRepo = fixture.CartRepository;
         }
 
         protected async Task<Domain.Concerts.Concert> CreateAndSaveNewConcertAggregate()
@@ -35,6 +40,20 @@ namespace Cloudbash.Application.UnitTests
             return concert;
         }
 
+        protected async Task<Domain.Carts.Cart> CreateAndSaveCartAggregate()
+        {
+            var cart = new Domain.Carts.Cart(Guid.NewGuid());
+
+            var cartVm = new Cart
+            {
+                Id = cart.Id.ToString(),
+                CustomerId = cart.CustomerId
+            };
+
+            await _cartRepo.AddAsync(cartVm);
+
+            return cart;
+        }
 
     }
 }

@@ -3,17 +3,16 @@ using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.Carts.Events;
 using Cloudbash.Domain.ReadModels;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Carts.Events
 {
-    class CheckOutCartEventHandler : INotificationHandler<DomainEventNotification<CartCheckedOutEvent>>
+    public class CartCheckedOutEventHandler : INotificationHandler<DomainEventNotification<CartCheckedOutEvent>>
     {
         private readonly IViewModelRepository<Cart> _cartRepository;
 
-        public CheckOutCartEventHandler(IViewModelRepository<Cart> cartRepository)
+        public CartCheckedOutEventHandler(IViewModelRepository<Cart> cartRepository)
         {
             _cartRepository = cartRepository;
         }

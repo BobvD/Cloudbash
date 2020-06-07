@@ -13,12 +13,12 @@ namespace Cloudbash.Application.Carts.Commands.RemoveCartItem
         public Guid CartId { get; set; }
         public Guid CartItemId { get; set; }
 
-        public class AddCartItemCommandHandler : IRequestHandler<RemoveCartItemCommand>
+        public class RemoveCartItemCommandHandler : IRequestHandler<RemoveCartItemCommand>
         {
 
             private readonly IRepository<Cart> _repository;
 
-            public AddCartItemCommandHandler(IRepository<Cart> repository)
+            public RemoveCartItemCommandHandler(IRepository<Cart> repository)
             {
                 _repository = repository;
             }

@@ -7,6 +7,7 @@ using MediatR;
 using System.Reflection;
 using Cloudbash.Application.Common.Behaviours;
 using Cloudbash.Application.Common.Interfaces;
+using Cloudbash.Domain.Carts;
 
 namespace Cloudbash.Application.UnitTests
 {
@@ -17,11 +18,12 @@ namespace Cloudbash.Application.UnitTests
         public CommandTestBase()
         {
             ConcertRepo = EventSourcedRepositoryFactory<Concert>.Create();
-          
+            CartRepo = EventSourcedRepositoryFactory<Cart>.Create();
+
         }
 
         public EventSourcedRepository<Concert> ConcertRepo { get; }
-
+        public EventSourcedRepository<Cart> CartRepo { get; }
 
         protected async Task<Concert> CreateAndSaveNewConcertAggregate()
         {
@@ -34,6 +36,16 @@ namespace Cloudbash.Application.UnitTests
             await ConcertRepo.SaveAsync(concert);
 
             return concert;
+        }
+
+
+        protected async Task<Cart> CreateAndSaveNewCartAggregate()
+        {
+            var cart = new Cart(Guid.NewGuid());
+
+            await CartRepo.SaveAsync(cart);
+
+            return cart;
         }
 
     }

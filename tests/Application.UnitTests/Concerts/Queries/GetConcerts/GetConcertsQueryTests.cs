@@ -29,7 +29,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.GetConcerts
 
             result.ShouldBeOfType<GetConcertsVm>();
             result.Concerts.Count.ShouldBe(1);
-
+            result.Count.ShouldBe(result.Concerts.Count);
         }
     }
 }

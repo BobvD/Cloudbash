@@ -1,0 +1,54 @@
+﻿using Cloudbash.Application.Carts.Events;
+using Cloudbash.Application.Common.Events;
+using Cloudbash.Domain.Carts;
+using Cloudbash.Domain.Carts.Events;
+using Shouldly;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Cloudbash.Application.UnitTests.Carts.Events
+{
+    [Collection("EventHandlerTests")]
+    public class CartCheckedOutEventHandlerTests : EventHandlerTestBase
+    {
+        private Guid _ticketTypeId = new Guid("4f356bc0-ebe0-409a-aea7-d7fdd7b76154");
+
+        public CartCheckedOutEventHandlerTests(TestFixture fixture) : base(fixture)
+        {
+        }
+
+        [Fact]
+        public async Task When_Concert_Created_Event_Handled_ConcertVm_Saved()
+        {
+            var cart = await CreateAndSaveCartAggregate();
+
+            var item = new CartItem
+            {
+                Quantity = 2,
+                TicketTypeId = _ticketTypeId
+            };
+
+            cart.AddItem(item);
+
+            cart.ClearUncommittedEvents();          
+
+            cart.CheckOut();
+
+            CartCheckedOutEvent @event = (CartCheckedOutEvent)cart.GetUncommittedEvents().Last();
+
+            var handler = new CartCheckedOutEventHandler(_cartRepo);
+
+            var notification = new DomainEventNotification<CartCheckedOutEvent>(@event);
+
+            await handler.Handle(notification, CancellationToken.None);
+
+            var updatedCart = await _cartRepo.GetAsync(cart.Id, new[] { "Items" });
+
+            updatedCart.ShouldBeNull();
+        }
+
+    }
+}

@@ -2,6 +2,7 @@
 using Cloudbash.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Cloudbash.Application.UnitTests
 {
@@ -41,7 +42,7 @@ namespace Cloudbash.Application.UnitTests
             {
                 Id = "2bfb53d2-549d-438b-a8be-e87a7457abd7",
                 Name = "Mumford & Sons",
-                VenueId = "5b5eb886-06c6-4aed-bb24-35a1373edf97",                
+                VenueId = "5b5eb886-06c6-4aed-bb24-35a1373edf97",
                 ImageUrl = "IMAGE_URL",
                 StartDate = new DateTime(2020, 12, 10, 8, 30, 00),
                 EndDate = new DateTime(2020, 12, 10, 10, 30, 00),
@@ -72,6 +73,20 @@ namespace Cloudbash.Application.UnitTests
             };
 
             context.Add(ticketType2);
+
+
+            Cart cart = new Cart
+            {
+                Id = "e43b8063-23f2-4835-a35a-503ae5e09673",
+                CustomerId = new Guid("6fe6c9a1-2ee9-4413-9123-d840ca7ead49"),
+                Items = new List<CartItem>
+                {
+                    new CartItem { Id = "313e977f-6c35-4dd3-a162-cb75c343e698", Quantity = 2, TicketType = ticketType1},
+                    new CartItem { Id = "d00247ee-cf2e-4319-ae77-e24b826d6946", Quantity = 4, TicketType = ticketType2}
+                }
+            };
+
+            context.Add(cart);
 
             context.SaveChanges();
         }
