@@ -43,7 +43,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.RemoveTicketType
         }
 
         [Fact]
-        public void Handle_GivenInvalidConcertId_ThrowsException()
+        public async Task Handle_GivenInvalidConcertId_ThrowsExceptionAsync()
         {
             var command = new RemoveTicketTypeCommand
             {
@@ -53,16 +53,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.RemoveTicketType
 
             var handler = new RemoveTicketTypeCommand.RemoveTicketTypeCommandHandler(ConcertRepo);
 
-            Should.ThrowAsync<NotFoundException>(() =>
-                handler.Handle(command, CancellationToken.None));
-        }
-
-        [Fact]
-        public void ShouldRequireMinimumFields()
-        {
-            var command = new RemoveTicketTypeCommand();
-
-            Should.ThrowAsync<ValidationException>(() => SendAsync(command));
+            await Should.ThrowAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
         }
     }
 }

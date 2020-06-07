@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateTicketType
 {
-    public class CreateTicketTypeCommandTests : CommandTestBase
+    public class CreateTIcketTypeCommandTests : CommandTestBase
     {
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateTicketType
         }
 
         [Fact]
-        public void Handle_GivenInvalidConcertId_ThrowsException()
+        public async Task Handle_GivenInvalidConcertId_ThrowsException()
         {
             var command = new CreateTicketTypeCommand
             {
@@ -44,20 +44,12 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateTicketType
                 Price = 49,
                 Quantity = 5000
             };
-
+            
             var handler = new CreateTicketTypeCommand.CreateTicketTypeCommandHandler(ConcertRepo);
 
-            Should.ThrowAsync<NotFoundException>(() =>
-                handler.Handle(command, CancellationToken.None));
+            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+
         }
 
-
-        [Fact]
-        public void ShouldRequireMinimumFields()
-        {
-            var command = new CreateTicketTypeCommand();
-
-            Should.ThrowAsync<ValidationException>(() => SendAsync(command));
-        }
     }
 }

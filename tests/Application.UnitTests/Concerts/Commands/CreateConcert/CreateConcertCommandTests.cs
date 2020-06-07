@@ -31,13 +31,5 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateConcert
             concert.VenueId.ShouldBe(command.VenueId);
             concert.ImageUrl.ShouldBe(command.ImageUrl);
         }
-
-        [Fact]
-        public void ShouldRequireMinimumFields()
-        {
-            var command = new CreateConcertCommand();
-            
-            Should.ThrowAsync<ValidationException>(() => SendAsync(command) );
-        }
     }
 }

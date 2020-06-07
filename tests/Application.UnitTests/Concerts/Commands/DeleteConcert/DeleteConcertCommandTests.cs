@@ -30,7 +30,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.DeleteConcert
         }
 
         [Fact]
-        public void Handle_GivenInvalidId_ThrowsException()
+        public async Task Handle_GivenInvalidId_ThrowsException()
         {
             var command = new DeleteConcertCommand
             {
@@ -39,8 +39,8 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.DeleteConcert
 
             var handler = new DeleteConcertCommand.DeleteConcertCommandHandler(ConcertRepo);
 
-            Should.ThrowAsync<NotFoundException>(() =>
-                handler.Handle(command, CancellationToken.None));
+            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+           
         }
     }
 }

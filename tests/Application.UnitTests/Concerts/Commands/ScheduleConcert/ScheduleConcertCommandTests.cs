@@ -33,7 +33,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.ScheduleConcert
         }
 
         [Fact]
-        public void Handle_GivenInvalidConcertId_ThrowsException()
+        public async Task Handle_GivenInvalidConcertId_ThrowsExceptionAsync()
         {
             var command = new ScheduleConcertCommand
             {
@@ -44,8 +44,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.ScheduleConcert
 
             var handler = new ScheduleConcertCommand.ScheduleConcertCommandHandler(ConcertRepo);
             
-            Should.ThrowAsync<NotFoundException>(() =>
-                handler.Handle(command, CancellationToken.None));
+           await Should.ThrowAsync<NotFoundException>(() =>handler.Handle(command, CancellationToken.None));
         }
     }
 }

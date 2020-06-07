@@ -44,6 +44,11 @@ namespace Cloudbash.Application.Common.EventSourcing
                 aggregatePersistence.ApplyEvent(@event, @event.AggregateVersion);
             }
 
+            if (aggregate.Id.Equals(default(Guid)))
+            {
+                return null;
+            }
+
             return aggregate;           
         }
 
