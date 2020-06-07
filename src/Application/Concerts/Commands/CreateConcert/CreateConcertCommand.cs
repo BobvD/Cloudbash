@@ -13,7 +13,6 @@ namespace Cloudbash.Application.Concerts.Commands.CreateConcert
         public string Name { get; set; }
         public Guid VenueId { get; set; }
         public string ImageUrl { get; set; }
-        public string Date { get; set; }
        
         public class CreateConcertCommandHandler : IRequestHandler<CreateConcertCommand, Guid>
         {

@@ -28,11 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Domain.UnitTests\Domain.UnitTests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Concerts\Commands\" />
   </ItemGroup>
 
 </Project>

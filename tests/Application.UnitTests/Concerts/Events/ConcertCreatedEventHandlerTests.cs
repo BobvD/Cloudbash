@@ -1,8 +1,6 @@
 ﻿using Cloudbash.Application.Common.Events;
-using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Application.Concerts.Events;
 using Cloudbash.Domain.Concerts.Events;
-using Cloudbash.Domain.ReadModels;
 using Shouldly;
 using System;
 using System.Linq;

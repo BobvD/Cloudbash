@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.UnitTests
 {
-    public abstract class EventHandlerTestBase
+    public abstract class EventHandlerTestBase 
     {
 
         protected readonly IViewModelRepository<Concert> _concertRepo;

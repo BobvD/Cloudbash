@@ -19,7 +19,7 @@ namespace Cloudbash.Domain.Concerts
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ConcertStatus Status { get; set; }
-        private List<TicketType> TicketTypes { get; set; }
+        public List<TicketType> TicketTypes { get; set; }
 
         public Concert(string name, Guid venueId, string imageUrl) : this()
         {
