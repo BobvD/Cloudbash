@@ -50,5 +50,14 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateTicketType
             Should.ThrowAsync<NotFoundException>(() =>
                 handler.Handle(command, CancellationToken.None));
         }
+
+
+        [Fact]
+        public void ShouldRequireMinimumFields()
+        {
+            var command = new CreateTicketTypeCommand();
+
+            Should.ThrowAsync<ValidationException>(() => SendAsync(command));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cloudbash.Application.Concerts.Commands.CreateConcert;
+﻿using Cloudbash.Application.Common.Exceptions;
+using Cloudbash.Application.Concerts.Commands.CreateConcert;
 using Shouldly;
 using System;
 using System.Threading;
@@ -29,6 +30,14 @@ namespace Cloudbash.Application.UnitTests.Concerts.Commands.CreateConcert
             concert.Name.ShouldBe(command.Name);
             concert.VenueId.ShouldBe(command.VenueId);
             concert.ImageUrl.ShouldBe(command.ImageUrl);
+        }
+
+        [Fact]
+        public void ShouldRequireMinimumFields()
+        {
+            var command = new CreateConcertCommand();
+            
+            Should.ThrowAsync<ValidationException>(() => SendAsync(command) );
         }
     }
 }
