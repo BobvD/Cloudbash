@@ -8,22 +8,22 @@ using System.Reflection;
 using Cloudbash.Application.Common.Behaviours;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.Carts;
+using Cloudbash.Domain.Venues;
 
 namespace Cloudbash.Application.UnitTests
 {
     public class CommandTestBase
     {
-        private static IServiceScopeFactory _scopeFactory;
-
         public CommandTestBase()
         {
             ConcertRepo = EventSourcedRepositoryFactory<Concert>.Create();
             CartRepo = EventSourcedRepositoryFactory<Cart>.Create();
-
+            VenueRepo = EventSourcedRepositoryFactory<Venue>.Create();
         }
 
         public EventSourcedRepository<Concert> ConcertRepo { get; }
         public EventSourcedRepository<Cart> CartRepo { get; }
+        public EventSourcedRepository<Venue> VenueRepo { get; }
 
         protected async Task<Concert> CreateAndSaveNewConcertAggregate()
         {

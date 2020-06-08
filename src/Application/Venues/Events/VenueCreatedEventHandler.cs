@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cloudbash.Application.Venues.Events
 {
-    class VenueCreatedEventHandler : INotificationHandler<DomainEventNotification<VenueCreatedEvent>>
+    public class VenueCreatedEventHandler : INotificationHandler<DomainEventNotification<VenueCreatedEvent>>
     {
         private readonly IViewModelRepository<Venue> _repository;
 

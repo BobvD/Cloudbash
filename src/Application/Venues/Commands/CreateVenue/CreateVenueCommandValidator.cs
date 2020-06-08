@@ -2,7 +2,7 @@
 
 namespace Cloudbash.Application.Venues.Commands.CreateVenue
 {
-    class CreateVenueCommandValidator : AbstractValidator<CreateVenueCommand>
+    public class CreateVenueCommandValidator : AbstractValidator<CreateVenueCommand>
     {
         public CreateVenueCommandValidator()
         {
@@ -10,7 +10,7 @@ namespace Cloudbash.Application.Venues.Commands.CreateVenue
                 .NotEmpty().WithMessage("Name is required.")
                 .MaximumLength(255).WithMessage("Name must not exceed 255 characters.");
 
-            RuleFor(v => v.Name)
+            RuleFor(v => v.Address)
                 .NotEmpty().WithMessage("Address is required.");
         }
     }
