@@ -14,7 +14,7 @@ namespace Cloudbash.Domain.Users
 
         public string FullName { get; set; }
         public string Email { get; set; }
-        private List<UserActivity> Activities { get; set; }
+        public List<UserActivity> Activities { get; set; }
 
         public User(Guid id, string fullName, string email)
         {

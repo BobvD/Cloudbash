@@ -9,6 +9,7 @@ using Cloudbash.Application.Common.Behaviours;
 using Cloudbash.Application.Common.Interfaces;
 using Cloudbash.Domain.Carts;
 using Cloudbash.Domain.Venues;
+using Cloudbash.Domain.Users;
 
 namespace Cloudbash.Application.UnitTests
 {
@@ -19,11 +20,13 @@ namespace Cloudbash.Application.UnitTests
             ConcertRepo = EventSourcedRepositoryFactory<Concert>.Create();
             CartRepo = EventSourcedRepositoryFactory<Cart>.Create();
             VenueRepo = EventSourcedRepositoryFactory<Venue>.Create();
+            UserRepo = EventSourcedRepositoryFactory<User>.Create();
         }
 
         public EventSourcedRepository<Concert> ConcertRepo { get; }
         public EventSourcedRepository<Cart> CartRepo { get; }
         public EventSourcedRepository<Venue> VenueRepo { get; }
+        public EventSourcedRepository<User> UserRepo { get; }
 
         protected async Task<Concert> CreateAndSaveNewConcertAggregate()
         {
@@ -46,6 +49,15 @@ namespace Cloudbash.Application.UnitTests
             await CartRepo.SaveAsync(cart);
 
             return cart;
+        }
+
+        protected async Task<User> CreateAndSaveNewUserAggregate()
+        {
+            var user = new User(Guid.NewGuid(), "Jane Doe", "jane@mail.com");
+
+            await UserRepo.SaveAsync(user);
+
+            return user;
         }
 
     }
