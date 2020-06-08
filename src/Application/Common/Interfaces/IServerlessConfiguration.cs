@@ -26,7 +26,7 @@
         public string EventStoreTableName { get; set; }
         public RedisConfiguration Redis { get; set; }
         public string RedisConnectionString { get { return $"{Redis?.Host}:{Redis?.Port}"; } }
-        public string BucketName { get; set; }
+        public string BucketName { get; set; }        
     }
 
     public enum EventBusType
