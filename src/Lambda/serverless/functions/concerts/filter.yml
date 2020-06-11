@@ -8,4 +8,6 @@ events:
         parameters:
             querystrings:
                 searchTerm: true
+                before: false
+                after: false
     cors: true
