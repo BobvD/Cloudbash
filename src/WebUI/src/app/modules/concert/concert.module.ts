@@ -6,12 +6,14 @@ import { ConcertSinglePageComponent } from './pages/concert-single-page/concert-
 import { ConcertRoutingModule } from './concert-routing.module';
 import { ConcertResolver } from './services/concert-resolver.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ConcertSearchPageComponent } from './pages/concert-search-page/concert-search-page.component';
 
 @NgModule({
     declarations: [
         ConcertGridComponent,
         ConcertGridItemComponent,
-        ConcertSinglePageComponent
+        ConcertSinglePageComponent,
+        ConcertSearchPageComponent
     ],
     imports: [ 
         CommonModule,

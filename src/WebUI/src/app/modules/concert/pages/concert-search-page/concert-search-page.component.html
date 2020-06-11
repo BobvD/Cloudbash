@@ -1,0 +1,13 @@
+<main role="main">
+    <div class="container d-flex flex-column">
+        <h5 class="mb-3">searchresults for <span class="capitalize"><span class="badge badge-primary mr-1">{{ term }}</span><span class="badge badge-secondary">{{ getTimeString(time) }}</span></span></h5> 
+        <div class="mx-auto text-center" *ngIf="busy">
+            <app-loading-spinner-large></app-loading-spinner-large>
+            <span class="d-block">Searching...</span>
+        </div>
+        <div class="mx-auto text-center" *ngIf="error">
+            <span class="d-block">No results.</span>
+        </div>
+        <app-concert-grid [concerts]="concerts"></app-concert-grid>   
+    </div>
+</main>

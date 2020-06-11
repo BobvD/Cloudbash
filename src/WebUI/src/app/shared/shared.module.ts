@@ -25,6 +25,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { LoadingSpinnerLargeComponent } from './components/loading-spinner-large/loading-spinner-large.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
         FileUploadComponent,
         LoadingSpinnerComponent,
         DateTimeComponent,
-        MainLayoutComponent
+        MainLayoutComponent,
+        LoadingSpinnerLargeComponent
     ],
     imports: [ 
         CommonModule,
@@ -57,8 +59,8 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
         FooterComponent,
         FileUploadComponent,
         LoadingSpinnerComponent,
-        DateTimeComponent
-
+        DateTimeComponent,
+        LoadingSpinnerLargeComponent
     ],
     providers: [
         FileService,
