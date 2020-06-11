@@ -9,7 +9,6 @@ namespace Cloudbash.Application.Concerts.Queries.FilterConcerts
     public class FilterConcertsQuery : IRequest<FilterConcertsVm>
     {
         public string SearchTerm { get; set; }
-        public string VenueName { get; set; }
 
         public class FilterConcertsQueryHandler : IRequestHandler<FilterConcertsQuery, FilterConcertsVm>
         {
@@ -26,7 +25,7 @@ namespace Cloudbash.Application.Concerts.Queries.FilterConcerts
 
                 var concerts = await _repository.FilterAsync(
                     c => c.Name.ToLower().Contains(request.SearchTerm.ToLower()) 
-                    && c.Venue.Name.ToLower().Contains(request.VenueName.ToLower()),
+                    || c.Venue.Name.ToLower().Contains(request.SearchTerm.ToLower()),
                     children);
 
                 var vm = new FilterConcertsVm

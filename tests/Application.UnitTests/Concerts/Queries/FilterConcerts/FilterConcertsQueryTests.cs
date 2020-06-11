@@ -23,8 +23,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.FilterConcerts
         {
             var query = new FilterConcertsQuery
             {
-                SearchTerm = "Mumford",
-                VenueName = ""
+                SearchTerm = "Mumford"
             };
 
             var handler = new FilterConcertsQuery.FilterConcertsQueryHandler(_repo);
@@ -40,8 +39,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.FilterConcerts
         {
             var query = new FilterConcertsQuery
             {
-                SearchTerm = "",
-                VenueName = "Ziggo Dome"
+                SearchTerm = "Ziggo Dome"
             };
 
             var handler = new FilterConcertsQuery.FilterConcertsQueryHandler(_repo);
@@ -58,8 +56,7 @@ namespace Cloudbash.Application.UnitTests.Concerts.Queries.FilterConcerts
         {
             var query = new FilterConcertsQuery
             {
-                SearchTerm = "Lady Gaga",
-                VenueName = ""
+                SearchTerm = "Lady Gaga"
             };
 
             var handler = new FilterConcertsQuery.FilterConcertsQueryHandler(_repo);

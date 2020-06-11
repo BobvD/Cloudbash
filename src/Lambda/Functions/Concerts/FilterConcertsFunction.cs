@@ -13,7 +13,6 @@ namespace Cloudbash.Lambda.Functions.Concerts
         {            
             var command = new FilterConcertsQuery();
             command.SearchTerm = GetQueryParameter(request, "searchTerm");
-            command.VenueName = GetQueryParameter(request, "venueName");
 
             var result = await Mediator.Send(command);
             return GenerateResponse(200, result);

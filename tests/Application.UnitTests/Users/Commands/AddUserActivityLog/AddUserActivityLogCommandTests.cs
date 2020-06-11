@@ -1,4 +1,5 @@
-﻿using Cloudbash.Application.Users.Commands.AddUserActivityLog;
+﻿using Cloudbash.Application.Common.Exceptions;
+using Cloudbash.Application.Users.Commands.AddUserActivityLog;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -31,5 +32,21 @@ namespace Cloudbash.Application.UnitTests.Users.Commands.AddUserActivityLog
             updatedUser.Activities.Last().Activity.ShouldBe(command.ActivityType);
             updatedUser.Activities.Last().UserID.ShouldBe(user.Id);
         }
+
+        [Fact]
+        public async Task Handle_GivenInvalidUserId_ThrowsExceptionAsync()
+        {
+            var command = new AddUserActivityLogCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActivityType = Domain.Users.UserActivityType.AUTHENTICATION
+            };
+
+
+            var handler = new AddUserActivityLogCommand.AddUserActivityLogCommandHandler(UserRepo);
+
+            await Should.ThrowAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+        }
+
     }
 }

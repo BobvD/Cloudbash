@@ -7,6 +7,5 @@ events:
     request:
         parameters:
             querystrings:
-                searchTerm: false
-                venueName: false
+                searchTerm: true
     cors: true
